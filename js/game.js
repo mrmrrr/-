@@ -305,8 +305,6 @@ var gameState = {
     //#endregion
 
         
-        
-        
         // filterbeforeimage = new Phaser.Filter(game, null, fragmentSrcB);
 
         // filterbeforeimage.setResolution(800, 800);
@@ -342,10 +340,6 @@ var gameState = {
         left.bringToTop();
        
         this.textTimer();
-        
-       
-
-
        
 
         white = game.add.sprite(0,0,'white');
@@ -411,6 +405,7 @@ var gameState = {
             b.events.onOutOfBounds.add(this.resetGreenBullet, this);
         }
     },
+
     textTimer: function(){
         textTimer = game.time.create(false);
         textTimer.loop(1000, this.rules, this);
@@ -430,7 +425,7 @@ var gameState = {
         text2.height = 1;
         text2.anchor.setTo(.5,.5);
 
-        text3 = game.add.text(0,0, 'ВЫВЕЗИ УТКА ПОКА НЕ ЗАТЯНУЛО',{font:'bold 100px Arial', fill:'#fff'});
+        text3 = game.add.text(0,0, 'ВЫВЕЗИ УТКУ ПОКА НЕ ЗАТЯНУЛО',{font:'bold 100px Arial', fill:'#fff'});
         text3.alpha=0;
         text3.position.setTo(game.world.centerX, game.world.centerY)
         text3W = text3.width;
@@ -497,12 +492,6 @@ var gameState = {
         // filterbeforeimage.update();
 
 
-
-        // if(green.width>200){
-        //     game.add.tween(filter).to( { sizeX: 10, sizeY: 10 }, 5000, "Linear", true);
-        //     // image.angle=45;
-        // }
-
         if(left.x>(width/2)-left.width){
             left.x = (width/2)-left.width;
         }else{
@@ -517,7 +506,6 @@ var gameState = {
             blackHole.height +=3;
         }
 
-
         if( left.x < 0){
             left.x = 0;
             rightKey.enabled = false;
@@ -526,7 +514,7 @@ var gameState = {
             game.add.text(0, 0, "ты выиграл");
 
             // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
-        // КАКИЕТО КОМАНДЫ
+            // КАКИЕТО КОМАНДЫ
 
             game.camera.shake(0.05, 700);
             
@@ -576,16 +564,12 @@ var gameState = {
                 // s.body.velocity.y = 10;
                 s.body.gravity.y =2000;
                 game.physics.arcade.collide(sads);
-
             }
         } 
         
         
         // ЗАПУСКАЕТ АНИМАЦИЮ БИТОГО СТЕКЛА
-        //
-        // if(green.width> 400){
-            
-        // }
+     
 
         if((right.x+right.width) > width ){
             right.x=width-right.width;
@@ -712,7 +696,6 @@ var gameState = {
             // }
         }
     },
-    
     //  Called if the bullet goes out of the screen
     resetPurpleBullet:function (purpleBullet) {
 
