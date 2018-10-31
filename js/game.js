@@ -10,12 +10,9 @@ var greenBullet;
 var greenBullets;
 var greenBulletTime = 0;
 
-
 var video;
 var bmd;
-
 var glitch;
-
 var Left;
 
 var gameState = {
@@ -46,11 +43,13 @@ var gameState = {
     create:function (){
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
         // game.stage.backgroundColor = '#fb2345';
         game.stage.backgroundColor = '#000';
 
-    //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
+    
+    
+    
+        //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
     //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
 
     //#region
