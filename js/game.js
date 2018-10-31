@@ -24,20 +24,16 @@ var gameState = {
         game.load.image('greenBullet','greenBullet.png');
         game.load.image('greenParticleCircle','greenParticleCircle.png');
         game.load.image('purpleParticleCircle','purpleParticleCircle.png');
-        // game.load.video('glitch','glitch.mp4');
-        // game.load.image('whiteMask', 'whiteMask.png');
-        game.load.spritesheet('glitch', 'glitch.png', 500, 280, 16);
-        game.load.spritesheet('glass', 'glassSprite.png', 1243, 765, 7);
-
-        // game.load.script('filter','https://cdn.rawgit.com/photonstorm/phaser-ce/master/filters/Pixelate.js');
-
         game.load.image('right','utkaKoleso.png');
         game.load.image('left','koleso2.png');
         game.load.image('like','like.png');
         game.load.image('sad','sad.png');
         game.load.image('tile','tile.png');
+        // game.load.video('glitch','glitch.mp4');
+        // game.load.image('whiteMask', 'whiteMask.png');
+        game.load.spritesheet('glitch', 'glitch.png', 500, 280, 16);
+        game.load.spritesheet('glass', 'glassSprite.png', 1243, 765, 7);
     },
-
 
 
     create:function (){
@@ -707,5 +703,4 @@ var gameState = {
         greenBullet.kill();
 
     }
-
 }
