@@ -18,22 +18,22 @@ var Left;
 var gameState = {
 
     preload:function(){
-        game.load.image('green','green.png');
-        game.load.image('purple','purple.png');
-        game.load.image('white','white.png');
-        game.load.image('purpleBullet','purpleBullet.png');
-        game.load.image('greenBullet','greenBullet.png');
-        game.load.image('greenParticleCircle','greenParticleCircle.png');
-        game.load.image('purpleParticleCircle','purpleParticleCircle.png');
-        game.load.image('right','utkaKoleso.png');
-        game.load.image('left','koleso2.png');
-        game.load.image('like','like.png');
-        game.load.image('sad','sad.png');
-        game.load.image('tile','tile.png');
+        game.load.image('green','img/green.png');
+        game.load.image('purple','img/purple.png');
+        game.load.image('white','img/white.png');
+        game.load.image('purpleBullet','img/purpleBullet.png');
+        game.load.image('greenBullet','img/greenBullet.png');
+        game.load.image('greenParticleCircle','img/greenParticleCircle.png');
+        game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
+        game.load.image('right','img/utkaKoleso.png');
+        game.load.image('left','img/koleso2.png');
+        game.load.image('like','img/like.png');
+        game.load.image('sad','img/sad.png');
+        game.load.image('tile','img/tile.png');
         // game.load.video('glitch','glitch.mp4');
         // game.load.image('whiteMask', 'whiteMask.png');
-        game.load.spritesheet('glitch', 'glitch.png', 500, 280, 16);
-        game.load.spritesheet('glass', 'glassSprite.png', 1243, 765, 7);
+        game.load.spritesheet('glitch', 'img/glitch.png', 500, 280, 16);
+        game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     },
 
     create:function (){
