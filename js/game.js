@@ -18,8 +18,8 @@ var Left;
 var gameState = {
 
 preload:function(){
-    game.load.image('green','img/green.png');
-    game.load.image('purple','img/purple.png');
+    // game.load.image('green','img/green.png');
+    // game.load.image('purple','img/purple.png');
     game.load.image('white','img/white.png');
     game.load.image('purpleBullet','img/purpleBullet.png');
     game.load.image('greenBullet','img/greenBullet.png');
@@ -495,61 +495,16 @@ update:function(){
 
     // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
 
-    if( left.x < 0){
-        left.x = 0;
+    if(left.x < width-width){
+        left.alpha=0;
         rightKey.enabled = false;
         leftKey.enabled = false;
 
         game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
 
-        // КАКИЕТО КОМАНДЫ
-
         game.camera.shake(0.05, 700);
         
-        //LIKE EMITTER
-        PpurpleEmitter = game.add.emitter(width/2-300, height/2 , 200);
-        game.physics.arcade.enable(PpurpleEmitter);
-        PpurpleEmitter.checkWorldBounds = true;
-        PpurpleEmitter.outOfBoundsKill = true;
-        
-        PpurpleEmitter.makeParticles('like');
-        PpurpleEmitter.setXSpeed(1000, -1000)
-        PpurpleEmitter.setYSpeed(1000, -1000)
-        PpurpleEmitter.start(false, 1500, 4);
-        
-        glitch.bringToTop();
-        glitch.alpha = 1;
-        white.alpha = 0;
-        glitch.animations.play('gglitch', 20, true);
-
-        //SAD EMITTER
-        sads = game.add.physicsGroup();
-        // sads.enableBody = true;
-
-        //GLASS ANIM
-        glass = game.add.sprite(width/2,0,'glass');
-        glass.scale.setTo(0.5,0.5);
-        glass.animations.add('glassCrack');
-        glass.animations.play('glassCrack', 10,false);
-
-        // var filter = game.add.filter('Pixelate', width, height);
-        // glass.filters = [filter];
-        // Phaser.Filter.Pixelate.sizeX = 100;
-        // Phaser.Filter.Pixelate.sizeY = 100;
-        // glass.filter.sizeX = 10;
-        // glass.sizeX = 20;
-        // glass.sizeY = 10;
-
-        for (var i = 0; i < 1; i++)
-        {
-            var s = sads.create(game.rnd.integerInRange(width/2,width), 0, 'sad');
-            s.scale.setTo(5);
-            s.name = 'sad' + s;
-            s.body.collideWorldBounds = true;
-            s.body.bounce.setTo(0.5,0.8  );
-            s.body.gravity.y =2000;
-            game.physics.arcade.collide(sads);
-        }
+        this.leftWIN();
     } 
     
     // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
@@ -559,8 +514,6 @@ update:function(){
         leftKey.enabled = false;
         game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
         
-        
-        // КАКИЕТО КОМАНДЫ
         game.camera.shake(0.5, 2000);
 
 
@@ -600,6 +553,38 @@ update:function(){
         fire1.makeParticles('purpleParticleCircle');
         fire1.start(false, 200, 100, 10);
     }
+},
+
+leftWIN: function (){
+    PpurpleEmitter = game.add.emitter(width/2-300, height/2 , 200);
+    game.physics.arcade.enable(PpurpleEmitter);
+    PpurpleEmitter.checkWorldBounds = true;
+    PpurpleEmitter.outOfBoundsKill = true;
+    
+    PpurpleEmitter.makeParticles('like');
+    PpurpleEmitter.setXSpeed(1000, -1000)
+    PpurpleEmitter.setYSpeed(1000, -1000)
+    PpurpleEmitter.start(false, 900, 4);
+    
+    // glitch.bringToTop();
+    // glitch.alpha = 1;
+    // white.alpha = 0;
+    // glitch.animations.play('gglitch', 20, true);
+
+    //SAD EMITTER
+    s = game.add.sprite(game.rnd.integerInRange(width/2,width), 0, 'sad');
+    game.physics.arcade.enable(s);
+    s.scale.setTo(5);
+    s.body.collideWorldBounds = true;
+    s.body.bounce.setTo(0.5, 0.8);
+    s.body.gravity.y =2000;
+    // game.physics.arcade.collide(s);
+
+    //GLASS ANIM
+    glass = game.add.sprite(width/2,0,'glass');
+    glass.scale.setTo(0.5,0.5);
+    glass.animations.add('glassCrack');
+    glass.animations.play('glassCrack', 10,false);
 },
 
 abyss:function(){
