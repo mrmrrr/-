@@ -456,13 +456,13 @@ textTimer: function(){
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 
 leftDuck: function(){
-    left.x -=20;
+    left.x -=40;
 
     // blackHole.width -=15;
     // blackHole.height -=15;
 },
 rightDuck: function(){
-    right.x +=20;
+    right.x +=40;
     
     // blackHole.width -=15;
     // blackHole.height -=15;
