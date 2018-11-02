@@ -463,7 +463,7 @@ var gameState = {
 
     },
     rightDuck: function(){
-        right.x +=50;
+        right.x +=40;
         
         blackHole.width -=15;
         blackHole.height -=15;
