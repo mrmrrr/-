@@ -16,6 +16,7 @@ var glitch;
 var Left;
 
 var gameState = {
+
     preload:function(){
         game.load.image('green','green.png');
         game.load.image('purple','purple.png');
@@ -35,15 +36,12 @@ var gameState = {
         game.load.spritesheet('glass', 'glassSprite.png', 1243, 765, 7);
     },
 
-
     create:function (){
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.stage.backgroundColor = '#fb2345';
         // game.stage.backgroundColor = '#000';
 
-    
-    
     
         //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
     //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
@@ -403,8 +401,8 @@ var gameState = {
     },
 
     textTimer: function(){
-        // textTimer = game.time.create(false);
-        // textTimer.loop(1000, this.rules, this);
+        textTimer = game.time.create(false);
+        textTimer.loop(1000, this);
 
 
         text1 = game.add.text(100, 100, 'НАЖИМАЙ ВЛЕВО', {font:'bold 100px Arial', fill:'#fff'});
@@ -459,13 +457,13 @@ var gameState = {
     //  Ш А Г    У В Е Л И Ч Е Н И Я
     
     leftDuck: function(){
-        left.x -=30;
+        left.x -=40;
         blackHole.width -=15;
         blackHole.height -=15;
 
     },
     rightDuck: function(){
-        right.x +=15    ;
+        right.x +=40    ;
         blackHole.width -=15;
         blackHole.height -=15;
     },
@@ -497,7 +495,7 @@ var gameState = {
             rightKey.enabled = false;
             leftKey.enabled = false;
 
-            game.add.text(0, 0, "ты выиграл");
+            game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
 
             // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
             // КАКИЕТО КОМАНДЫ
@@ -560,7 +558,7 @@ var gameState = {
         if((right.x+right.width) > width ){
             right.x=width-right.width;
             leftKey.enabled = false;
-            game.add.text(width/2, 0, "ты выиграл");
+            game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
             
             // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
             // КАКИЕТО КОМАНДЫ
