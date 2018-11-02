@@ -496,13 +496,11 @@ update:function(){
     // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
 
     if(left.x < width-width){
-        left.alpha=0;
+        // left.alpha=0;
         rightKey.enabled = false;
         leftKey.enabled = false;
 
-        game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
-
-        game.camera.shake(0.05, 700);
+        
         
         this.leftWIN();
     } 
@@ -514,10 +512,7 @@ update:function(){
         rightKey.enabled = false;
         leftKey.enabled = false;
 
-        game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
         
-        game.camera.shake(0.5, 2000);
-
 
         //З А П У С К    GLITCH
 
@@ -558,7 +553,47 @@ update:function(){
 },
 
 leftWIN: function (){
+    left.x = 0;
+    left.alpha = 0;
+    game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#abc345'});
+
+    game.camera.shake(0.05, 700);
+
     PpurpleEmitter = game.add.emitter(width/2-300, height/2 , 200);
+    game.physics.arcade.enable(PpurpleEmitter);
+    PpurpleEmitter.checkWorldBounds = true;
+    PpurpleEmitter.outOfBoundsKill = true;
+    
+    PpurpleEmitter.makeParticles('like');
+    PpurpleEmitter.setXSpeed(1000, -1000)
+    PpurpleEmitter.setYSpeed(1000, -1000)
+    PpurpleEmitter.start(false, 400, 10);
+    
+    // glitch.bringToTop();
+    // glitch.alpha = 1;
+    // white.alpha = 0;
+    // glitch.animations.play('gglitch', 20, true);
+    //SAD EMITTER
+    s = game.add.sprite(game.rnd.integerInRange(width/2, width), 0, 'sad');
+    game.physics.arcade.enable(s);
+    s.scale.setTo(10);
+    s.angle =game.rnd.integerInRange(-40,40);
+    s.body.collideWorldBounds = true;
+    s.body.bounce.setTo(0.5, 0.8);
+    s.body.gravity.y =2000;
+    
+    //GLASS ANIM
+    glass = game.add.sprite(width/2,0,'glass');
+    glass.scale.setTo(0.5,0.5);
+    glass.animations.add('glassCrack');
+    glass.animations.play('glassCrack', 10,false);
+},
+rightWIN : function (){
+    game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
+        
+    game.camera.shake(0.5, 2000);
+
+    PpurpleEmitter = game.add.emitter(width/2+300, height/2 , 200);
     game.physics.arcade.enable(PpurpleEmitter);
     PpurpleEmitter.checkWorldBounds = true;
     PpurpleEmitter.outOfBoundsKill = true;
@@ -574,7 +609,7 @@ leftWIN: function (){
     // glitch.animations.play('gglitch', 20, true);
 
     //SAD EMITTER
-    s = game.add.sprite(game.rnd.integerInRange(width/2,width), 0, 'sad');
+    s = game.add.sprite(game.rnd.integerInRange(0, width/2), 0, 'sad');
     game.physics.arcade.enable(s);
     s.scale.setTo(5);
     s.body.collideWorldBounds = true;
@@ -583,13 +618,10 @@ leftWIN: function (){
     // game.physics.arcade.collide(s);
 
     //GLASS ANIM
-    glass = game.add.sprite(width/2,0,'glass');
+    glass = game.add.sprite(0, 0, 'glass');
     glass.scale.setTo(0.5,0.5);
     glass.animations.add('glassCrack');
     glass.animations.play('glassCrack', 10,false);
-},
-rightWIN : function (){
-
 },
 
 abyss: function (){
