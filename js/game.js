@@ -457,13 +457,13 @@ var gameState = {
     //  Ш А Г    У В Е Л И Ч Е Н И Я
     
     leftDuck: function(){
-        left.x -=10;
+        left.x -=40;
         blackHole.width -=15;
         blackHole.height -=15;
 
     },
     rightDuck: function(){
-        right.x +=140;
+        right.x +=40;
         
         blackHole.width -=15;
         blackHole.height -=15;
