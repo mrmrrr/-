@@ -512,6 +512,7 @@ update:function(){
         rightKey.enabled = false;
         leftKey.enabled = false;
 
+        this.rightWIN();
         
 
         //З А П У С К    GLITCH
@@ -589,9 +590,12 @@ leftWIN: function (){
     glass.animations.play('glassCrack', 10,false);
 },
 rightWIN : function (){
+    right.x = 0;
+    right.alpha = 0;
+
     game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
         
-    game.camera.shake(0.5, 2000);
+    game.camera.shake(0.05, 700);
 
     PpurpleEmitter = game.add.emitter(width/2+300, height/2 , 200);
     game.physics.arcade.enable(PpurpleEmitter);
@@ -609,8 +613,9 @@ rightWIN : function (){
     // glitch.animations.play('gglitch', 20, true);
 
     //SAD EMITTER
-    s = game.add.sprite(game.rnd.integerInRange(0, width/2), 0, 'sad');
+    s = game.add.sprite(game.rnd.integerInRange(0, width/2-300), 0, 'sad');
     game.physics.arcade.enable(s);
+    s.angle =game.rnd.integerInRange(-40,40);
     s.scale.setTo(5);
     s.body.collideWorldBounds = true;
     s.body.bounce.setTo(0.5, 0.8);
@@ -691,14 +696,10 @@ greenFireBullet: function (){
 },
 //  Called if the bullet goes out of the screen
 resetPurpleBullet: function (purpleBullet) {
-
     purpleBullet.kill();
-
 },
 resetGreenBullet: function (greenBullet){
-
     greenBullet.kill();
-
 }
 
 }
