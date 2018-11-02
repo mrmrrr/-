@@ -10,17 +10,12 @@ var greenBullet;
 var greenBullets;
 var greenBulletTime = 0;
 
-var video;
 var bmd;
-var glitch;
-var Left;
+// var Left;
 
 var gameState = {
 
 preload:function(){
-    // game.load.image('green','img/green.png');
-    // game.load.image('purple','img/purple.png');
-    game.load.image('white','img/white.png');
     game.load.image('purpleBullet','img/purpleBullet.png');
     game.load.image('greenBullet','img/greenBullet.png');
     game.load.image('greenParticleCircle','img/greenParticleCircle.png');
@@ -32,9 +27,6 @@ preload:function(){
     game.load.image('tile','img/tile.png');
     game.load.image('leftRocket','img/leftRocket.png');
     game.load.image('rightRocket','img/rightRocket.png');
-    // game.load.video('glitch','glitch.mp4');
-    // game.load.image('whiteMask', 'whiteMask.png');
-    game.load.spritesheet('glitch', 'img/glitch.png', 500, 280, 16);
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
 },
 
@@ -338,12 +330,6 @@ create:function (){
     
     this.textTimer();
     
-
-    white = game.add.sprite(0,0,'white');
-    white.scale.setTo(0.65,0.65);
-    white.x=(width-white.width)/2;
-    white.y=(height-white.height)/2;
-    white.alpha=0;
     
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -353,14 +339,6 @@ create:function (){
     
     this.bullets();
     
-    G = game.make.group();
-    glitch = game.add.sprite(0, 0, 'glitch');
-    G.add(glitch);
-    glitch.scale.setTo(3,3);
-    glitch.x=(width-glitch.width)/2;
-    glitch.y=(height-glitch.height)/2;
-    glitch.animations.add('gglitch');
-    glitch.alpha = 0;
 
     leftRocket = game.add.sprite(0, 0, 'leftRocket');
     leftRocket.alpha = 0;
@@ -369,12 +347,6 @@ create:function (){
 
     
     // sprite.filters = [ filterbeforeimage ];
-    
-    // blackHole = game.add.graphics(0, 0);
-    // blackHole.beginFill(0x000000, 1);
-    // blackHole.drawCircle(0, 0, 10);
-
-    // blackHole.position.setTo(width/2+(blackHole.width/2),height/2);
 },
 
 
@@ -461,16 +433,10 @@ textTimer: function(){
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 leftDuck: function(){
-    left.x -=20;
-
-    // blackHole.width -=15;
-    // blackHole.height -=15;
+    left.x -=60;
 },
 rightDuck: function(){
-    right.x +=20;
-    
-    // blackHole.width -=15;
-    // blackHole.height -=15;
+    right.x +=60;
 },
 
         
@@ -515,7 +481,7 @@ update:function(){
         this.rightWIN();
     }
 
-    //Дым из под колес
+    //  Д   Ы   М    ИЗ  ПОД     КОЛЕС
     //#region
 
     if (leftKey.isDown){   
@@ -543,7 +509,7 @@ update:function(){
     //#endregion
 
 
-    //Смена на ракету
+    //  Р   А   К   Е   Т   А
     //#region
     if(leftKey.isDown && left.x<(width/2)/2){
         leftRocket.alpha =1;
@@ -551,12 +517,10 @@ update:function(){
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
     }
 
-    if(rightKey.isDown && right.x>(width/2)+(width/4)){
+    if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
         rightRocket.alpha =1;
         rightRocket.scale.setTo(0.5);
         rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
-        console.log(rightRocket.width-right.width);
-
     }
 
     //#endregion
@@ -565,6 +529,7 @@ update:function(){
 leftWIN: function (){
     left.x = 0;
     left.alpha = 0;
+    leftRocket.alpha = 0;
     game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#abc345'});
 
     game.camera.shake(0.05, 700);
@@ -601,6 +566,7 @@ leftWIN: function (){
 rightWIN : function (){
     right.x = 0;
     right.alpha = 0;
+    rightRocket.alpha = 0;
 
     game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
         
@@ -611,25 +577,20 @@ rightWIN : function (){
     PpurpleEmitter.checkWorldBounds = true;
     PpurpleEmitter.outOfBoundsKill = true;
     
+    //L I K E
     PpurpleEmitter.makeParticles('like');
     PpurpleEmitter.setXSpeed(1000, -1000)
     PpurpleEmitter.setYSpeed(1000, -1000)
     PpurpleEmitter.start(false, 900, 4);
     
-    // glitch.bringToTop();
-    // glitch.alpha = 1;
-    // white.alpha = 0;
-    // glitch.animations.play('gglitch', 20, true);
-
-    //SAD EMITTER
-    s = game.add.sprite(game.rnd.integerInRange(0, width/2-300), 0, 'sad');
+    //S A D
+    s = game.add.sprite(game.rnd.integerInRange(0, width/2-400), 0, 'sad');
     game.physics.arcade.enable(s);
     s.angle =game.rnd.integerInRange(-40,40);
     s.scale.setTo(10);
     s.body.collideWorldBounds = true;
     s.body.bounce.setTo(0.5, 0.8);
     s.body.gravity.y =2000;
-    // game.physics.arcade.collide(s);
 
     //GLASS ANIM
     glass = game.add.sprite(0, 0, 'glass');
