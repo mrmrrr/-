@@ -309,8 +309,10 @@ create:function (){
 
     //КОНЕЦ В А У ЭФФЕКТА
     
-    // tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
-    // tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
+    tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
+    tilesprite.alpha=0;
+    tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
+    tilesprite2.alpha=0;
 
     duckGroup = game.add.group();
 
@@ -436,6 +438,8 @@ textTimer: function(){
 leftDuck: function(){
 
     if(leftKey.isDown && left.x < width/4 ){
+        
+
         left.x -=22;
         leftRocket.alpha =1;
         leftRocket.scale.setTo(0.5);
@@ -458,9 +462,15 @@ rightDuck: function(){
 
         
 update:function(){
-    // tilesprite.tilePosition.x -= 10;
-    // tilesprite2.tilePosition.x += 10;
-    
+    if(leftRocket.alpha == 1){
+        tilesprite.alpha=1;
+        tilesprite.tilePosition.x += 10;
+    }
+    if(rightRocket.alpha == 1){
+        tilesprite2.alpha=1;
+        tilesprite2.tilePosition.x -= 10;
+    }
+
     // filterbeforeimage.update();
 
 
@@ -488,6 +498,9 @@ update:function(){
     if(left.x < 0){
         rightKey.enabled = false;
         leftKey.enabled = false;
+        
+        tilesprite.destroy();
+
         this.leftWIN();
     } 
     
@@ -495,6 +508,9 @@ update:function(){
     if((right.x+right.width) > width ){
         rightKey.enabled = false;
         leftKey.enabled = false;
+        
+        tilesprite2.destroy();
+
         this.rightWIN();
     }
 
@@ -529,6 +545,9 @@ update:function(){
 },
 
 leftWIN: function (){
+    rightKey.enabled = false;
+    leftKey.enabled = false;
+
     left.x = 0;
     left.alpha = 0;
     leftRocket.alpha = 0;
@@ -568,6 +587,9 @@ leftWIN: function (){
     glass.animations.play('glassCrack', 10,false);
 },
 rightWIN : function (){
+    rightKey.enabled = false;
+    leftKey.enabled = false;
+    
     right.x = 0;
     right.alpha = 0;
     rightRocket.alpha = 0;
@@ -591,14 +613,14 @@ rightWIN : function (){
     game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
 
     //S A D
-    s = game.add.sprite(game.rnd.integerInRange(0, width/2-400), 0, 'sad');
+    s = game.add.sprite(game.rnd.integerInRange(0, width/2-500), 0, 'sad');
     game.physics.arcade.enable(s);
     s.angle =game.rnd.integerInRange(-40,40);
     s.scale.setTo(10);
     s.body.collideWorldBounds = true;
     s.body.bounce.setTo(0.5, 0.8);
     s.body.gravity.y =2000;
-    
+
     game.add.text(50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
 
     //GLASS ANIM
