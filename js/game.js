@@ -352,13 +352,13 @@ create:function (){
     this.bullets();
     
     G = game.make.group();
-    // glitch = game.add.sprite(0, 0, 'glitch');
-    // G.add(glitch);
-    // glitch.scale.setTo(3,3);
-    // glitch.x=(width-glitch.width)/2;
-    // glitch.y=(height-glitch.height)/2;
-    // glitch.animations.add('gglitch');
-    // glitch.alpha = 0;
+    glitch = game.add.sprite(0, 0, 'glitch');
+    G.add(glitch);
+    glitch.scale.setTo(3,3);
+    glitch.x=(width-glitch.width)/2;
+    glitch.y=(height-glitch.height)/2;
+    glitch.animations.add('gglitch');
+    glitch.alpha = 0;
 
     // sprite.filters = [ filterbeforeimage ];
     
@@ -453,8 +453,6 @@ textTimer: function(){
 },
 
 
-
-
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 
 leftDuck: function(){
@@ -477,21 +475,25 @@ update:function(){
     
     // filterbeforeimage.update();
 
-
+    //Чтобы стояли на старте, посередине экрана.
+    //Иначе двигаются к центру обратно.
+    //#region 
     if(left.x==(width/2)-left.width ){
         left.x = (width/2)-left.width;
     }else{
         left.x+=1;
         // blackHole.width +=3;
-
     }
-
     if(right.x==width/2){
         right.x = width/2;
     }else{
         right.x-=1;
         // blackHole.height +=3;
     }
+    //#endregion 
+
+
+    // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
 
     if( left.x < 0){
         left.x = 0;
@@ -500,12 +502,11 @@ update:function(){
 
         game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
 
-        // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
         // КАКИЕТО КОМАНДЫ
 
         game.camera.shake(0.05, 700);
         
-    //LIKE EMITTER
+        //LIKE EMITTER
         PpurpleEmitter = game.add.emitter(width/2-300, height/2 , 200);
         game.physics.arcade.enable(PpurpleEmitter);
         PpurpleEmitter.checkWorldBounds = true;
@@ -516,17 +517,16 @@ update:function(){
         PpurpleEmitter.setYSpeed(1000, -1000)
         PpurpleEmitter.start(false, 1500, 4);
         
-        // glitch.bringToTop();
-        // glitch.alpha = 1;
-        // white.alpha = 0;
-        // glitch.animations.play('gglitch', 20, true);
+        glitch.bringToTop();
+        glitch.alpha = 1;
+        white.alpha = 0;
+        glitch.animations.play('gglitch', 20, true);
 
-    //SAD EMITTER
-
+        //SAD EMITTER
         sads = game.add.physicsGroup();
         // sads.enableBody = true;
 
-    //GLASS ANIM
+        //GLASS ANIM
         glass = game.add.sprite(width/2,0,'glass');
         glass.scale.setTo(0.5,0.5);
         glass.animations.add('glassCrack');
@@ -552,16 +552,14 @@ update:function(){
         }
     } 
     
-    
-    // ЗАПУСКАЕТ АНИМАЦИЮ БИТОГО СТЕКЛА
-    
+    // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
 
     if((right.x+right.width) > width ){
         right.x=width-right.width;
         leftKey.enabled = false;
         game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
         
-        // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
+        
         // КАКИЕТО КОМАНДЫ
         game.camera.shake(0.5, 2000);
 
@@ -579,8 +577,6 @@ update:function(){
         // glass.x = width/2;
         // glass.animations.add('glassCrack');
         // glass.animations.play('glassCrack', 20,true);
-
-
     }
 
     if (leftKey.isDown){   
@@ -592,7 +588,6 @@ update:function(){
 
         fire.makeParticles('purpleParticleCircle');
         fire.start(false, 200, 100, 10);
-
     }
 
     if (rightKey.isDown){   
@@ -604,7 +599,6 @@ update:function(){
 
         fire1.makeParticles('purpleParticleCircle');
         fire1.start(false, 200, 100, 10);
-
     }
 },
 
