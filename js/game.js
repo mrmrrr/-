@@ -342,6 +342,7 @@ create:function (){
 
     leftRocket = game.add.sprite(0, 0, 'leftRocket');
     leftRocket.alpha = 0;
+
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
 
@@ -433,10 +434,27 @@ textTimer: function(){
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 leftDuck: function(){
-    left.x -=60;
+
+    if(leftKey.isDown && left.x<(width/2)/2){
+        left.x -=15;
+        leftRocket.alpha =1;
+        leftRocket.scale.setTo(0.5);
+        leftRocket.position.setTo(left.x, left.y+(left.height/2));
+    }else{
+        left.x -=30;
+    }
 },
+
 rightDuck: function(){
-    right.x +=60;
+    if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
+        right.x +=15;
+        rightRocket.alpha =1;
+        rightRocket.scale.setTo(0.5);
+        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
+    }else{
+        right.x +=30;
+
+    }
 },
 
         
@@ -447,7 +465,7 @@ update:function(){
     // filterbeforeimage.update();
 
 
-
+    //  Н А    С Т А Р Т Е
     //Чтобы стояли на старте, посередине экрана.
     //Иначе двигаются к центру обратно.
     //#region 
@@ -481,7 +499,7 @@ update:function(){
         this.rightWIN();
     }
 
-    //  Д   Ы   М    ИЗ  ПОД     КОЛЕС
+    //  Д   Ы   М    ИЗ ПОД КОЛЕС
     //#region
 
     if (leftKey.isDown){   
@@ -507,7 +525,6 @@ update:function(){
     }
 
     //#endregion
-
 
     //  Р   А   К   Е   Т   А
     //#region
