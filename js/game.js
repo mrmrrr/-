@@ -30,6 +30,8 @@ preload:function(){
     game.load.image('like','img/like.png');
     game.load.image('sad','img/sad.png');
     game.load.image('tile','img/tile.png');
+    game.load.image('leftRocket','img/leftRocket.png');
+    game.load.image('rightRocket','img/rightRocket.png');
     // game.load.video('glitch','glitch.mp4');
     // game.load.image('whiteMask', 'whiteMask.png');
     game.load.spritesheet('glitch', 'img/glitch.png', 500, 280, 16);
@@ -360,6 +362,12 @@ create:function (){
     glitch.animations.add('gglitch');
     glitch.alpha = 0;
 
+    leftRocket = game.add.sprite(0, 0, 'leftRocket');
+    leftRocket.alpha = 0;
+    rightRocket = game.add.sprite(0, 0, 'rightRocket');
+    rightRocket.alpha = 0;
+
+    
     // sprite.filters = [ filterbeforeimage ];
     
     // blackHole = game.add.graphics(0, 0);
@@ -453,13 +461,13 @@ textTimer: function(){
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 leftDuck: function(){
-    left.x -=40;
+    left.x -=20;
 
     // blackHole.width -=15;
     // blackHole.height -=15;
 },
 rightDuck: function(){
-    right.x +=40;
+    right.x +=20;
     
     // blackHole.width -=15;
     // blackHole.height -=15;
@@ -472,63 +480,43 @@ update:function(){
     
     // filterbeforeimage.update();
 
+
+
     //Чтобы стояли на старте, посередине экрана.
     //Иначе двигаются к центру обратно.
     //#region 
-
     if(left.x==(width/2)-left.width ){
         left.x = (width/2)-left.width;
     }else{
         left.x+=1;
-        // blackHole.width +=3;
+        leftRocket.position.setTo(left.x, left.y+(left.height/2));
     }
 
     if(right.x==width/2){
         right.x = width/2;
     }else{
         right.x-=1;
-        // blackHole.height +=3;
+        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
     }
-
     //#endregion 
 
 
     // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
-
-    if(left.x < width-width){
-        // left.alpha=0;
+    if(left.x < 0){
         rightKey.enabled = false;
         leftKey.enabled = false;
-
-        
-        
         this.leftWIN();
     } 
     
     // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
-
     if((right.x+right.width) > width ){
-        right.x=width-right.width;
         rightKey.enabled = false;
         leftKey.enabled = false;
-
         this.rightWIN();
-        
-
-        //З А П У С К    GLITCH
-
-        // video.play(true);
-        // glitch.bringToTop();
-        // glitch.alpha = 1;
-        // white.alpha = 0;
-        // glitch.animations.play('gglitch', 20, true);
-        
-        // glass = game.add.sprite(0,0,'glass');
-        // glass.scale.setTo(0.5,0.5);
-        // glass.x = width/2;
-        // glass.animations.add('glassCrack');
-        // glass.animations.play('glassCrack', 20,true);
     }
+
+    //Дым из под колес
+    //#region
 
     if (leftKey.isDown){   
         this.purpleFireBullet();
@@ -551,6 +539,27 @@ update:function(){
         fire1.makeParticles('purpleParticleCircle');
         fire1.start(false, 200, 100, 10);
     }
+
+    //#endregion
+
+
+    //Смена на ракету
+    //#region
+    if(leftKey.isDown && left.x<(width/2)/2){
+        leftRocket.alpha =1;
+        leftRocket.scale.setTo(0.5);
+        leftRocket.position.setTo(left.x, left.y+(left.height/2));
+    }
+
+    if(rightKey.isDown && right.x>(width/2)+(width/4)){
+        rightRocket.alpha =1;
+        rightRocket.scale.setTo(0.5);
+        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
+        console.log(rightRocket.width-right.width);
+
+    }
+
+    //#endregion
 },
 
 leftWIN: function (){
@@ -616,7 +625,7 @@ rightWIN : function (){
     s = game.add.sprite(game.rnd.integerInRange(0, width/2-300), 0, 'sad');
     game.physics.arcade.enable(s);
     s.angle =game.rnd.integerInRange(-40,40);
-    s.scale.setTo(5);
+    s.scale.setTo(10);
     s.body.collideWorldBounds = true;
     s.body.bounce.setTo(0.5, 0.8);
     s.body.gravity.y =2000;
