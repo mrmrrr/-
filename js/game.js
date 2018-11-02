@@ -400,7 +400,6 @@ bullets:function(){
         b.events.onOutOfBounds.add(this.resetGreenBullet, this);
     }
 },
-
 textTimer: function(){
     textTimer = game.time.create(false);
     textTimer.loop(1000, this);
@@ -452,9 +451,7 @@ textTimer: function(){
     });
 },
 
-
 //  Ш А Г    У В Е Л И Ч Е Н И Я
-
 leftDuck: function(){
     left.x -=40;
 
@@ -478,18 +475,21 @@ update:function(){
     //Чтобы стояли на старте, посередине экрана.
     //Иначе двигаются к центру обратно.
     //#region 
+
     if(left.x==(width/2)-left.width ){
         left.x = (width/2)-left.width;
     }else{
         left.x+=1;
         // blackHole.width +=3;
     }
+
     if(right.x==width/2){
         right.x = width/2;
     }else{
         right.x-=1;
         // blackHole.height +=3;
     }
+
     //#endregion 
 
 
@@ -511,7 +511,9 @@ update:function(){
 
     if((right.x+right.width) > width ){
         right.x=width-right.width;
+        rightKey.enabled = false;
         leftKey.enabled = false;
+
         game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
         
         game.camera.shake(0.5, 2000);
@@ -586,8 +588,11 @@ leftWIN: function (){
     glass.animations.add('glassCrack');
     glass.animations.play('glassCrack', 10,false);
 },
+rightWIN : function (){
 
-abyss:function(){
+},
+
+abyss: function (){
     // filterbeforeimage = new Phaser.Filter(game, null, fragmentSrcB);
 
     // filterbeforeimage.setResolution(800, 800);
@@ -597,7 +602,7 @@ abyss:function(){
     sprite.filters = [ filterbeforeimage ];
 },  
 
-purpleFireBullet:function () {
+purpleFireBullet: function (){
 
     if (game.time.now > purpleBulletTime)
     {
@@ -628,7 +633,7 @@ purpleFireBullet:function () {
 
 },
 
-greenFireBullet:function () {
+greenFireBullet: function (){
 
     if (game.time.now > greenBulletTime){
 
@@ -653,12 +658,12 @@ greenFireBullet:function () {
     }
 },
 //  Called if the bullet goes out of the screen
-resetPurpleBullet:function (purpleBullet) {
+resetPurpleBullet: function (purpleBullet) {
 
     purpleBullet.kill();
 
 },
-resetGreenBullet:function (greenBullet) {
+resetGreenBullet: function (greenBullet){
 
     greenBullet.kill();
 
