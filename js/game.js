@@ -435,25 +435,24 @@ textTimer: function(){
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 leftDuck: function(){
 
-    if(leftKey.isDown && left.x<(width/2)/2){
-        left.x -=15;
+    if(leftKey.isDown && left.x < width/4 ){
+        left.x -=22;
         leftRocket.alpha =1;
         leftRocket.scale.setTo(0.5);
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
     }else{
-        left.x -=30;
+        left.x -=20;
     }
 },
-
 rightDuck: function(){
+
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
-        right.x +=15;
+        right.x +=22;
         rightRocket.alpha =1;
         rightRocket.scale.setTo(0.5);
         rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
     }else{
-        right.x +=30;
-
+        right.x +=20;
     }
 },
 
@@ -526,45 +525,31 @@ update:function(){
 
     //#endregion
 
-    //  Р   А   К   Е   Т   А
-    //#region
-    if(leftKey.isDown && left.x<(width/2)/2){
-        leftRocket.alpha =1;
-        leftRocket.scale.setTo(0.5);
-        leftRocket.position.setTo(left.x, left.y+(left.height/2));
-    }
 
-    if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
-        rightRocket.alpha =1;
-        rightRocket.scale.setTo(0.5);
-        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
-    }
-
-    //#endregion
 },
 
 leftWIN: function (){
     left.x = 0;
     left.alpha = 0;
     leftRocket.alpha = 0;
-    game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#abc345'});
 
     game.camera.shake(0.05, 700);
 
-    PpurpleEmitter = game.add.emitter(width/2-300, height/2 , 200);
-    game.physics.arcade.enable(PpurpleEmitter);
-    PpurpleEmitter.checkWorldBounds = true;
-    PpurpleEmitter.outOfBoundsKill = true;
+    for(i=0;i<4;i++){
+        PpurpleEmitter = game.add.emitter(width/2-300, height/2 , 200);
+        game.physics.arcade.enable(PpurpleEmitter);
+        PpurpleEmitter.checkWorldBounds = true;
+        PpurpleEmitter.outOfBoundsKill = true;
+        
+        PpurpleEmitter.makeParticles('like');
+        PpurpleEmitter.setXSpeed(1000, -1000)
+        PpurpleEmitter.setYSpeed(1000, -1000)
+        PpurpleEmitter.start(false, 900, 10);
+    }
+
+    game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
+
     
-    PpurpleEmitter.makeParticles('like');
-    PpurpleEmitter.setXSpeed(1000, -1000)
-    PpurpleEmitter.setYSpeed(1000, -1000)
-    PpurpleEmitter.start(false, 400, 10);
-    
-    // glitch.bringToTop();
-    // glitch.alpha = 1;
-    // white.alpha = 0;
-    // glitch.animations.play('gglitch', 20, true);
     //SAD EMITTER
     s = game.add.sprite(game.rnd.integerInRange(width/2, width), 0, 'sad');
     game.physics.arcade.enable(s);
@@ -573,6 +558,8 @@ leftWIN: function (){
     s.body.collideWorldBounds = true;
     s.body.bounce.setTo(0.5, 0.8);
     s.body.gravity.y =2000;
+
+    game.add.text(width/2 +50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
     
     //GLASS ANIM
     glass = game.add.sprite(width/2,0,'glass');
@@ -585,21 +572,24 @@ rightWIN : function (){
     right.alpha = 0;
     rightRocket.alpha = 0;
 
-    game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
         
     game.camera.shake(0.05, 700);
 
-    PpurpleEmitter = game.add.emitter(width/2+300, height/2 , 200);
-    game.physics.arcade.enable(PpurpleEmitter);
-    PpurpleEmitter.checkWorldBounds = true;
-    PpurpleEmitter.outOfBoundsKill = true;
-    
     //L I K E
-    PpurpleEmitter.makeParticles('like');
-    PpurpleEmitter.setXSpeed(1000, -1000)
-    PpurpleEmitter.setYSpeed(1000, -1000)
-    PpurpleEmitter.start(false, 900, 4);
-    
+    for(i=0;i<4;i++){
+        PpurpleEmitter = game.add.emitter(width/2+300, height/2 , 200);
+        game.physics.arcade.enable(PpurpleEmitter);
+        PpurpleEmitter.checkWorldBounds = true;
+        PpurpleEmitter.outOfBoundsKill = true;
+        
+        PpurpleEmitter.makeParticles('like');
+        PpurpleEmitter.setXSpeed(1000, -1000)
+        PpurpleEmitter.setYSpeed(1000, -1000)
+        PpurpleEmitter.start(false, 900, 4);
+    }
+
+    game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
+
     //S A D
     s = game.add.sprite(game.rnd.integerInRange(0, width/2-400), 0, 'sad');
     game.physics.arcade.enable(s);
@@ -608,6 +598,8 @@ rightWIN : function (){
     s.body.collideWorldBounds = true;
     s.body.bounce.setTo(0.5, 0.8);
     s.body.gravity.y =2000;
+    
+    game.add.text(50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
 
     //GLASS ANIM
     glass = game.add.sprite(0, 0, 'glass');
