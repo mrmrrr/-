@@ -39,8 +39,8 @@ var gameState = {
     create:function (){
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        // game.stage.backgroundColor = '#fb2345';
-        game.stage.backgroundColor = '#000';
+        game.stage.backgroundColor = '#fb2345';
+        // game.stage.backgroundColor = '#000';
 
     
     
@@ -342,7 +342,7 @@ var gameState = {
         white.scale.setTo(0.65,0.65);
         white.x=(width-white.width)/2;
         white.y=(height-white.height)/2;
-        // white.alpha=0;
+        white.alpha=0;
         
         rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
         leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -403,57 +403,47 @@ var gameState = {
     },
 
     textTimer: function(){
-        textTimer = game.time.create(false);
-        textTimer.loop(1000, this.rules, this);
-        text1 = game.add.text(game.world.centerX,game.world.centerY, 'НАЖИМАЙ ВЛЕВО',{font:'bold 100px Arial', fill:'#fff'});
+        // textTimer = game.time.create(false);
+        // textTimer.loop(1000, this.rules, this);
+
+
+        text1 = game.add.text(100, 100, 'НАЖИМАЙ ВЛЕВО', {font:'bold 100px Arial', fill:'#fff'});
         text1W = text1.width;
         text1H = text1.height;
-        text1.anchor.setTo(.5,.5);
-        text1.width = 1;
-        text1.height = 1;
+        text1.alpha=0;
 
-        text2 = game.add.text(0,0, 'ИЛИ ВПРАВО',{font:'bold 100px Arial', fill:'#fff'});
-        text2.alpha=0;
-        text2.position.setTo(game.world.centerX, game.world.centerY)
+
+        text2 = game.add.text(100,100, 'ИЛИ ВПРАВО',{font:'bold 100px Arial', fill:'#fff'});
         text2W = text2.width;
         text2H = text2.height;
-        text2.width = 1;
-        text2.height = 1;
-        text2.anchor.setTo(.5,.5);
+        text2.alpha=0;
 
-        text3 = game.add.text(0,0, 'ВЫВЕЗИ УТКУ ПОКА НЕ ЗАТЯНУЛО',{font:'bold 100px Arial', fill:'#fff'});
-        text3.alpha=0;
-        text3.position.setTo(game.world.centerX, game.world.centerY)
+
+        text3 = game.add.text(100,100, 'ВЫВЕЗИ УТКУ\nПОКА НЕ ЗАТЯНУЛО',{font:'bold 100px Arial', fill:'#fff'});
         text3W = text3.width;
         text3H = text3.height;
-        text3.width = 1;
-        text3.height = 1;
-        text3.anchor.setTo(.5,.5);
+        text3.alpha=0;
+
 
         textTween1 = game.add.tween(text1);
         textTween2 = game.add.tween(text2);
         textTween3 = game.add.tween(text3);
 
         textTween1.to({
-            width: text1W,
-            height: text1H
-        },800,'Linear',true, 400);
+            alpha:1
+        },1000,'Linear',true, 400);
 
         textTween1.onComplete.add( function(){
             text1.alpha = 0;
-            text2.alpha = 1;
             textTween2.to({
-                width: text2W,
-                height: text2H
-            },800,'Linear',true);
+                alpha:1
+            },1000,'Linear',true);
 
             textTween2.onComplete.add(
                 function(){
                     text2.alpha = 0;
-                    text3.alpha = 1;
                     textTween3.to({
-                        width: text3W,
-                        height: text3H
+                        alpha:1
                     },1000,'Linear',true);
                     textTween3.onComplete.add(function(){
                         text3.alpha = 0;
@@ -469,7 +459,7 @@ var gameState = {
     //  Ш А Г    У В Е Л И Ч Е Н И Я
     
     leftDuck: function(){
-        left.x -=15;
+        left.x -=30;
         blackHole.width -=15;
         blackHole.height -=15;
 
