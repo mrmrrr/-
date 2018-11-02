@@ -25,8 +25,8 @@ var gameState = {
         game.load.image('greenBullet','img/greenBullet.png');
         game.load.image('greenParticleCircle','img/greenParticleCircle.png');
         game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
-        game.load.image('right','img/utkaKoleso.png');
-        game.load.image('left','img/koleso2.png');
+        game.load.image('right','img/right.png');
+        game.load.image('left','img/left.png');
         game.load.image('like','img/like.png');
         game.load.image('sad','img/sad.png');
         game.load.image('tile','img/tile.png');
@@ -360,11 +360,12 @@ var gameState = {
         // glitch.alpha = 0;
 
         // sprite.filters = [ filterbeforeimage ];
-        blackHole = game.add.graphics(0, 0);
-        blackHole.beginFill(0x000000, 1);
-        blackHole.drawCircle(0, 0, 10);
+        
+        // blackHole = game.add.graphics(0, 0);
+        // blackHole.beginFill(0x000000, 1);
+        // blackHole.drawCircle(0, 0, 10);
 
-        blackHole.position.setTo(width/2+(blackHole.width/2),height/2);
+        // blackHole.position.setTo(width/2+(blackHole.width/2),height/2);
 
         
     },
@@ -389,6 +390,7 @@ var gameState = {
         greenBullets = game.add.group();
         greenBullets.enableBody = true;
         greenBullets.physicsBodyType = Phaser.Physics.ARCADE;
+
         for (var i = 0; i < 20; i++)
         {
             var b = greenBullets.create(0, 0, 'greenBullet');
@@ -457,13 +459,13 @@ var gameState = {
     //  Ш А Г    У В Е Л И Ч Е Н И Я
     
     leftDuck: function(){
-        left.x -=40;
+        left.x -=20;
         blackHole.width -=15;
         blackHole.height -=15;
 
     },
     rightDuck: function(){
-        right.x +=40;
+        right.x +=20;
         
         blackHole.width -=15;
         blackHole.height -=15;
@@ -477,18 +479,19 @@ var gameState = {
         // filterbeforeimage.update();
 
 
-        if(left.x>(width/2)-left.width){
+        if(left.x==(width/2)-left.width ){
             left.x = (width/2)-left.width;
         }else{
             left.x+=1;
+            // blackHole.width +=3;
+
         }
 
-        if(right.x<width/2){
+        if(right.x==width/2){
             right.x = width/2;
         }else{
             right.x-=1;
-            blackHole.width +=3;
-            blackHole.height +=3;
+            // blackHole.height +=3;
         }
 
         if( left.x < 0){
@@ -540,13 +543,11 @@ var gameState = {
 
             for (var i = 0; i < 1; i++)
             {
-                // game.rnd.integerInRange(0,height/2)
                 var s = sads.create(game.rnd.integerInRange(width/2,width), 0, 'sad');
                 s.scale.setTo(5);
                 s.name = 'sad' + s;
                 s.body.collideWorldBounds = true;
                 s.body.bounce.setTo(0.5,0.8  );
-                // s.body.velocity.y = 10;
                 s.body.gravity.y =2000;
                 game.physics.arcade.collide(sads);
             }
@@ -564,16 +565,6 @@ var gameState = {
             // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
             // КАКИЕТО КОМАНДЫ
             game.camera.shake(0.5, 2000);
-
-            // GpurpleEmitter = game.add.emitter(width/2+300, height/2 , 100);
-            // game.physics.arcade.enable(GpurpleEmitter);
-            // GpurpleEmitter.checkWorldBounds = true;
-            // GpurpleEmitter.outOfBoundsKill = true;
-            
-            // GpurpleEmitter.makeParticles('like');
-            // GpurpleEmitter.setXSpeed(1000, -1000);
-            // GpurpleEmitter.setYSpeed(1000, -1000);
-            // GpurpleEmitter.start(false, 1500, 20);
 
 
             //З А П У С К    GLITCH
@@ -594,26 +585,26 @@ var gameState = {
         }
 
        if (leftKey.isDown){   
-            // this.purpleFireBullet();
+            this.purpleFireBullet();
 
-            // fire = game.add.emitter(left.x+left.width-50,left.y+100,2);
-            // duckGroup.add(fire);
-            // left.bringToTop();
+            fire = game.add.emitter((left.x+left.width)-50, left.y+100, 50);
+            duckGroup.add(fire);
+            left.bringToTop();
 
-            // fire.makeParticles('purpleParticleCircle');
-            // fire.start(false, 1, 2,1);
+            fire.makeParticles('purpleParticleCircle');
+            fire.start(false, 200, 100, 10);
 
         }
 
         if (rightKey.isDown){   
-            // this.greenFireBullet();
+            this.greenFireBullet();
 
-            // fire1 = game.add.emitter(right.x+50,right.y+100,200);
-            // duckGroup.add(fire1);
-            // right.bringToTop();
+            fire1 = game.add.emitter(right.x+50, right.y+100, 50);
+            duckGroup.add(fire1);
+            right.bringToTop();
 
-            // fire1.makeParticles('purpleParticleCircle');
-            // fire1.start(false, 100, 250,10);
+            fire1.makeParticles('purpleParticleCircle');
+            fire1.start(false, 200, 100, 10);
 
         }
     },
@@ -636,9 +627,11 @@ var gameState = {
 
             if (purpleBullet)
             {
-                purpleBullet.reset(width/2, game.rnd.integerInRange(0, height - purpleBullet.height));
-                purpleBullet.body.velocity.x = -3000;
-                purpleBulletTime = game.time.now + 250;
+
+                // purpleBullet.reset(width/2, game.rnd.integerInRange(0, height - purpleBullet.height));
+                // purpleBullet.body.velocity.x = -1000;
+                // purpleBulletTime = game.time.now + 250;
+                
             }
             
             // if(left.x < (width/2)/2){
@@ -665,9 +658,9 @@ var gameState = {
             
             if (greenBullet){
 
-                greenBullet.reset(width/2, game.rnd.integerInRange(0, height-greenBullet.height));
-                greenBullet.body.velocity.x = 3000;
-                greenBulletTime = game.time.now + 250;
+                // greenBullet.reset(width/2, game.rnd.integerInRange(0, height-greenBullet.height));
+                // greenBullet.body.velocity.x = 1000;
+                // greenBulletTime = game.time.now + 250;
 
             }
 
