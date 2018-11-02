@@ -440,7 +440,7 @@ leftDuck: function(){
     if(leftKey.isDown && left.x < width/4 ){
         
 
-        left.x -=22;
+        left.x -=15;
         leftRocket.alpha =1;
         leftRocket.scale.setTo(0.5);
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
@@ -451,7 +451,7 @@ leftDuck: function(){
 rightDuck: function(){
 
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
-        right.x +=22;
+        right.x +=15;
         rightRocket.alpha =1;
         rightRocket.scale.setTo(0.5);
         rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
@@ -589,7 +589,7 @@ leftWIN: function (){
 rightWIN : function (){
     rightKey.enabled = false;
     leftKey.enabled = false;
-    
+
     right.x = 0;
     right.alpha = 0;
     rightRocket.alpha = 0;
