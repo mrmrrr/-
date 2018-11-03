@@ -17,6 +17,10 @@ var gameState = {
 
 preload:function(){
     game.load.image('purpleBullet','img/purpleBullet.png');
+    game.load.image('q','img/q.png');
+    game.load.image('q2','img/q2.png');
+
+
     game.load.image('greenBullet','img/greenBullet.png');
     game.load.image('greenParticleCircle','img/greenParticleCircle.png');
     game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
@@ -310,7 +314,15 @@ create:function (){
     // filterbeforeimage.update();
 
     //КОНЕЦ В А У ЭФФЕКТА
-    
+    q = game.add.sprite(0, 0, 'q');
+    q.width=(width/2)+1;
+    q.height=height;
+    q2 = game.add.sprite(width/2, 0, 'q2');
+    q2.width=(width/2)+1;
+    q2.height=height;
+    q.alpha=0;
+    q2.alpha=0;
+
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
     tilesprite.alpha=0;
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
@@ -371,14 +383,16 @@ create:function (){
 
 
 
-    fire = game.add.emitter(100,100, 100);
+    fire = game.add.emitter(100,100, 50);
     fire.makeParticles('greenParticleCircle');
     fire.setXSpeed(0,1000);
 
-    fire2 = game.add.emitter(100,100, 100);
-    fire2.makeParticles('greenParticleCircle');
+    fire2 = game.add.emitter(100,100, 50);
+    fire2.makeParticles('purpleParticleCircle');
     fire2.setXSpeed(-1000,0);
     // sprite.filters = [ filterbeforeimage ];
+
+
 },
 
 
@@ -471,6 +485,9 @@ bullets:function(){
 leftDuck: function(){
 
     if(leftKey.isDown && left.x < width/4 ){
+        q.alpha=1;
+        q2.alpha=1;
+
         left.angle=10;
         left.x -=15;
         
@@ -480,7 +497,7 @@ leftDuck: function(){
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
         
         fire.position.setTo(leftRocket.x+leftRocket.width-150, leftRocket.y-(leftRocket.height/2)+50)
-        fire.start(true,1000,null,10);
+        fire.start(true,500,null,10);
         
     }else{
         left.x -=20;
@@ -490,18 +507,20 @@ leftDuck: function(){
 rightDuck: function(){
 
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
+        q.alpha=1;
+        q2.alpha=1;
+
         right.angle=-10;
-        right.y=280;
+        // right.y=280;
         right.x +=15;
 
         rightRocket.alpha =1;
         rightRocket.angle=-10;
 
         rightRocket.scale.setTo(0.5);
-        rightRocket.position.setTo(right.x-(rightRocket.width-right.width)+50, 0);
         
-        fire2.position.setTo(rightRocket.x+rightRocket.width-150, rightRocket.y)
-        fire2.start(true,1000,null,10);
+        fire2.position.setTo(rightRocket.x-50, rightRocket.y-(rightRocket.height/2))
+        fire2.start(true,500,null,10);
     }else{
         right.x +=20;
     }
@@ -509,7 +528,7 @@ rightDuck: function(){
 
         
 update:function(){
-
+//Тайлятся звезды
     if(leftRocket.alpha == 1){
         tilesprite.alpha=1;
         tilesprite.tilePosition.x += 10;
@@ -530,14 +549,14 @@ update:function(){
         left.x = (width/2)-left.width;
     }else{
         left.x+=1;
-        leftRocket.position.setTo(left.x, left.y+(left.height/2));
+        leftRocket.position.setTo(left.x, left.y+(left.height/2)+5);
     }
 
     if(right.x==width/2){
         right.x = width/2;
     }else{
         right.x-=1;
-        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
+        rightRocket.position.setTo(right.x-(rightRocket.width-right.width)+2, right.y+(right.height/2)+10);
     }
     //#endregion 
 
