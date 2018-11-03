@@ -28,6 +28,9 @@ preload:function(){
     game.load.image('leftRocket','img/leftRocket.png');
     game.load.image('rightRocket','img/rightRocket.png');
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
+    game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
+    game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
+
 },
 
 create:function (){
@@ -297,8 +300,6 @@ create:function (){
 
     // filterbeforeimage.setResolution(800, 800);
     // sprite = game.add.sprite();
-    // // G.add(sprite);
-    // // sprite.bringToTop();
     // sprite.width = width;
     // sprite.height = height;
 
@@ -348,7 +349,17 @@ create:function (){
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
 
-    
+    arrowLeft = game.add.sprite(50,0,'arrowLeft');
+    arrowLeft.y=(height-arrowLeft.height)-50;
+    arrowLeft.animations.add('arrowL');
+    arrowLeft.animations.play('arrowL', 10, true);
+
+    arrowRight = game.add.sprite(0,0,'arrowRight');
+    arrowRight.x = (width-arrowRight.width)-50;
+    arrowRight.y = (height-arrowRight.height)-50;
+    arrowRight.animations.add('arrowR');
+    arrowRight.animations.play('arrowR', 10, true);
+
     // sprite.filters = [ filterbeforeimage ];
 },
 
@@ -400,7 +411,7 @@ textTimer: function(){
     text2.alpha=0;
 
 
-    text3 = game.add.text(100,100, 'ВЫВЕЗИ УТКУ\nПОКА НЕ ЗАТЯНУЛО',{font:'bold 100px Arial', fill:'#fff'});
+    text3 = game.add.text(100,100, 'ВЫВЕЗИ УТКУ',{font:'bold 100px Arial', fill:'#fff'});
     text3W = text3.width;
     text3H = text3.height;
     text3.alpha=0;
