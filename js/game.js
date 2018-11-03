@@ -20,6 +20,10 @@ preload:function(){
     game.load.image('q','img/q.png');
     game.load.image('q2','img/q2.png');
 
+    game.load.image('back','img/back.png');
+
+
+
 
     game.load.image('greenBullet','img/greenBullet.png');
     game.load.image('greenParticleCircle','img/greenParticleCircle.png');
@@ -43,7 +47,36 @@ create:function (){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#fb2345';
     // game.stage.backgroundColor = '#000';
+    
+    // backGroup = game.add.group();
+    
+    // back = game.add.sprite(0,0,'back');
+    // back2 = game.add.sprite(0,0,'back');
+    // back.width=width/2;
+    // back.height=height;
+    // back2.width=width/2;
+    // back2.height=height;
+    // backGroup.add(back);
+    // backGroup.add(back2);
 
+    q = game.add.sprite(width/2, 0, 'q2');
+    q.width=0;
+    q.height=height;
+    // backGroup.add(q);
+
+    q2 = game.add.sprite(width/2, 0, 'q2');
+    q2.width=0;
+    q2.height=height;
+    // backGroup.add(q2);
+    
+    // back.bringToTop();
+    // back2.bringToTop();
+
+    q.alpha=0;
+    q2.alpha=0;
+
+    qTween = game.add.tween(q);
+    q2Tween = game.add.tween(q2);
 
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
     //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
@@ -314,14 +347,8 @@ create:function (){
     // filterbeforeimage.update();
 
     //КОНЕЦ В А У ЭФФЕКТА
-    q = game.add.sprite(0, 0, 'q');
-    q.width=(width/2)+1;
-    q.height=height;
-    q2 = game.add.sprite(width/2, 0, 'q2');
-    q2.width=(width/2)+1;
-    q2.height=height;
-    q.alpha=0;
-    q2.alpha=0;
+
+
 
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
     tilesprite.alpha=0;
@@ -485,8 +512,11 @@ bullets:function(){
 leftDuck: function(){
 
     if(leftKey.isDown && left.x < width/4 ){
-        q.alpha=1;
-        q2.alpha=1;
+        qTween.to({
+            alpha:1,
+            // x:0+1,
+            width:-width/2
+        },1000,'Linear',true, 400);
 
         left.angle=10;
         left.x -=15;
@@ -507,8 +537,11 @@ leftDuck: function(){
 rightDuck: function(){
 
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
-        q.alpha=1;
-        q2.alpha=1;
+        q2Tween.to({
+            alpha:1,
+            // x:(width/2)+1,
+            width:width/2
+        },1000,'Linear',true, 400);
 
         right.angle=-10;
         // right.y=280;
