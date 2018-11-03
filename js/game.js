@@ -35,9 +35,12 @@ preload:function(){
     game.load.image('tile','img/tile.png');
     game.load.image('leftRocket','img/leftRocket.png');
     game.load.image('rightRocket','img/rightRocket.png');
+
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
     game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
+    game.load.spritesheet('star','img/star.png',480,360,24);
+
     game.load.image('fog','img/fog.png');
 
 },
@@ -58,6 +61,8 @@ create:function (){
     // back2.height=height;
     // backGroup.add(back);
     // backGroup.add(back2);
+    // star = game.add.sprite(0,0,'star');
+    // star.animations.add('play');
 
     q = game.add.sprite(width/2, 0, 'q2');
     q.width=0;
@@ -532,6 +537,8 @@ leftDuck: function(){
     }else{
         left.x -=20;
     }
+
+   
 },
 
 rightDuck: function(){
