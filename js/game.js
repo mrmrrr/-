@@ -30,6 +30,7 @@ preload:function(){
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
     game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
+    game.load.image('fog','img/fog.png');
 
 },
 
@@ -315,23 +316,29 @@ create:function (){
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
     tilesprite2.alpha=0;
 
-    duckGroup = game.add.group();
+    duckGroupL = game.add.group();
+
+
+    duckGroupR = game.add.group();
+    
+   
 
     right = game.add.sprite(0,0,'right');
     right.scale.setTo(0.5);
-    duckGroup.add(right);
+    duckGroupR.add(right);
     right.position.x = (width/2);
     right.position.y =  (height/2)-(right.height/2);
     right.bringToTop();
     
     left = game.add.sprite(0,0,'left');
     left.scale.setTo(0.5);
-    duckGroup.add(left);
+    duckGroupL.add(left);
     left.position.x = (width/2)-right.width;
     left.position.y = (height/2) - (left.height/2) ;
     left.bringToTop();
     
-    this.textTimer();
+    
+    // this.textTimer();
     
     
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -345,6 +352,8 @@ create:function (){
 
     leftRocket = game.add.sprite(0, 0, 'leftRocket');
     leftRocket.alpha = 0;
+    duckGroupL.add(leftRocket);
+
 
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
@@ -360,6 +369,15 @@ create:function (){
     arrowRight.animations.add('arrowR');
     arrowRight.animations.play('arrowR', 10, true);
 
+
+
+    fire = game.add.emitter(100,100, 100);
+    fire.makeParticles('greenParticleCircle');
+    fire.setXSpeed(0,1000);
+
+    fire2 = game.add.emitter(100,100, 100);
+    fire2.makeParticles('greenParticleCircle');
+    fire2.setXSpeed(-1000,0);
     // sprite.filters = [ filterbeforeimage ];
 },
 
@@ -394,78 +412,96 @@ bullets:function(){
         b.events.onOutOfBounds.add(this.resetGreenBullet, this);
     }
 },
-textTimer: function(){
-    textTimer = game.time.create(false);
-    textTimer.loop(1000, this);
 
 
-    text1 = game.add.text(100, 100, 'НАЖИМАЙ ВЛЕВО', {font:'bold 100px Arial', fill:'#fff'});
-    text1W = text1.width;
-    text1H = text1.height;
-    text1.alpha=0;
+// textTimer: function(){
+//     textTimer = game.time.create(false);
+//     textTimer.loop(1000, this);
 
 
-    text2 = game.add.text(100,100, 'ИЛИ ВПРАВО',{font:'bold 100px Arial', fill:'#fff'});
-    text2W = text2.width;
-    text2H = text2.height;
-    text2.alpha=0;
+//     text1 = game.add.text(100, 100, 'НАЖИМАЙ ВЛЕВО', {font:'bold 100px Arial', fill:'#fff'});
+//     text1W = text1.width;
+//     text1H = text1.height;
+//     text1.alpha=0;
 
 
-    text3 = game.add.text(100,100, 'ВЫВЕЗИ УТКУ',{font:'bold 100px Arial', fill:'#fff'});
-    text3W = text3.width;
-    text3H = text3.height;
-    text3.alpha=0;
+//     text2 = game.add.text(100,100, 'ИЛИ ВПРАВО',{font:'bold 100px Arial', fill:'#fff'});
+//     text2W = text2.width;
+//     text2H = text2.height;
+//     text2.alpha=0;
 
 
-    textTween1 = game.add.tween(text1);
-    textTween2 = game.add.tween(text2);
-    textTween3 = game.add.tween(text3);
+//     text3 = game.add.text(100,100, 'ВЫВЕЗИ УТКУ',{font:'bold 100px Arial', fill:'#fff'});
+//     text3W = text3.width;
+//     text3H = text3.height;
+//     text3.alpha=0;
 
-    textTween1.to({
-        alpha:1
-    },1000,'Linear',true, 400);
 
-    textTween1.onComplete.add( function(){
-        text1.alpha = 0;
-        textTween2.to({
-            alpha:1
-        },1000,'Linear',true);
+//     textTween1 = game.add.tween(text1);
+//     textTween2 = game.add.tween(text2);
+//     textTween3 = game.add.tween(text3);
 
-        textTween2.onComplete.add(
-            function(){
-                text2.alpha = 0;
-                textTween3.to({
-                    alpha:1
-                },1000,'Linear',true);
-                textTween3.onComplete.add(function(){
-                    text3.alpha = 0;
-                })
-            }
-        );   
-    });
-},
+//     textTween1.to({
+//         alpha:1
+//     },1000,'Linear',true, 400);
+
+//     textTween1.onComplete.add( function(){
+//         text1.alpha = 0;
+//         textTween2.to({
+//             alpha:1
+//         },1000,'Linear',true);
+
+//         textTween2.onComplete.add(
+//             function(){
+//                 text2.alpha = 0;
+//                 textTween3.to({
+//                     alpha:1
+//                 },1000,'Linear',true);
+//                 textTween3.onComplete.add(function(){
+//                     text3.alpha = 0;
+//                 })
+//             }
+//         );   
+//     });
+// },
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я
+
+
 leftDuck: function(){
 
     if(leftKey.isDown && left.x < width/4 ){
-        
-
+        left.angle=10;
         left.x -=15;
+        
         leftRocket.alpha =1;
+        leftRocket.angle=10;
         leftRocket.scale.setTo(0.5);
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
+        
+        fire.position.setTo(leftRocket.x+leftRocket.width-150, leftRocket.y-(leftRocket.height/2)+50)
+        fire.start(true,1000,null,10);
+        
     }else{
         left.x -=20;
     }
 },
+
 rightDuck: function(){
 
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
+        right.angle=-10;
+        right.y=280;
         right.x +=15;
+
         rightRocket.alpha =1;
+        rightRocket.angle=-10;
+
         rightRocket.scale.setTo(0.5);
-        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
+        rightRocket.position.setTo(right.x-(rightRocket.width-right.width)+50, 0);
+        
+        fire2.position.setTo(rightRocket.x+rightRocket.width-150, rightRocket.y)
+        fire2.start(true,1000,null,10);
     }else{
         right.x +=20;
     }
@@ -473,6 +509,7 @@ rightDuck: function(){
 
         
 update:function(){
+
     if(leftRocket.alpha == 1){
         tilesprite.alpha=1;
         tilesprite.tilePosition.x += 10;
@@ -510,7 +547,9 @@ update:function(){
         rightKey.enabled = false;
         leftKey.enabled = false;
         
-        tilesprite.destroy();
+        tilesprite.kill();
+        tilesprite2.kill();
+
 
         this.leftWIN();
     } 
@@ -520,7 +559,8 @@ update:function(){
         rightKey.enabled = false;
         leftKey.enabled = false;
         
-        tilesprite2.destroy();
+        tilesprite.kill();
+        tilesprite2.kill();
 
         this.rightWIN();
     }
@@ -531,23 +571,23 @@ update:function(){
     if (leftKey.isDown){   
         this.purpleFireBullet();
 
-        fire = game.add.emitter((left.x+left.width)-50, left.y+100, 50);
-        duckGroup.add(fire);
-        left.bringToTop();
-
-        fire.makeParticles('purpleParticleCircle');
-        fire.start(false, 200, 100, 10);
+        // duckGroup.add(fire);
+        // left.bringToTop();
+        // fire = game.add.emitter((left.x+left.width)-50, left.y+100, 10);
+        // fire.makeParticles('fog');
+        // fire.setXSpeed(200,0)
+        // fire.start(true, 1, 400);
     }
 
     if (rightKey.isDown){   
         this.greenFireBullet();
 
-        fire1 = game.add.emitter(right.x+50, right.y+100, 50);
-        duckGroup.add(fire1);
-        right.bringToTop();
+        // fire1 = game.add.emitter(right.x+50, right.y+100, 50);
+        // duckGroup.add(fire1);
+        // right.bringToTop();
 
-        fire1.makeParticles('purpleParticleCircle');
-        fire1.start(false, 200, 100, 10);
+        // fire1.makeParticles('purpleParticleCircle');
+        // fire1.start(false, 200, 100, 10);
     }
 
     //#endregion
@@ -660,9 +700,9 @@ purpleFireBullet: function (){
         if (purpleBullet)
         {
 
-            // purpleBullet.reset(width/2, game.rnd.integerInRange(0, height - purpleBullet.height));
-            // purpleBullet.body.velocity.x = -1000;
-            // purpleBulletTime = game.time.now + 250;
+            purpleBullet.reset(width/2, game.rnd.integerInRange(0, height - purpleBullet.height));
+            purpleBullet.body.velocity.x = -1000;
+            purpleBulletTime = game.time.now + 250;
             
         }
         
@@ -690,9 +730,9 @@ greenFireBullet: function (){
         
         if (greenBullet){
 
-            // greenBullet.reset(width/2, game.rnd.integerInRange(0, height-greenBullet.height));
-            // greenBullet.body.velocity.x = 1000;
-            // greenBulletTime = game.time.now + 250;
+            greenBullet.reset(width/2, game.rnd.integerInRange(0, height-greenBullet.height));
+            greenBullet.body.velocity.x = 1000;
+            greenBulletTime = game.time.now + 250;
 
         }
 
