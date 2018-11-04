@@ -527,7 +527,7 @@ leftDuck: function(){
         left.x -=15;
         
         leftRocket.alpha =1;
-        leftRocket.angle=10;
+        leftRocket.angle=15;
         leftRocket.scale.setTo(0.5);
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
         
@@ -568,6 +568,8 @@ rightDuck: function(){
 
         
 update:function(){
+
+
 //Тайлятся звезды
     if(leftRocket.alpha == 1){
         tilesprite.alpha=1;
@@ -589,14 +591,14 @@ update:function(){
         left.x = (width/2)-left.width;
     }else{
         left.x+=1;
-        leftRocket.position.setTo(left.x, left.y+(left.height/2)+5);
+        leftRocket.position.setTo(left.x, left.y+(left.height/2));
     }
 
     if(right.x==width/2){
         right.x = width/2;
     }else{
         right.x-=1;
-        rightRocket.position.setTo(right.x-(rightRocket.width-right.width)+2, right.y+(right.height/2)+10);
+        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
     }
     //#endregion 
 
@@ -811,6 +813,14 @@ resetPurpleBullet: function (purpleBullet) {
 },
 resetGreenBullet: function (greenBullet){
     greenBullet.kill();
+},
+render: function(){
+    game.debug.spriteBounds(left);
+    game.debug.spriteBounds(leftRocket);
+    game.debug.spriteBounds(right);
+    game.debug.spriteBounds(rightRocket);
+
+
 }
 
 }
