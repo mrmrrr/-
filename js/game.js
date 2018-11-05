@@ -64,7 +64,8 @@ create:function (){
     q2Tween = game.add.tween(q2);
 
     STARS = [];
-    for(k=0;k<2;k++){
+    x=0;
+    for( k = 0; k < 50; k++ ){
 
         star = game.add.sprite(
             game.rnd.integerInRange(0,width/2),
@@ -72,19 +73,16 @@ create:function (){
             'greenParticleCircle'
         );
 
-        star.name='star'+k;
+        // star.name='star'+k;
         STARS.push(star);
-        starTween = game.add.tween(STARS[k]);
         
-        // STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
-
+        STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
+        
+        starTween = game.add.tween(STARS[k]);
+        x++;
         
     }
-    
-
-
-    console.log(STARS[0]);
-  
+   
 
 
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
@@ -364,25 +362,19 @@ create:function (){
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
     tilesprite2.alpha=0;
 
-    duckGroupL = game.add.group();
-
-
-    duckGroupR = game.add.group();
-    
    
 
     right = game.add.sprite(0,0,'right');
     right.anchor.setTo(0,0);
 
     right.scale.setTo(0.5);
-    // duckGroupR.add(right);
     right.position.x = (width/2);
     right.position.y =  (height/2)-(right.height/2);
     right.bringToTop();
     
     left = game.add.sprite(0,0,'left');
+    
     left.scale.setTo(0.5);
-    // duckGroupL.add(left);
     left.position.x = (width/2)-right.width;
     left.position.y = (height/2) - (left.height/2) ;
     left.bringToTop();
@@ -413,8 +405,6 @@ create:function (){
     arrowRight.y = (height-arrowRight.height)-50;
     arrowRight.animations.add('arrowR');
     arrowRight.animations.play('arrowR', 10, true);
-
-
 
     fire = game.add.emitter(100,100, 50);
     fire.makeParticles('greenParticleCircle');
@@ -510,8 +500,13 @@ rightDuck: function(){
 },
         
 update:function(){
-    
-
+    if(x==4)
+    starTween.to({
+        x:1000
+    },500,'Linear');   
+        
+   
+  
 //Тайлятся звезды
     if(leftRocket.alpha == 1){
         tilesprite.alpha=1;
