@@ -63,27 +63,20 @@ create:function (){
     qTween = game.add.tween(q);
     q2Tween = game.add.tween(q2);
 
-    STARS = [];
+    // STARS = [];
 
-    for( k = 0; k < 3; k++ ){
+    // for( k = 0; k < 50; k++ ){
 
-        star = game.add.sprite(
-            game.rnd.integerInRange(0,width/2),
-            game.rnd.integerInRange(0,height),
-            'greenParticleCircle'
-        );
+    //     star = game.add.sprite(
+    //         game.rnd.integerInRange(0,width/2),
+    //         game.rnd.integerInRange(0,height),
+    //         'greenParticleCircle'
+    //     );
         
-        STARS.push(star);
+    //     STARS.push(star);
         
-        STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
-    }
-    starTween = game.add.tween(STARS[0]);
-    starTween = game.add.tween(STARS[1]);
-    starTween = game.add.tween(STARS[2]);
-
-    
-
-   
+    //     STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
+    // }
 
 
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
@@ -357,9 +350,14 @@ create:function (){
     //КОНЕЦ В А У ЭФФЕКТА
 
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
-    tilesprite.alpha=0;
+    // tilesprite.alpha=0;
+    tilesprite.position.setTo(0,-300);
+
+
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
-    tilesprite2.alpha=0;
+    tilesprite2.position.setTo(width/2,-300);
+
+    // tilesprite2.alpha=0;
 
 
     right = game.add.sprite(0,0,'right');
@@ -447,8 +445,6 @@ bullets:function(){
 },
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я
-
-
 leftDuck: function(){
     if(leftKey.isDown && left.x < width/4 ){
         qTween.to({
@@ -457,10 +453,6 @@ leftDuck: function(){
                 width:-width/2
             },1000,'Linear',true, 400
         );
-        
-        starTween.to({
-            width:400
-        },1000,'Linear');
         
 
         left.angle=10;
@@ -504,16 +496,19 @@ rightDuck: function(){
 },
         
 update:function(){
-  
+
+    
 //Тайлятся звезды
     if(leftRocket.alpha == 1){
-        tilesprite.alpha=1;
         tilesprite.tilePosition.x += 10;
-        
+    }else{
+        tilesprite.tilePosition.x += 0.5;
     }
+    
     if(rightRocket.alpha == 1){
-        tilesprite2.alpha=1;
         tilesprite2.tilePosition.x -= 10;
+    }else{
+        tilesprite2.tilePosition.x -= 0.5;
     }
 
     // filterbeforeimage.update();
