@@ -62,20 +62,19 @@ create:function (){
     qTween = game.add.tween(q);
     q2Tween = game.add.tween(q2);
 
-    STARS = game.add.group();
+    STARS = [];
     
     for(k=0;k<20;k++){
-        // star.create(
-        //     game.add.sprite(game.rnd.integerInRange(0,width/2),
-        //     game.rnd.integerInRange(0,height),
-        //     'greenParticleCircle')
-        // );
-        // star.children[k].scale.setTo(0.1);
-
-        
-        star = game.add.sprite(game.rnd.integerInRange(0,width/2),game.rnd.integerInRange(0,height),'greenParticleCircle');
+        star = game.add.sprite(
+            game.rnd.integerInRange(0,width/2),
+            game.rnd.integerInRange(0,height),
+            'greenParticleCircle'
+        );
         star.name='star'+k;
-        STARS.add(star);
+        STARS.push(star);
+        STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
+        
+        STARS[k] = game.add.tween(q);
     }
     console.log(STARS);
 
