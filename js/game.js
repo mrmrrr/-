@@ -49,6 +49,7 @@ create:function (){
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#fb2345';
+   
     // game.stage.backgroundColor = '#000';
     
     // backGroup = game.add.group();
@@ -368,15 +369,17 @@ create:function (){
    
 
     right = game.add.sprite(0,0,'right');
+    right.anchor.setTo(0,0);
+
     right.scale.setTo(0.5);
-    duckGroupR.add(right);
+    // duckGroupR.add(right);
     right.position.x = (width/2);
     right.position.y =  (height/2)-(right.height/2);
     right.bringToTop();
     
     left = game.add.sprite(0,0,'left');
     left.scale.setTo(0.5);
-    duckGroupL.add(left);
+    // duckGroupL.add(left);
     left.position.x = (width/2)-right.width;
     left.position.y = (height/2) - (left.height/2) ;
     left.bringToTop();
@@ -396,8 +399,6 @@ create:function (){
 
     leftRocket = game.add.sprite(0, 0, 'leftRocket');
     leftRocket.alpha = 0;
-    duckGroupL.add(leftRocket);
-
 
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
@@ -535,7 +536,8 @@ leftDuck: function(){
         fire.start(true,500,null,10);
         
     }else{
-        left.x -=20;
+        left.x -=40;
+
     }
 
    
@@ -549,11 +551,11 @@ rightDuck: function(){
             // x:(width/2)+1,
             width:width/2
         },1000,'Linear',true, 400);
-
         right.angle=-10;
+        
         // right.y=280;
         right.x +=15;
-
+        console.log(right.world);
         rightRocket.alpha =1;
         rightRocket.angle=-10;
 
@@ -562,7 +564,8 @@ rightDuck: function(){
         fire2.position.setTo(rightRocket.x-50, rightRocket.y-(rightRocket.height/2))
         fire2.start(true,500,null,10);
     }else{
-        right.x +=20;
+        right.x +=40;
+        // right.y=left.y;
     }
 },
 
