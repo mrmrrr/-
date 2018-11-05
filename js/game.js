@@ -12,6 +12,7 @@ var greenBulletTime = 0;
 
 var bmd;
 // var Left;
+var starTween;
 
 var gameState = {
 
@@ -63,21 +64,26 @@ create:function (){
     q2Tween = game.add.tween(q2);
 
     STARS = [];
-    
-    for(k=0;k<100;k++){
+    for(k=0;k<2;k++){
+
         star = game.add.sprite(
             game.rnd.integerInRange(0,width/2),
             game.rnd.integerInRange(0,height),
             'greenParticleCircle'
         );
+
         star.name='star'+k;
         STARS.push(star);
-        starTween = game.add.tween(STARS[1]);
-        STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
+        starTween = game.add.tween(STARS[k]);
+        
+        // STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
 
         
     }
-    console.log(STARS[1]);
+    
+
+
+    console.log(STARS[0]);
   
 
 
@@ -455,7 +461,6 @@ bullets:function(){
 
 
 leftDuck: function(){
-
     if(leftKey.isDown && left.x < width/4 ){
         qTween.to({
                 alpha:1,
@@ -476,26 +481,22 @@ leftDuck: function(){
         fire.start(true,500,null,10);
         
     }else{
-        left.x -=12;
-
+        left.x -=40;
     }
-
-   
 },
 
 rightDuck: function(){
-
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
         q2Tween.to({
             alpha:1,
             // x:(width/2)+1,
             width:width/2
         },1000,'Linear',true, 400);
+
         right.angle=-10;
         
-        // right.y=280;
         right.x +=15;
-        console.log(right.world);
+
         rightRocket.alpha =1;
         rightRocket.angle=-10;
 
@@ -505,22 +506,17 @@ rightDuck: function(){
         fire2.start(true,500,null,10);
     }else{
         right.x +=40;
-        // right.y=left.y;
     }
 },
-
         
 update:function(){
-
-    starTween.to({
-        scale:10
-    },300,'Linear')
     
 
 //Тайлятся звезды
     if(leftRocket.alpha == 1){
         tilesprite.alpha=1;
         tilesprite.tilePosition.x += 10;
+        
     }
     if(rightRocket.alpha == 1){
         tilesprite2.alpha=1;
