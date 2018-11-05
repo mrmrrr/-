@@ -16,33 +16,29 @@ var bmd;
 var gameState = {
 
 preload:function(){
-    game.load.image('purpleBullet','img/purpleBullet.png');
     game.load.image('q','img/q.png');
     game.load.image('q2','img/q2.png');
-
     game.load.image('back','img/back.png');
 
-
-
-
+    game.load.image('purpleBullet','img/purpleBullet.png');
     game.load.image('greenBullet','img/greenBullet.png');
+    
     game.load.image('greenParticleCircle','img/greenParticleCircle.png');
     game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
+    
     game.load.image('right','img/right.png');
     game.load.image('left','img/left.png');
+    
     game.load.image('like','img/like.png');
     game.load.image('sad','img/sad.png');
     game.load.image('tile','img/tile.png');
+    
     game.load.image('leftRocket','img/leftRocket.png');
     game.load.image('rightRocket','img/rightRocket.png');
 
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
     game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
-    game.load.spritesheet('star','img/star.png',480,360,24);
-
-    game.load.image('fog','img/fog.png');
-
 },
 
 create:function (){
@@ -52,37 +48,36 @@ create:function (){
    
     // game.stage.backgroundColor = '#000';
     
-    // backGroup = game.add.group();
-    
-    // back = game.add.sprite(0,0,'back');
-    // back2 = game.add.sprite(0,0,'back');
-    // back.width=width/2;
-    // back.height=height;
-    // back2.width=width/2;
-    // back2.height=height;
-    // backGroup.add(back);
-    // backGroup.add(back2);
-    // star = game.add.sprite(0,0,'star');
-    // star.animations.add('play');
-
     q = game.add.sprite(width/2, 0, 'q2');
     q.width=0;
     q.height=height;
-    // backGroup.add(q);
 
     q2 = game.add.sprite(width/2, 0, 'q2');
     q2.width=0;
     q2.height=height;
-    // backGroup.add(q2);
-    
-    // back.bringToTop();
-    // back2.bringToTop();
 
     q.alpha=0;
     q2.alpha=0;
 
     qTween = game.add.tween(q);
     q2Tween = game.add.tween(q2);
+
+    STARS = game.add.group();
+    
+    for(k=0;k<20;k++){
+        // star.create(
+        //     game.add.sprite(game.rnd.integerInRange(0,width/2),
+        //     game.rnd.integerInRange(0,height),
+        //     'greenParticleCircle')
+        // );
+        // star.children[k].scale.setTo(0.1);
+
+        
+        star = game.add.sprite(game.rnd.integerInRange(0,width/2),game.rnd.integerInRange(0,height),'greenParticleCircle');
+        star.name='star'+k;
+        STARS.add(star);
+    }
+    console.log(STARS);
 
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
     //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
@@ -425,7 +420,8 @@ create:function (){
     fire2.setXSpeed(-1000,0);
     // sprite.filters = [ filterbeforeimage ];
 
-
+   
+    
 },
 
 
@@ -536,7 +532,7 @@ leftDuck: function(){
         fire.start(true,500,null,10);
         
     }else{
-        left.x -=40;
+        left.x -=12;
 
     }
 
@@ -629,29 +625,15 @@ update:function(){
         this.rightWIN();
     }
 
-    //  Д   Ы   М    ИЗ ПОД КОЛЕС
+    //  Д   Ы   М    ИЗ ПОД КОЛЕС  ****** НЕ СДЕЛАН
     //#region
 
     if (leftKey.isDown){   
         this.purpleFireBullet();
-
-        // duckGroup.add(fire);
-        // left.bringToTop();
-        // fire = game.add.emitter((left.x+left.width)-50, left.y+100, 10);
-        // fire.makeParticles('fog');
-        // fire.setXSpeed(200,0)
-        // fire.start(true, 1, 400);
     }
 
     if (rightKey.isDown){   
         this.greenFireBullet();
-
-        // fire1 = game.add.emitter(right.x+50, right.y+100, 50);
-        // duckGroup.add(fire1);
-        // right.bringToTop();
-
-        // fire1.makeParticles('purpleParticleCircle');
-        // fire1.start(false, 200, 100, 10);
     }
 
     //#endregion
@@ -817,13 +799,13 @@ resetPurpleBullet: function (purpleBullet) {
 resetGreenBullet: function (greenBullet){
     greenBullet.kill();
 },
-render: function(){
-    game.debug.spriteBounds(left);
-    game.debug.spriteBounds(leftRocket);
-    game.debug.spriteBounds(right);
-    game.debug.spriteBounds(rightRocket);
+// render: function(){
+//     game.debug.spriteBounds(left);
+//     game.debug.spriteBounds(leftRocket);
+//     game.debug.spriteBounds(right);
+//     game.debug.spriteBounds(rightRocket);
 
 
-}
+// }
 
 }
