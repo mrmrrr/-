@@ -63,21 +63,27 @@ create:function (){
     qTween = game.add.tween(q);
     q2Tween = game.add.tween(q2);
 
-    // STARS = [];
+    STARS = [];
 
-    // for( k = 0; k < 50; k++ ){
+    for( k = 0; k < 50; k++ ){
 
-    //     star = game.add.sprite(
-    //         game.rnd.integerInRange(0,width/2),
-    //         game.rnd.integerInRange(0,height),
-    //         'greenParticleCircle'
-    //     );
+        star = game.add.sprite(
+            game.rnd.integerInRange(0,width/2),
+            game.rnd.integerInRange(0,height),
+            'greenParticleCircle'
+        );
         
-    //     STARS.push(star);
+        STARS.push(star);
         
-    //     STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
-    // }
+        STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
 
+        tweenA = game.add.tween(STARS[k]).to({width:20,height:20},1000,'Linear',true);
+        tweenB = game.add.tween(STARS[k]).to({width:0,height:0},1000,'Linear',true);
+        tweenA.chain(tweenB);
+    }
+
+
+    this.grid();
 
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
     //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
@@ -352,10 +358,12 @@ create:function (){
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
     // tilesprite.alpha=0;
     tilesprite.position.setTo(0,-300);
-
+    tileTweenL = game.add.tween(tilesprite);
 
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
     tilesprite2.position.setTo(width/2,-300);
+    tileTweenR = game.add.tween(tilesprite2);
+
 
     // tilesprite2.alpha=0;
 
@@ -378,7 +386,7 @@ create:function (){
     leftKey.onDown.add(this.leftDuck, this);
     rightKey.onDown.add(this.rightDuck, this);
     
-    this.bullets();
+    // this.bullets();
     
     leftRocket = game.add.sprite(0, 0, 'leftRocket');
     leftRocket.alpha = 0;
@@ -388,16 +396,16 @@ create:function (){
     
     //ARROW
     //#region 
-    arrowLeft = game.add.sprite(50,0,'arrowLeft');
-    arrowLeft.y=(height-arrowLeft.height)-50;
-    arrowLeft.animations.add('arrowL');
-    arrowLeft.animations.play('arrowL', 10, true);
+    // arrowLeft = game.add.sprite(50,0,'arrowLeft');
+    // arrowLeft.y=(height-arrowLeft.height)-50;
+    // arrowLeft.animations.add('arrowL');
+    // arrowLeft.animations.play('arrowL', 10, true);
 
-    arrowRight = game.add.sprite(0,0,'arrowRight');
-    arrowRight.x = (width-arrowRight.width)-50;
-    arrowRight.y = (height-arrowRight.height)-50;
-    arrowRight.animations.add('arrowR');
-    arrowRight.animations.play('arrowR', 10, true);
+    // arrowRight = game.add.sprite(0,0,'arrowRight');
+    // arrowRight.x = (width-arrowRight.width)-50;
+    // arrowRight.y = (height-arrowRight.height)-50;
+    // arrowRight.animations.add('arrowR');
+    // arrowRight.animations.play('arrowR', 10, true);
     //#endregion
     
     //Rocket Fire
@@ -413,47 +421,69 @@ create:function (){
     // sprite.filters = [ filterbeforeimage ];
 },
 
+grid: function(){
+    col_width = (width/4)/4;
+    row_height = height/8;
+    x_pos=0;
+    y_pos=0;
 
-bullets:function(){
-    purpleBullets = game.add.group();
-    purpleBullets.enableBody = true;
-    purpleBullets.physicsBodyType = Phaser.Physics.ARCADE;
-    
-    for (var i = 0; i < 20; i++)
-    {
-        var b = purpleBullets.create(0, 0, 'purpleBullet');
-        b.name = 'purpleBullet' + i;
-        b.exists = false;
-        b.visible = false;
-        b.checkWorldBounds = true;
-        b.events.onOutOfBounds.add(this.resetPurpleBullet, this);
-    }
-
-    greenBullets = game.add.group();
-    greenBullets.enableBody = true;
-    greenBullets.physicsBodyType = Phaser.Physics.ARCADE;
-
-    for (var i = 0; i < 20; i++)
-    {
-        var b = greenBullets.create(0, 0, 'greenBullet');
-        b.name = 'purpleBullet' + i;
-        b.exists = false;
-        b.visible = false;
-        b.checkWorldBounds = true;
-        b.events.onOutOfBounds.add(this.resetGreenBullet, this);
+    for(v=0;v<8;v++){
+        for(i=0;i<8;i++){
+            point = game.add.sprite(
+                x_pos+(col_width/2), 
+                y_pos+(row_height/2),
+                'greenBullet').scale.setTo(0.05);
+            x_pos = x_pos+col_width;
+        }
+        y_pos = y_pos+row_height;
+        x_pos = 0;
     }
 },
+
+// bullets:function(){
+//     purpleBullets = game.add.group();
+//     purpleBullets.enableBody = true;
+//     purpleBullets.physicsBodyType = Phaser.Physics.ARCADE;
+    
+//     for (var i = 0; i < 20; i++)
+//     {
+//         var b = purpleBullets.create(0, 0, 'purpleBullet');
+//         b.name = 'purpleBullet' + i;
+//         b.exists = false;
+//         b.visible = false;
+//         b.checkWorldBounds = true;
+//         b.events.onOutOfBounds.add(this.resetPurpleBullet, this);
+//     }
+
+//     greenBullets = game.add.group();
+//     greenBullets.enableBody = true;
+//     greenBullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+//     for (var i = 0; i < 20; i++)
+//     {
+//         var b = greenBullets.create(0, 0, 'greenBullet');
+//         b.name = 'purpleBullet' + i;
+//         b.exists = false;
+//         b.visible = false;
+//         b.checkWorldBounds = true;
+//         b.events.onOutOfBounds.add(this.resetGreenBullet, this);
+//     }
+// },
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 leftDuck: function(){
     if(leftKey.isDown && left.x < width/4 ){
+        
         qTween.to({
                 alpha:1,
                 // x:0+1,
                 width:-width/2
             },1000,'Linear',true, 400
         );
-        
+        tileTweenL.to({
+            x:0,
+            y:0
+        },1000,'Linear',true);
 
         left.angle=10;
         left.x -=15;
@@ -473,12 +503,18 @@ leftDuck: function(){
 
 rightDuck: function(){
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
+        
         q2Tween.to({
             alpha:1,
             // x:(width/2)+1,
             width:width/2
         },1000,'Linear',true, 400);
-
+        
+        tileTweenR.to({
+            x:width/2,
+            y:0
+        },1000,'Linear',true);
+        
         right.angle=-10;
         
         right.x +=15;
@@ -497,19 +533,25 @@ rightDuck: function(){
         
 update:function(){
 
-    
+
 //Тайлятся звезды
+//#region
     if(leftRocket.alpha == 1){
         tilesprite.tilePosition.x += 10;
+        tilesprite.tilePosition.y += 10;
+
     }else{
         tilesprite.tilePosition.x += 0.5;
     }
     
     if(rightRocket.alpha == 1){
         tilesprite2.tilePosition.x -= 10;
+        tilesprite2.tilePosition.y += 10;
+
     }else{
         tilesprite2.tilePosition.x -= 0.5;
     }
+//#endregion
 
     // filterbeforeimage.update();
 
@@ -561,11 +603,11 @@ update:function(){
     //#region
 
     if (leftKey.isDown){   
-        this.purpleFireBullet();
+        // this.purpleFireBullet();
     }
 
     if (rightKey.isDown){   
-        this.greenFireBullet();
+        // this.greenFireBullet();
     }
 
     //#endregion
@@ -666,38 +708,38 @@ abyss: function (){
     sprite.filters = [ filterbeforeimage ];
 },  
 
-purpleFireBullet: function (){
+// purpleFireBullet: function (){
 
-    if (game.time.now > purpleBulletTime)
-    {
-        purpleBullet = purpleBullets.getFirstExists(false);
+//     if (game.time.now > purpleBulletTime)
+//     {
+//         purpleBullet = purpleBullets.getFirstExists(false);
 
-        if (purpleBullet)
-        {
+//         if (purpleBullet)
+//         {
 
-            purpleBullet.reset(width/2, game.rnd.integerInRange(0, height - purpleBullet.height));
-            purpleBullet.body.velocity.x = -1000;
-            purpleBulletTime = game.time.now + 250;
+//             purpleBullet.reset(width/2, game.rnd.integerInRange(0, height - purpleBullet.height));
+//             purpleBullet.body.velocity.x = -1000;
+//             purpleBulletTime = game.time.now + 250;
             
-        }
-    }
-},
+//         }
+//     }
+// },
 
-greenFireBullet: function (){
+// greenFireBullet: function (){
 
-    if (game.time.now > greenBulletTime){
+//     if (game.time.now > greenBulletTime){
 
-        greenBullet = greenBullets.getFirstExists(false);
+//         greenBullet = greenBullets.getFirstExists(false);
         
-        if (greenBullet){
+//         if (greenBullet){
 
-            greenBullet.reset(width/2, game.rnd.integerInRange(0, height-greenBullet.height));
-            greenBullet.body.velocity.x = 1000;
-            greenBulletTime = game.time.now + 250;
+//             greenBullet.reset(width/2, game.rnd.integerInRange(0, height-greenBullet.height));
+//             greenBullet.body.velocity.x = 1000;
+//             greenBulletTime = game.time.now + 250;
 
-        }
-    }
-},
+//         }
+//     }
+// },
 //  Called if the bullet goes out of the screen
 resetPurpleBullet: function (purpleBullet) {
     purpleBullet.kill();
