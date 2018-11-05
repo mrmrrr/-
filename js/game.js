@@ -72,16 +72,17 @@ create:function (){
             game.rnd.integerInRange(0,height),
             'greenParticleCircle'
         );
-
-        // star.name='star'+k;
+        
         STARS.push(star);
         
         STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
+        // STARS[k].alpha=1;
+    
         
-        starTween = game.add.tween(STARS[k]);
-        x++;
-        
+
     }
+    starTween = game.add.tween(STARS);
+
    
 
 
@@ -355,30 +356,23 @@ create:function (){
 
     //КОНЕЦ В А У ЭФФЕКТА
 
-
-
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
     tilesprite.alpha=0;
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
     tilesprite2.alpha=0;
 
-   
 
     right = game.add.sprite(0,0,'right');
-    right.anchor.setTo(0,0);
-
     right.scale.setTo(0.5);
     right.position.x = (width/2);
     right.position.y =  (height/2)-(right.height/2);
     right.bringToTop();
     
     left = game.add.sprite(0,0,'left');
-    
     left.scale.setTo(0.5);
     left.position.x = (width/2)-right.width;
     left.position.y = (height/2) - (left.height/2) ;
     left.bringToTop();
-    
     
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -388,13 +382,14 @@ create:function (){
     
     this.bullets();
     
-
     leftRocket = game.add.sprite(0, 0, 'leftRocket');
     leftRocket.alpha = 0;
 
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
-
+    
+    //ARROW
+    //#region 
     arrowLeft = game.add.sprite(50,0,'arrowLeft');
     arrowLeft.y=(height-arrowLeft.height)-50;
     arrowLeft.animations.add('arrowL');
@@ -405,7 +400,10 @@ create:function (){
     arrowRight.y = (height-arrowRight.height)-50;
     arrowRight.animations.add('arrowR');
     arrowRight.animations.play('arrowR', 10, true);
-
+    //#endregion
+    
+    //Rocket Fire
+    //#region
     fire = game.add.emitter(100,100, 50);
     fire.makeParticles('greenParticleCircle');
     fire.setXSpeed(0,1000);
@@ -413,6 +411,7 @@ create:function (){
     fire2 = game.add.emitter(100,100, 50);
     fire2.makeParticles('purpleParticleCircle');
     fire2.setXSpeed(-1000,0);
+    //#endregion
     // sprite.filters = [ filterbeforeimage ];
 },
 
@@ -458,6 +457,11 @@ leftDuck: function(){
                 width:-width/2
             },1000,'Linear',true, 400
         );
+        
+        starTween.to({
+            scale:0
+        },1000,'Linear',true,1);
+        
 
         left.angle=10;
         left.x -=15;
