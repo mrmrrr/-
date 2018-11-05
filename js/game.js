@@ -64,7 +64,7 @@ create:function (){
 
     STARS = [];
     
-    for(k=0;k<20;k++){
+    for(k=0;k<100;k++){
         star = game.add.sprite(
             game.rnd.integerInRange(0,width/2),
             game.rnd.integerInRange(0,height),
@@ -72,11 +72,14 @@ create:function (){
         );
         star.name='star'+k;
         STARS.push(star);
+        starTween = game.add.tween(STARS[1]);
         STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
+
         
-        STARS[k] = game.add.tween(q);
     }
-    console.log(STARS);
+    console.log(STARS[1]);
+  
+
 
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
     //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
@@ -379,9 +382,6 @@ create:function (){
     left.bringToTop();
     
     
-    // this.textTimer();
-    
-    
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 
@@ -418,11 +418,7 @@ create:function (){
     fire2.makeParticles('purpleParticleCircle');
     fire2.setXSpeed(-1000,0);
     // sprite.filters = [ filterbeforeimage ];
-
-   
-    
 },
-
 
 
 bullets:function(){
@@ -455,58 +451,6 @@ bullets:function(){
     }
 },
 
-
-// textTimer: function(){
-//     textTimer = game.time.create(false);
-//     textTimer.loop(1000, this);
-
-
-//     text1 = game.add.text(100, 100, 'НАЖИМАЙ ВЛЕВО', {font:'bold 100px Arial', fill:'#fff'});
-//     text1W = text1.width;
-//     text1H = text1.height;
-//     text1.alpha=0;
-
-
-//     text2 = game.add.text(100,100, 'ИЛИ ВПРАВО',{font:'bold 100px Arial', fill:'#fff'});
-//     text2W = text2.width;
-//     text2H = text2.height;
-//     text2.alpha=0;
-
-
-//     text3 = game.add.text(100,100, 'ВЫВЕЗИ УТКУ',{font:'bold 100px Arial', fill:'#fff'});
-//     text3W = text3.width;
-//     text3H = text3.height;
-//     text3.alpha=0;
-
-
-//     textTween1 = game.add.tween(text1);
-//     textTween2 = game.add.tween(text2);
-//     textTween3 = game.add.tween(text3);
-
-//     textTween1.to({
-//         alpha:1
-//     },1000,'Linear',true, 400);
-
-//     textTween1.onComplete.add( function(){
-//         text1.alpha = 0;
-//         textTween2.to({
-//             alpha:1
-//         },1000,'Linear',true);
-
-//         textTween2.onComplete.add(
-//             function(){
-//                 text2.alpha = 0;
-//                 textTween3.to({
-//                     alpha:1
-//                 },1000,'Linear',true);
-//                 textTween3.onComplete.add(function(){
-//                     text3.alpha = 0;
-//                 })
-//             }
-//         );   
-//     });
-// },
-
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 
 
@@ -514,10 +458,11 @@ leftDuck: function(){
 
     if(leftKey.isDown && left.x < width/4 ){
         qTween.to({
-            alpha:1,
-            // x:0+1,
-            width:-width/2
-        },1000,'Linear',true, 400);
+                alpha:1,
+                // x:0+1,
+                width:-width/2
+            },1000,'Linear',true, 400
+        );
 
         left.angle=10;
         left.x -=15;
@@ -567,6 +512,10 @@ rightDuck: function(){
         
 update:function(){
 
+    starTween.to({
+        scale:10
+    },300,'Linear')
+    
 
 //Тайлятся звезды
     if(leftRocket.alpha == 1){
@@ -636,8 +585,6 @@ update:function(){
     }
 
     //#endregion
-
-
 },
 
 leftWIN: function (){
@@ -663,7 +610,6 @@ leftWIN: function (){
     }
 
     game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
-
     
     //SAD EMITTER
     s = game.add.sprite(game.rnd.integerInRange(width/2, width), 0, 'sad');
@@ -750,21 +696,7 @@ purpleFireBullet: function (){
             purpleBulletTime = game.time.now + 250;
             
         }
-        
-        // if(left.x < (width/2)/2){
-
-        //     purpleEmitter = game.add.emitter(width/2, purpleBullet.y , 200);
-        //     purpleEmitter.makeParticles('purpleParticleCircle');
-        //     // purpleEmitter.rotation = 1;
-        //     // purpleEmitter.x = width/2;
-        //     // purpleEmitter.setRotation(0, 0);
-        //     purpleEmitter.start(false, 2000, 250,10);
-        //     // emitter.angle=90;
-        //     //СЮДА ЕЩЕ ПАРТИКЛЫ ДОБАВИТЬ
-
-        // }
     }
-
 },
 
 greenFireBullet: function (){
@@ -780,15 +712,6 @@ greenFireBullet: function (){
             greenBulletTime = game.time.now + 250;
 
         }
-
-        // if(right.x > ((width/2)+((width/2)/2))){
-
-        //     greenEmitter = game.add.emitter(width/2, greenBullet.y , 200);
-        //     greenEmitter.makeParticles('greenParticleCircle');
-        //     greenEmitter.start(false, 2000, 250,10);
-        //     // emitter.angle=90;
-        //     //СЮДА ЕЩЕ ПАРТИКЛЫ ДОБАВИТЬ
-        // }
     }
 },
 //  Called if the bullet goes out of the screen
@@ -803,8 +726,6 @@ resetGreenBullet: function (greenBullet){
 //     game.debug.spriteBounds(leftRocket);
 //     game.debug.spriteBounds(right);
 //     game.debug.spriteBounds(rightRocket);
-
-
 // }
 
 }
