@@ -64,8 +64,8 @@ create:function (){
     q2Tween = game.add.tween(q2);
 
     STARS = [];
-    x=0;
-    for( k = 0; k < 50; k++ ){
+
+    for( k = 0; k < 3; k++ ){
 
         star = game.add.sprite(
             game.rnd.integerInRange(0,width/2),
@@ -76,12 +76,12 @@ create:function (){
         STARS.push(star);
         
         STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
-        // STARS[k].alpha=1;
-    
-        
-
     }
-    starTween = game.add.tween(STARS);
+    starTween = game.add.tween(STARS[0]);
+    starTween = game.add.tween(STARS[1]);
+    starTween = game.add.tween(STARS[2]);
+
+    
 
    
 
@@ -459,8 +459,8 @@ leftDuck: function(){
         );
         
         starTween.to({
-            scale:0
-        },1000,'Linear',true,1);
+            width:400
+        },1000,'Linear');
         
 
         left.angle=10;
@@ -504,12 +504,6 @@ rightDuck: function(){
 },
         
 update:function(){
-    if(x==4)
-    starTween.to({
-        x:1000
-    },500,'Linear');   
-        
-   
   
 //Тайлятся звезды
     if(leftRocket.alpha == 1){
