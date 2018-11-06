@@ -74,7 +74,7 @@ create:function (){
 
     // dotsR.animations.add('a');
 
-
+    //Г Р А Д И Е Н Т Ы
     q = game.add.sprite(width/2, 0, 'q2');
     q.width=0;
     q.height=height;
@@ -88,7 +88,9 @@ create:function (){
 
     qTween = game.add.tween(q);
     q2Tween = game.add.tween(q2);
-
+    //C L O S E   Г Р А Д И Е Н Т Ы
+    
+    
     // STARS = [];
 
     // for( k = 0; k < 50; k++ ){
