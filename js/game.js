@@ -35,12 +35,13 @@ preload:function(){
     
     game.load.image('leftRocket','img/leftRocket.png');
     game.load.image('rightRocket','img/rightRocket.png');
-    game.load.image('middle','img/middle.png');
-
+    
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
     game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
     game.load.spritesheet('dots','img/dots.png',680,768,90);
+    game.load.spritesheet('middle','img/middle.png',61,768,16);
+
 },
 
 create:function (){
@@ -54,7 +55,7 @@ create:function (){
     dotsL.width=width/2;
     dotsL.height=height;
     dotsL.animations.add('l');
-    dotsL.animations.play('l',30,false,false); 
+    dotsL.animations.play('l',30,true); 
     // dotsL.frame=73;
 
     dotsR = game.add.sprite(0, 0,'dots');
@@ -62,14 +63,15 @@ create:function (){
     dotsR.height=height;
     dotsR.anchor.setTo(0.5,0.5);
     dotsR.scale.x *= -1;
-    dotsR.position.setTo(width/2 + (dotsR.width/2), 0+dotsR.height/2);
-
+    dotsR.position.setTo(width/2 - (dotsR.width/2), 0+dotsR.height/2);
     dotsR.animations.add('r');
-    dotsR.animations.play('r',30,false,false);  
+    dotsR.animations.play('r',30,true);  
 
     middle = game.add.sprite(0,0,'middle');
     middle.height = height;
     middle.position.setTo((width/2)-(middle.width/2),0);
+    middle.animations.add('m');
+    middle.animations.play('m',30,true); 
 
 
     //Г Р А Д И Е Н Т Ы
