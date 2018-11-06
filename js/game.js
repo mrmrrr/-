@@ -19,7 +19,6 @@ var gameState = {
 preload:function(){
     game.load.image('q','img/q.png');
     game.load.image('q2','img/q2.png');
-    game.load.image('back','img/back.png');
 
     game.load.image('purpleBullet','img/purpleBullet.png');
     game.load.image('greenBullet','img/greenBullet.png');
@@ -41,7 +40,7 @@ preload:function(){
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
     game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
-    game.load.spritesheet('dots','img/dots.png',680,768,74);
+    game.load.spritesheet('dots','img/dots.png',680,768,90);
 },
 
 create:function (){
@@ -54,25 +53,24 @@ create:function (){
     dotsL = game.add.sprite(0,0,'dots');
     dotsL.width=width/2;
     dotsL.height=height;
-    dotsL.frame=73;
+    dotsL.animations.add('l');
+    dotsL.animations.play('l',30,false,false); 
+    // dotsL.frame=73;
 
-    dotsL2 = game.add.sprite(0,0,'dots');
-    dotsL2.alpha = 0.2;
-    dotsL2.width=width/2;
-    dotsL2.height=height;
-    dotsL2.animations.add('d');
-    dotsL2.animations.play('d',60,true,false);  
-    // dotsL.animations.currentFrame=20
+    dotsR = game.add.sprite(0, 0,'dots');
+    dotsR.width=width/2;
+    dotsR.height=height;
+    dotsR.anchor.setTo(0.5,0.5);
+    dotsR.scale.x *= -1;
+    dotsR.position.setTo(width/2 + (dotsR.width/2), 0+dotsR.height/2);
+
+    dotsR.animations.add('r');
+    dotsR.animations.play('r',30,false,false);  
 
     middle = game.add.sprite(0,0,'middle');
     middle.height = height;
     middle.position.setTo((width/2)-(middle.width/2),0);
-    // dotsR = game.add.sprite(0,0,'dots');
-    // dotsR.anchor.setTo(.5,.5);
-    // dotsR.scale.x *= -1;
-    // dotsR.position.setTo(width/2 - (dotsR.width/2), 0+dotsR.height/2);
 
-    // dotsR.animations.add('a');
 
     //Г Р А Д И Е Н Т Ы
     q = game.add.sprite(width/2, 0, 'q2');
@@ -305,9 +303,8 @@ rightDuck: function(){
         
 update:function(){
 
-
-//Тайлятся звезды
-//#region
+    //Т А Й Л Я Т С Я    З В Е З Д Ы
+    //#region
     if(leftRocket.alpha == 1){
         tilesprite.tilePosition.x += 10;
         tilesprite.tilePosition.y += 10;
@@ -323,8 +320,9 @@ update:function(){
     }else{
         tilesprite2.tilePosition.x -= 0.5;
     }
-//#endregion
+    //#endregion
 
+    
     // filterbeforeimage.update();
 
 
@@ -519,11 +517,8 @@ resetPurpleBullet: function (purpleBullet) {
 resetGreenBullet: function (greenBullet){
     greenBullet.kill();
 },
-// render: function(){
-//     game.debug.spriteBounds(left);
-//     game.debug.spriteBounds(leftRocket);
-//     game.debug.spriteBounds(right);
-//     game.debug.spriteBounds(rightRocket);
-// }
+render: function(){
+    // game.debug.spriteBounds(dotsR);
+}
 
 }
