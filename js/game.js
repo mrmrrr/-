@@ -40,15 +40,32 @@ preload:function(){
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
     game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
+    game.load.spritesheet('dots','img/dots.png',680,768,74);
+    game.load.spritesheet('firstDOT','img/firstDOT.png',680,768,75);
+
+
 },
 
 create:function (){
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.stage.backgroundColor = '#fb2345';
+    // game.stage.backgroundColor = '#fb2345';
    
-    // game.stage.backgroundColor = '#000';
+    game.stage.backgroundColor = '#000';
     
+    dotsL = game.add.sprite(0,0,'dots');
+    // dotsL.animations.add('d');
+    // dotsL.animations.play('d',60,false,false);   
+    dotsL.animations.currentFrame=20
+
+    // dotsR = game.add.sprite(0,0,'dots');
+    // dotsR.anchor.setTo(.5,.5);
+    // dotsR.scale.x *= -1;
+    // dotsR.position.setTo(width/2 - (dotsR.width/2), 0+dotsR.height/2);
+
+    // dotsR.animations.add('a');
+
+
     q = game.add.sprite(width/2, 0, 'q2');
     q.width=0;
     q.height=height;
@@ -63,27 +80,25 @@ create:function (){
     qTween = game.add.tween(q);
     q2Tween = game.add.tween(q2);
 
-    STARS = [];
+    // STARS = [];
 
-    for( k = 0; k < 50; k++ ){
+    // for( k = 0; k < 50; k++ ){
 
-        star = game.add.sprite(
-            game.rnd.integerInRange(0,width/2),
-            game.rnd.integerInRange(0,height),
-            'greenParticleCircle'
-        );
+    //     star = game.add.sprite(
+    //         game.rnd.integerInRange(0,width/2),
+    //         game.rnd.integerInRange(0,height),
+    //         'greenParticleCircle'
+    //     );
         
-        STARS.push(star);
+    //     STARS.push(star);
         
-        STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
+    //     STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
 
-        tweenA = game.add.tween(STARS[k]).to({width:20,height:20},1000,'Linear',true);
-        tweenB = game.add.tween(STARS[k]).to({width:0,height:0},1000,'Linear',true);
-        tweenA.chain(tweenB);
-    }
+    //     tweenA = game.add.tween(STARS[k]).to({width:20,height:20},1000,'Linear',true);
+    //     tweenB = game.add.tween(STARS[k]).to({width:0,height:0},1000,'Linear',true);
+    //     tweenA.chain(tweenB);
+    // }
 
-
-    this.grid();
 
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
     //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
@@ -356,11 +371,13 @@ create:function (){
     //КОНЕЦ В А У ЭФФЕКТА
 
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
-    // tilesprite.alpha=0;
+    tilesprite.alpha=0;
     tilesprite.position.setTo(0,-300);
     tileTweenL = game.add.tween(tilesprite);
 
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
+    tilesprite2.alpha=0;
+
     tilesprite2.position.setTo(width/2,-300);
     tileTweenR = game.add.tween(tilesprite2);
 
@@ -421,24 +438,31 @@ create:function (){
     // sprite.filters = [ filterbeforeimage ];
 },
 
-grid: function(){
-    col_width = (width/4)/4;
-    row_height = height/8;
-    x_pos=0;
-    y_pos=0;
+// grid: function(){
+//     col_width = (width/4)/4;
+//     row_height = height/8;
+//     x_pos=0;
+//     y_pos=0;
+//     pointS={};
+//     for(i=0;i<64;i++){
+//         if(pointS.point(i) === undefined){
+//             pointS.point(i) = 1;
+//         }
+//     }
+//     console.log(pointS.point20);
 
-    for(v=0;v<8;v++){
-        for(i=0;i<8;i++){
-            point = game.add.sprite(
-                x_pos+(col_width/2), 
-                y_pos+(row_height/2),
-                'greenBullet').scale.setTo(0.05);
-            x_pos = x_pos+col_width;
-        }
-        y_pos = y_pos+row_height;
-        x_pos = 0;
-    }
-},
+//     for(v=0;v<8;v++){
+//         for(i=0;i<8;i++){
+//             point = game.add.sprite(x_pos+(col_width/2), y_pos+(row_height/2), 'greenBullet').scale.setTo(0.05);
+            
+//             pointS.point;
+            
+//             x_pos = x_pos+col_width;
+//         }
+//         y_pos = y_pos+row_height;
+//         x_pos = 0;
+//     }
+// },
 
 // bullets:function(){
 //     purpleBullets = game.add.group();
