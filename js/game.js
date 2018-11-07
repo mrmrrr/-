@@ -39,8 +39,10 @@ preload:function(){
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
     game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
-    game.load.spritesheet('dots','img/dots.png',680,768,90);
+    game.load.spritesheet('dots','img/dots.png',680,768,40);
     game.load.spritesheet('m','img/m.png',61,768,32);
+
+    game.load.spritesheet('arrow','img/arrow.png',680,768,33);
 
 },
 
@@ -51,8 +53,10 @@ create:function (){
    
     game.stage.backgroundColor = '#000';
     
-    gridAnimation(); 
+    this.gridAnimation(); 
 
+
+    
 
     //Г Р А Д И Е Н Т Ы
     q = game.add.sprite(width/2, 0, 'q2');
@@ -98,19 +102,21 @@ create:function (){
 
     //КОНЕЦ В А У ЭФФЕКТА
 
+
+    //
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
     tilesprite.alpha=0;
+    // tilesprite.alpha=1;
     tilesprite.position.setTo(0,-300);
     tileTweenL = game.add.tween(tilesprite);
 
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
     tilesprite2.alpha=0;
+    // tilesprite2.alpha=1;
 
     tilesprite2.position.setTo(width/2,-300);
     tileTweenR = game.add.tween(tilesprite2);
 
-
-    // tilesprite2.alpha=0;
 
 
     right = game.add.sprite(0,0,'right');
@@ -501,17 +507,16 @@ resetGreenBullet: function (greenBullet){
 },
 render: function(){
     // game.debug.spriteBounds(dotsR);
-}
+},
 
-}
-
-function gridAnimation() {
+gridAnimation: function() {
     dotsL = game.add.sprite(0, 0, 'dots');
     dotsL.width = width / 2;
     dotsL.height = height;
     dotsL.animations.add('l');
-    dotsL.animations.play('l', 30, false);
+    dotsL.animations.play('l', 20, false);
     // dotsL.frame=73;
+    
     dotsR = game.add.sprite(0, 0, 'dots');
     dotsR.width = width / 2;
     dotsR.height = height;
@@ -519,10 +524,39 @@ function gridAnimation() {
     dotsR.scale.x *= -1;
     dotsR.position.setTo(width / 2 - (dotsR.width / 2), 0 + dotsR.height / 2);
     dotsR.animations.add('r');
-    dotsR.animations.play('r', 30, false);
-    middle = game.add.sprite(0, 0, 'm');
-    middle.height = height;
-    middle.position.setTo((width / 2) - (middle.width / 2), 0);
-    middle.animations.add('m');
-    middle.animations.play('m', 20, false);
+    dotsR.animations.play('r', 20, false);
+    
+    // middle = game.add.sprite(0, 0, 'm');
+    // middle.height = height;
+    // middle.position.setTo((width / 2) - (middle.width / 2), 0);
+    // middle.animations.add('m');
+    // middle.animations.play('m', 20, false);
+
+    arrowL = game.add.sprite(0, 0, 'arrow');
+    arrowL.width = width/2;
+    arrowL.height=height;
+    arrowL.animations.add('aL');
+    arrowL.alpha=0;
+
+    arrowR = game.add.sprite(0, 0, 'arrow');
+    arrowR.width = width/2;
+    arrowR.height=height;
+    arrowR.anchor.setTo(0.5, 0.5);
+    arrowR.scale.x *= -1;
+    arrowR.position.setTo(width / 2 - (arrowR.width / 2), 0 + arrowR.height / 2);
+    arrowR.animations.add('aR');
+    arrowR.alpha=0;
+
+    arrowTimer = game.time.create(false);
+    arrowTimer.loop(3000,this.arrowStart,this);
+    arrowTimer.start();
+},
+arrowStart: function(){
+    arrowL.alpha=1;
+    arrowL.animations.play('aL', 20, false);
+
+    arrowR.alpha=1;
+    arrowR.animations.play('aR', 20, false);
+    
+}
 }
