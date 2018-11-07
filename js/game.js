@@ -42,7 +42,7 @@ preload:function(){
     game.load.spritesheet('dots','img/dots.png',680,768,40);
     game.load.spritesheet('m','img/m.png',61,768,32);
 
-    game.load.spritesheet('arrow','img/arrow.png',680,768,33);
+    game.load.spritesheet('arrow','img/arrow.png',680,768,34);
 
 },
 
@@ -55,8 +55,6 @@ create:function (){
     
     this.gridAnimation(); 
 
-
-    
 
     //Г Р А Д И Е Н Т Ы
     q = game.add.sprite(width/2, 0, 'q2');
@@ -105,14 +103,14 @@ create:function (){
 
     //
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
-    tilesprite.alpha=0;
-    // tilesprite.alpha=1;
+    // tilesprite.alpha=0;
+    tilesprite.alpha=1;
     tilesprite.position.setTo(0,-300);
     tileTweenL = game.add.tween(tilesprite);
 
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
-    tilesprite2.alpha=0;
-    // tilesprite2.alpha=1;
+    // tilesprite2.alpha=0;
+    tilesprite2.alpha=1;
 
     tilesprite2.position.setTo(width/2,-300);
     tileTweenR = game.add.tween(tilesprite2);
@@ -170,6 +168,8 @@ create:function (){
     fire2.setXSpeed(-1000,0);
     //#endregion
     // sprite.filters = [ filterbeforeimage ];
+    xposL = left.x;
+    xposR = right.x;
 },
 
 // grid: function(){
@@ -359,8 +359,22 @@ update:function(){
 
     //  Д   Ы   М    ИЗ ПОД КОЛЕС  ****** НЕ СДЕЛАН
     //#region
+    // if(leftKey.onDown){
+    //     arrowL.animations.add('aLL');
+    //     arrowL.animations.play('aL', [25,26,27,28,29,30,31,32,33,34], true);
+    // }
+
+    //Отключает анимацию стрелки
+    if(xposL>left.x || xposR<right.x){
+        
+    }
 
     if (leftKey.isDown){   
+        
+
+
+        // arrowR.animations.add('aRR');
+
         // this.purpleFireBullet();
     }
 
@@ -548,15 +562,27 @@ gridAnimation: function() {
     arrowR.alpha=0;
 
     arrowTimer = game.time.create(false);
-    arrowTimer.loop(3000,this.arrowStart,this);
+    arrowTimer.loop(1000,this.arrowStart,this);
     arrowTimer.start();
+    
+    
+    
 },
+
 arrowStart: function(){
     arrowL.alpha=1;
-    arrowL.animations.play('aL', 20, false);
-
-    arrowR.alpha=1;
-    arrowR.animations.play('aR', 20, false);
+    arrowL.animations.play('aL', 20, false, true);
     
+    arrowR.alpha=1;
+    arrowR.animations.play('aR', 20, false,true);
+    arrowInsideTimer = game.time.create(false);
+    arrowInsideTimer.loop(1000,function(){
+        arrowL.animations.add('LL',[25,26,27,28,29,30,31,32,33,34],30);
+        arrowL.animations.play('LL',true);
+
+        arrowR.animations.add('LL',[25,26,27,28,29,30,31,32,33,34],30);
+        arrowR.animations.play('LL',true);
+    },this);
+    arrowInsideTimer.start();
 }
 }
