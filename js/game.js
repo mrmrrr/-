@@ -44,6 +44,8 @@ preload:function(){
 
     game.load.spritesheet('proval','img/proval.png',664,648,49);
     game.load.spritesheet('arrow','img/arrow.png',680,768,34);
+    game.load.spritesheet('speed','img/speed.png', 680,768,39);
+
 
 },
 
@@ -104,14 +106,14 @@ create:function (){
 
     //
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
-    // tilesprite.alpha=0;
-    tilesprite.alpha=1;
+    tilesprite.alpha=0;
+    // tilesprite.alpha=1;
     tilesprite.position.setTo(0,-300);
     tileTweenL = game.add.tween(tilesprite);
 
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
-    // tilesprite2.alpha=0;
-    tilesprite2.alpha=1;
+    tilesprite2.alpha=0;
+    // tilesprite2.alpha=1;a
 
     tilesprite2.position.setTo(width/2,-300);
     tileTweenR = game.add.tween(tilesprite2);
@@ -144,7 +146,14 @@ create:function (){
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
     
-    
+    speed = game.add.sprite(0,0,'speed');
+    speed.animations.add('speed');
+
+    speedR = game.add.sprite(0,0,'speed');
+    speedR.animations.add('speedR');
+    speedR.anchor.setTo(.5,.5);
+    speedR.scale.x *= -1;
+    speedR.position.setTo(width+(speedR.width/2),speedR.height/2);
     //ARROW
     //#region 
     // arrowLeft = game.add.sprite(50,0,'arrowLeft');
@@ -172,68 +181,13 @@ create:function (){
     // sprite.filters = [ filterbeforeimage ];
     xposL = left.x;
     xposR = right.x;
-
-   
 },
 
-// grid: function(){
-//     col_width = (width/4)/4;
-//     row_height = height/8;
-//     x_pos=0;
-//     y_pos=0;
-//     pointS={};
-//     for(i=0;i<64;i++){
-//         if(pointS.point(i) === undefined){
-//             pointS.point(i) = 1;
-//         }
-//     }
-//     console.log(pointS.point20);
 
-//     for(v=0;v<8;v++){
-//         for(i=0;i<8;i++){
-//             point = game.add.sprite(x_pos+(col_width/2), y_pos+(row_height/2), 'greenBullet').scale.setTo(0.05);
-            
-//             pointS.point;
-            
-//             x_pos = x_pos+col_width;
-//         }
-//         y_pos = y_pos+row_height;
-//         x_pos = 0;
-//     }
-// },
-
-// bullets:function(){
-//     purpleBullets = game.add.group();
-//     purpleBullets.enableBody = true;
-//     purpleBullets.physicsBodyType = Phaser.Physics.ARCADE;
-    
-//     for (var i = 0; i < 20; i++)
-//     {
-//         var b = purpleBullets.create(0, 0, 'purpleBullet');
-//         b.name = 'purpleBullet' + i;
-//         b.exists = false;
-//         b.visible = false;
-//         b.checkWorldBounds = true;
-//         b.events.onOutOfBounds.add(this.resetPurpleBullet, this);
-//     }
-
-//     greenBullets = game.add.group();
-//     greenBullets.enableBody = true;
-//     greenBullets.physicsBodyType = Phaser.Physics.ARCADE;
-
-//     for (var i = 0; i < 20; i++)
-//     {
-//         var b = greenBullets.create(0, 0, 'greenBullet');
-//         b.name = 'purpleBullet' + i;
-//         b.exists = false;
-//         b.visible = false;
-//         b.checkWorldBounds = true;
-//         b.events.onOutOfBounds.add(this.resetGreenBullet, this);
-//     }
-// },
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 leftDuck: function(){
+    
     if(leftKey.isDown && left.x < width/4 ){
         qTween.to({
                 alpha:1,
@@ -247,12 +201,14 @@ leftDuck: function(){
         },1000,'Linear',true);
 
         left.angle=10;
-        left.x -=45;
+        left.x -=15;
         
         leftRocket.alpha =1;
         leftRocket.angle=15;
         leftRocket.scale.setTo(0.5);
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
+
+        speed.animations.play('speed', 20,true);
         
         fire.position.setTo(leftRocket.x+leftRocket.width-150, leftRocket.y-(leftRocket.height/2)+50)
         fire.start(true,500,null,10);
@@ -263,6 +219,7 @@ leftDuck: function(){
 },
 
 rightDuck: function(){
+
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
         
         q2Tween.to({
@@ -277,14 +234,14 @@ rightDuck: function(){
         },1000,'Linear',true);
         
         right.angle=-10;
-        
-        right.x +=45;
+        right.x +=15;
 
         rightRocket.alpha =1;
         rightRocket.angle=-10;
-
         rightRocket.scale.setTo(0.5);
         
+        speedR.animations.play('speedR', 20,true);
+
         fire2.position.setTo(rightRocket.x-50, rightRocket.y-(rightRocket.height/2))
         fire2.start(true,500,null,10);
     }else{
@@ -344,7 +301,6 @@ update:function(){
         
         tilesprite.kill();
         tilesprite2.kill();
-
 
         this.leftWIN();
     } 
@@ -440,6 +396,8 @@ leftWIN: function (){
     glass.scale.setTo(0.5,0.5);
     glass.animations.add('glassCrack');
     glass.animations.play('glassCrack', 10,false);
+
+
 },
 rightWIN : function (){
     rightKey.enabled = false;
@@ -495,45 +453,7 @@ abyss: function (){
     sprite.filters = [ filterbeforeimage ];
 },  
 
-// purpleFireBullet: function (){
 
-//     if (game.time.now > purpleBulletTime)
-//     {
-//         purpleBullet = purpleBullets.getFirstExists(false);
-
-//         if (purpleBullet)
-//         {
-
-//             purpleBullet.reset(width/2, game.rnd.integerInRange(0, height - purpleBullet.height));
-//             purpleBullet.body.velocity.x = -1000;
-//             purpleBulletTime = game.time.now + 250;
-            
-//         }
-//     }
-// },
-
-// greenFireBullet: function (){
-
-//     if (game.time.now > greenBulletTime){
-
-//         greenBullet = greenBullets.getFirstExists(false);
-        
-//         if (greenBullet){
-
-//             greenBullet.reset(width/2, game.rnd.integerInRange(0, height-greenBullet.height));
-//             greenBullet.body.velocity.x = 1000;
-//             greenBulletTime = game.time.now + 250;
-
-//         }
-//     }
-// },
-//  Called if the bullet goes out of the screen
-resetPurpleBullet: function (purpleBullet) {
-    purpleBullet.kill();
-},
-resetGreenBullet: function (greenBullet){
-    greenBullet.kill();
-},
 render: function(){
     // game.debug.spriteBounds(dotsR);
 },
@@ -579,9 +499,6 @@ gridAnimation: function() {
     arrowTimer = game.time.create(false);
     arrowTimer.loop(1000,this.arrowStart,this);
     arrowTimer.start();
-    
-    
-    
 },
 
 arrowStart: function(){
@@ -603,3 +520,100 @@ arrowStart: function(){
 }
 
 
+// grid: function(){
+//     col_width = (width/4)/4;
+//     row_height = height/8;
+//     x_pos=0;
+//     y_pos=0;
+//     pointS={};
+//     for(i=0;i<64;i++){
+//         if(pointS.point(i) === undefined){
+//             pointS.point(i) = 1;
+//         }
+//     }
+//     console.log(pointS.point20);
+
+//     for(v=0;v<8;v++){
+//         for(i=0;i<8;i++){
+//             point = game.add.sprite(x_pos+(col_width/2), y_pos+(row_height/2), 'greenBullet').scale.setTo(0.05);
+            
+//             pointS.point;
+            
+//             x_pos = x_pos+col_width;
+//         }
+//         y_pos = y_pos+row_height;
+//         x_pos = 0;
+//     }
+// },
+
+// bullets:function(){
+//     purpleBullets = game.add.group();
+//     purpleBullets.enableBody = true;
+//     purpleBullets.physicsBodyType = Phaser.Physics.ARCADE;
+    
+//     for (var i = 0; i < 20; i++)
+//     {
+//         var b = purpleBullets.create(0, 0, 'purpleBullet');
+//         b.name = 'purpleBullet' + i;
+//         b.exists = false;
+//         b.visible = false;
+//         b.checkWorldBounds = true;
+//         b.events.onOutOfBounds.add(this.resetPurpleBullet, this);
+//     }
+
+//     greenBullets = game.add.group();
+//     greenBullets.enableBody = true;
+//     greenBullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+//     for (var i = 0; i < 20; i++)
+//     {
+//         var b = greenBullets.create(0, 0, 'greenBullet');
+//         b.name = 'purpleBullet' + i;
+//         b.exists = false;
+//         b.visible = false;
+//         b.checkWorldBounds = true;
+//         b.events.onOutOfBounds.add(this.resetGreenBullet, this);
+//     }
+// },
+
+
+
+// purpleFireBullet: function (){
+
+//     if (game.time.now > purpleBulletTime)
+//     {
+//         purpleBullet = purpleBullets.getFirstExists(false);
+
+//         if (purpleBullet)
+//         {
+
+//             purpleBullet.reset(width/2, game.rnd.integerInRange(0, height - purpleBullet.height));
+//             purpleBullet.body.velocity.x = -1000;
+//             purpleBulletTime = game.time.now + 250;
+            
+//         }
+//     }
+// },
+
+// greenFireBullet: function (){
+
+//     if (game.time.now > greenBulletTime){
+
+//         greenBullet = greenBullets.getFirstExists(false);
+        
+//         if (greenBullet){
+
+//             greenBullet.reset(width/2, game.rnd.integerInRange(0, height-greenBullet.height));
+//             greenBullet.body.velocity.x = 1000;
+//             greenBulletTime = game.time.now + 250;
+
+//         }
+//     }
+// },
+//  Called if the bullet goes out of the screen
+// resetPurpleBullet: function (purpleBullet) {
+//     purpleBullet.kill();
+// },
+// resetGreenBullet: function (greenBullet){
+//     greenBullet.kill();
+// },
