@@ -113,7 +113,7 @@ create:function (){
 
     tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
     tilesprite2.alpha=0;
-    // tilesprite2.alpha=1;a
+    // tilesprite2.alpha=1;
 
     tilesprite2.position.setTo(width/2,-300);
     tileTweenR = game.add.tween(tilesprite2);
@@ -183,8 +183,6 @@ create:function (){
     xposR = right.x;
 },
 
-
-
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 leftDuck: function(){
     
@@ -214,7 +212,7 @@ leftDuck: function(){
         fire.start(true,500,null,10);
         
     }else{
-        left.x -=40;
+        left.x -=13;
     }
 },
 
@@ -245,7 +243,7 @@ rightDuck: function(){
         fire2.position.setTo(rightRocket.x-50, rightRocket.y-(rightRocket.height/2))
         fire2.start(true,500,null,10);
     }else{
-        right.x +=40;
+        right.x +=13;
     }
 },
         
@@ -270,6 +268,11 @@ update:function(){
     }
     //#endregion
 
+
+    //Б Э К Г Р А У Н Д  становится   Б Е Л Ы Й
+    if(leftRocket.alpha == 1 && rightRocket.alpha == 1){
+        game.stage.backgroundColor = '#fff';
+    }
     
     // filterbeforeimage.update();
 
