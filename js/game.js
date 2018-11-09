@@ -42,6 +42,7 @@ preload:function(){
     game.load.spritesheet('dots','img/dots.png',680,768,40);
     game.load.spritesheet('m','img/m.png',61,768,32);
 
+    game.load.spritesheet('proval','img/proval.png',664,648,49);
     game.load.spritesheet('arrow','img/arrow.png',680,768,34);
 
 },
@@ -143,6 +144,7 @@ create:function (){
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
     
+    
     //ARROW
     //#region 
     // arrowLeft = game.add.sprite(50,0,'arrowLeft');
@@ -170,6 +172,8 @@ create:function (){
     // sprite.filters = [ filterbeforeimage ];
     xposL = left.x;
     xposR = right.x;
+
+   
 },
 
 // grid: function(){
@@ -231,7 +235,6 @@ create:function (){
 //  Ш А Г    У В Е Л И Ч Е Н И Я
 leftDuck: function(){
     if(leftKey.isDown && left.x < width/4 ){
-        
         qTween.to({
                 alpha:1,
                 // x:0+1,
@@ -244,7 +247,7 @@ leftDuck: function(){
         },1000,'Linear',true);
 
         left.angle=10;
-        left.x -=15;
+        left.x -=45;
         
         leftRocket.alpha =1;
         leftRocket.angle=15;
@@ -275,7 +278,7 @@ rightDuck: function(){
         
         right.angle=-10;
         
-        right.x +=15;
+        right.x +=45;
 
         rightRocket.alpha =1;
         rightRocket.angle=-10;
@@ -420,6 +423,18 @@ leftWIN: function (){
 
     game.add.text(width/2 +50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
     
+    proval = game.add.sprite(0,0,'proval');
+    proval.alpha=0.01;
+    // proval.scale.setTo(1.3,1.3);
+    proval.position.setTo(width/2-100,height-proval.height);
+    proval.animations.add('p');
+    
+    provalTimer = game.time.create(false);
+    provalTimer.loop(1500,function(){
+        proval.alpha=1;
+        proval.animations.play('p', 20, true);
+    },this);
+    provalTimer.start();
     //GLASS ANIM
     glass = game.add.sprite(width/2,0,'glass');
     glass.scale.setTo(0.5,0.5);
@@ -586,3 +601,5 @@ arrowStart: function(){
     arrowInsideTimer.start();
 }
 }
+
+
