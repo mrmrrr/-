@@ -421,7 +421,7 @@ leftWIN: function (){
     s.body.bounce.setTo(0.5, 0.8);
     s.body.gravity.y =2000;
 
-    game.add.text(width/2 +50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
+    // game.add.text(width/2 +50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
     
     proval = game.add.sprite(0,0,'proval');
     proval.alpha=0.01;
