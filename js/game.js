@@ -14,6 +14,7 @@ var bmd;
 // var Left;
 var starTween;
 
+
 var gameState = {
 
 preload:function(){
@@ -40,7 +41,7 @@ preload:function(){
     game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
     game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
     game.load.spritesheet('dots','img/dots.png',680,768,40);
-    game.load.spritesheet('m','img/m.png',61,768,32);
+    // game.load.spritesheet('m','img/m.png',61,768,32);
 
     game.load.spritesheet('proval','img/proval.png',664,648,49);
     game.load.spritesheet('arrow','img/arrow.png',680,768,34);
@@ -58,6 +59,7 @@ create:function (){
     
     this.gridAnimation(); 
 
+  
 
     //Г Р А Д И Е Н Т Ы
     q = game.add.sprite(width/2, 0, 'q2');
@@ -181,9 +183,21 @@ create:function (){
     // sprite.filters = [ filterbeforeimage ];
     xposL = left.x;
     xposR = right.x;
+    
+    rect1 = game.add.group();
+    rect2 = game.add.group();
+
+    pointS=game.add.group();
+    pointS2=game.add.group();
+
+    pointSR=game.add.group();
+
+
+    this.grid();
+
 },
 
-//  Ш А Г    У В Е Л И Ч Е Н И Я
+//  Ш А Г    У В Е Л И Ч Е Н И Я и появляется РАКЕТА и чтото с тайлами
 leftDuck: function(){
     
     if(leftKey.isDown && left.x < width/4 ){
@@ -212,7 +226,7 @@ leftDuck: function(){
         fire.start(true,500,null,10);
         
     }else{
-        left.x -=13;
+        left.x -=43;
     }
 },
 
@@ -243,8 +257,120 @@ rightDuck: function(){
         fire2.position.setTo(rightRocket.x-50, rightRocket.y-(rightRocket.height/2))
         fire2.start(true,500,null,10);
     }else{
-        right.x +=13;
+        right.x +=43;
     }
+},
+
+grid: function(){
+    col_width = (width/2)/20;
+    row_height = (height)/20;
+    x_pos=0;
+    y_pos=0;
+
+    for(v=0;v<20;v++){
+        for(i=0;i<20;i++){
+            
+            pointS.create(x_pos+(col_width/2), y_pos+(row_height/2), 'greenBullet').scale.setTo(0.03);
+            x_pos = x_pos+col_width;
+        }
+
+        y_pos = y_pos+row_height;
+        x_pos = 0;
+    }
+    
+
+
+    
+    col_width2 = (width/2)/20;
+    row_height2 = (height)/20;
+    x_pos2=col_width/2;
+    y_pos2=row_height/2;
+
+    for(v=0;v<20;v++){
+        for(i=0;i<19;i++){
+            
+            pointS2.create(x_pos2+(col_width2/2), y_pos2+(row_height2/2), 'purpleBullet').scale.setTo(0.03);
+            x_pos2 = x_pos2+col_width2;
+        }
+
+        y_pos2 = y_pos2+row_height2;
+        x_pos2 = col_width/2;
+    }
+
+    // pointS
+    
+    // //присвоить имена элементам массива
+    // for(i=0;i<pointS.length;i++){
+    //     pointS.children[i].name='p'+i;
+    // }
+    //первый ректангл
+    //Левая часть ректангла
+    //верхняя сторона
+    // for(i=0;i<8;i++){
+    //     rect1.add(pointS.children[i]);
+    //     pointS.addAt(game.add.sprite(0,0),i);
+    // }
+    // //боковая сторона
+    // for(i=0;i<64;i=i+8){
+    //     // i= i+8;
+    //     rect1.add(pointS.children[i]);
+    //     pointS.addAt(game.add.sprite(0,0),i);
+    // }
+    // //нижняя сторона
+    // for(i=56;i<64;i++){
+    //     rect1.add(pointS.children[i]);
+    //     pointS.addAt(game.add.sprite(0,0),i);
+    // }
+    // //Правая часть ректангла
+    // x_pos_Right=width/2;
+    // y_pos=0;
+    // for(v=0;v<8;v++){
+    //     for(i=0;i<8;i++){
+    //         pointSR.create(x_pos_Right+(col_width/2), y_pos+(row_height/2), 'purpleBullet').scale.setTo(0.05);
+    //         x_pos_Right = x_pos_Right+col_width;
+    //     }
+    //     y_pos = y_pos+row_height;
+    //     x_pos_Right = width/2;
+    // }
+    // //верхняя сторона
+    // for(i=0;i<8;i++){
+    //     rect2.add(pointSR.children[i]);
+    //     pointSR.addAt(game.add.sprite(0,0),i);
+    // }
+    // //боковая сторона
+    // for(i=7;i<64;i=i+8){
+    //     // i= i+8;
+    //     rect2.add(pointSR.children[i]);
+    //     pointSR.addAt(game.add.sprite(0,0),i);
+    // }
+    // //нижняя сторона
+    // for(i=56;i<64;i++){
+    //     rect2.add(pointSR.children[i]);
+    //     pointSR.addAt(game.add.sprite(0,0),i);
+    // }
+    // //движение к центру и рандом по времени
+    // for(i=0;i<rect1.length;i++){
+    //     pointTween = game.add.tween(rect1.children[i]).to({
+    //         x:width/2,
+    //         y:height/2,
+    //         width:5,
+    //         height:5
+    //     },game.rnd.integerInRange(2000,3000),
+    //     Phaser.Easing.Exponential.InOut,true);
+
+    //     pointTween2 = game.add.tween(rect2.children[i]).to({
+    //         x:width/2,
+    //         y:height/2,
+    //         width:5,
+    //         height:5
+    //     },game.rnd.integerInRange(2000,3000),
+    //     Phaser.Easing.Exponential.InOut,true);
+    // }
+    
+
+    //***************************************
+    // второй ректангл
+
 },
         
 update:function(){
@@ -321,10 +447,7 @@ update:function(){
 
     //  Д   Ы   М    ИЗ ПОД КОЛЕС  ****** НЕ СДЕЛАН
     //#region
-    // if(leftKey.onDown){
-    //     arrowL.animations.add('aLL');
-    //     arrowL.animations.play('aL', [25,26,27,28,29,30,31,32,33,34], true);
-    // }
+  
 
     //Отключает анимацию стрелки
     if(xposL>left.x || xposR<right.x){
@@ -335,7 +458,6 @@ update:function(){
         
 
 
-        // arrowR.animations.add('aRR');
 
         // this.purpleFireBullet();
     }
@@ -410,7 +532,6 @@ rightWIN : function (){
     right.alpha = 0;
     rightRocket.alpha = 0;
 
-        
     game.camera.shake(0.05, 700);
 
     //L I K E
@@ -523,31 +644,7 @@ arrowStart: function(){
 }
 
 
-// grid: function(){
-//     col_width = (width/4)/4;
-//     row_height = height/8;
-//     x_pos=0;
-//     y_pos=0;
-//     pointS={};
-//     for(i=0;i<64;i++){
-//         if(pointS.point(i) === undefined){
-//             pointS.point(i) = 1;
-//         }
-//     }
-//     console.log(pointS.point20);
 
-//     for(v=0;v<8;v++){
-//         for(i=0;i<8;i++){
-//             point = game.add.sprite(x_pos+(col_width/2), y_pos+(row_height/2), 'greenBullet').scale.setTo(0.05);
-            
-//             pointS.point;
-            
-//             x_pos = x_pos+col_width;
-//         }
-//         y_pos = y_pos+row_height;
-//         x_pos = 0;
-//     }
-// },
 
 // bullets:function(){
 //     purpleBullets = game.add.group();
