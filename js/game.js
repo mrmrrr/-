@@ -205,7 +205,9 @@ create:function (){
     points_pink = game.add.group();
     points_purple = game.add.group();
     pointSR = game.add.group();
-   
+    arr=game.add.group();
+    timer=game.time.create(false);
+    timer.loop(1500,timerFunc);
     this.grid();
 
 },
@@ -705,11 +707,11 @@ grid: function(){
     // Левая часть ректангла
     // верхняя сторона
     for(i=189;i<200;i++){
-        rect17.add(points_pink.children[i]);
+        rect19.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
     for(i=209;i<220;i++){
-        rect17.add(points_pink.children[i]);
+        rect19.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
     
@@ -740,30 +742,60 @@ grid: function(){
     rect16.alpha=0;
     rect17.alpha=0;
     rect18.alpha=0;
-    
-    
-    rect19.alpha=1;
-    rect19.name='rect19';
+    rect19.alpha=0;
     rect20.alpha=0;
-    rect20.name='rect20';
 
-    arr=game.add.group();
-
+    arr.add(rect1);
+    arr.add(rect2);
+    arr.add(rect3);
+    arr.add(rect4);
+    arr.add(rect5);
+    arr.add(rect6);
+    arr.add(rect7);
+    arr.add(rect8);
+    arr.add(rect9);
+    arr.add(rect10);
+    arr.add(rect11);
+    arr.add(rect12);
+    arr.add(rect13);
+    arr.add(rect14);
+    arr.add(rect15);
+    arr.add(rect16);
+    arr.add(rect17);
+    arr.add(rect18);
     arr.add(rect19);
     arr.add(rect20);
-    this.rectAnim();
+    
+    timer.start();
+    // this.rectAnim();
     
 },
-
+timerFunc: function(){
+    for(i=0;i<arr.length;i++){
+        arr.children[i].alpha=1;
+    }
+},
 rectAnim: function(){
    
     // arr.forEach(function(item,i,arr){
+    //     // item.alpha=1;
     //     for(b=0;b<item.length;b++){
     //         game.add.tween(item.children[b]).to({
-    //             x:1
-    //         },2000,'Linear',true);
+    //             x:width/2,
+    //             y:height/2,
+    //             width:0.01,
+    //             height:0.01
+    //         },game.rnd.integerInRange(2000,3000),'Linear',true);
     //     }
     // });
+
+    arr.forEach(function(item,i,arr){
+        for(b=0;b<item.length;b++){
+            item.children[b].alpha=1;
+
+
+        }
+    });
 
         // for(i=0;i<rect20.length;i++){
         //     rect20.children[i].alpha=0;
