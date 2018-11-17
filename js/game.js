@@ -57,7 +57,6 @@ create:function (){
    
     game.stage.backgroundColor = '#000';
     
-    // this.gridAnimation(); 
 
   
 
@@ -119,8 +118,6 @@ create:function (){
 
     tilesprite2.position.setTo(width/2,-300);
     tileTweenR = game.add.tween(tilesprite2);
-
-
 
     right = game.add.sprite(0,0,'right');
     right.scale.setTo(0.5);
@@ -241,6 +238,8 @@ leftDuck: function(){
         
         fire.position.setTo(leftRocket.x+leftRocket.width-150, leftRocket.y-(leftRocket.height/2)+50)
         fire.start(true,500,null,10);
+
+        
         
     }else{
         left.x -=43;
@@ -284,6 +283,7 @@ grid: function(){
     row_height = (height)/20;
     x_pos=0;
     y_pos=0;
+
     for(v=0;v<20;v++){
         for(i=0;i<20;i++){
             points_pink.create(x_pos+(col_width/2), y_pos+(row_height/2), 'greenBullet').scale.setTo(0.03);
@@ -309,7 +309,7 @@ grid: function(){
 
 
     //***************************************
-    // 🎀 Первый ректангл
+    // 🎀 1 ректангл
     // Левая часть ректангла
     // верхняя сторона
     for(i=0;i<20;i++){
@@ -372,11 +372,10 @@ grid: function(){
     //     },game.rnd.integerInRange(2000,3000),
     //     Phaser.Easing.Exponential.InOut,true);
     // }
-    
     rect1.alpha=0;
 
-    //***************************************
-    // 💜 Второй ректангл  
+
+    // 💜 2 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=0;i<19;i++){
@@ -385,7 +384,6 @@ grid: function(){
     }
     //боковая сторона
     for(i=0;i<360;i=i+19){
-        // i= i+8;
         rect2.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
@@ -397,12 +395,10 @@ grid: function(){
     rect2.alpha=0;
 
 
-    //***************************************
-    // 🎀 Третий ректангл 
+    // 🎀 3 ректангл 
     // Левая часть ректангла
     // верхняя сторона
     for(i=21;i<40;i++){
-        // i=19;
         rect3.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
@@ -416,61 +412,55 @@ grid: function(){
         rect3.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-
     rect3.alpha=0;
 
     
-    //***************************************
-    // 💜 Четвертый ректангл  
+    // 💜 4 ректангл  
     // Левая часть ректангла
     // верхняя сторона
-    for(i=20;i<39;i++){
-        // i=19;
+    for(i=20;i<38;i++){
         rect4.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
     //боковая сторона
-    for(i=20;i<361;i=i+19){
+    for(i=39;i<325;i=i+19){
         rect4.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
     // нижняя сторона
-    for(i=324;i<342;i++){
+    for(i=325;i<342;i++){
         rect4.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-
     rect4.alpha=0;
 
-    // //***************************************
-    // // 🎀 5 ректангл 
-    // // Левая часть ректангла
-    // // верхняя сторона
-    // // points_pink.children[21].alpha=0;
-    // for(i=20;i<39;i++){
-    //     // i=19;
-    //     rect4.add(points_purple.children[i]);
-    //     points_purple.addAt(game.add.sprite(0,0),i);
-    // }
-    // //боковая сторона
-    // for(i=20;i<361;i=i+19){
-    //     rect4.add(points_purple.children[i]);
-    //     points_purple.addAt(game.add.sprite(0,0),i);
-    // }
-    // // нижняя сторона
-    // for(i=324;i<342;i++){
-    //     rect4.add(points_purple.children[i]);
-    //     points_purple.addAt(game.add.sprite(0,0),i);
-    // }
 
-    // rect5.alpha=0;
 
-    //***************************************
+    // 🎀 5 ректангл 
+    // Левая часть ректангла
+    // верхняя сторона
+    for(i=42;i<60;i++){
+        rect5.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    //боковая сторона
+    for(i=62;i<343;i=i+20){
+        rect5.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    // нижняя сторона
+    for(i=343;i<360;i++){
+        rect5.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    rect5.alpha=0;
+
+
+
     // 💜 6 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=40;i<59;i++){
-        // i=19;
         rect6.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
@@ -481,18 +471,37 @@ grid: function(){
     }
     // нижняя сторона
     for(i=306;i<325;i++){
-        rect4.add(points_purple.children[i]);
+        rect6.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-
     rect6.alpha=0;
 
-    //***************************************
+
+
+    // 🎀 7 ректангл 
+    // Левая часть ректангла
+    // верхняя сторона
+    for(i=63;i<80;i++){
+        rect7.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    //боковая сторона
+    for(i=83;i<324;i=i+20){
+        rect7.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    // нижняя сторона
+    for(i=324;i<340;i++){
+        rect7.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    rect7.alpha=0;
+
+
     // 💜 8 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=60;i<79;i++){
-        // i=19;
         rect8.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
@@ -509,12 +518,30 @@ grid: function(){
     rect8.alpha=0;
 
 
-    //***************************************
+    // 🎀 9 ректангл 
+    // Левая часть ректангла
+    // верхняя сторона
+    for(i=84;i<100;i++){
+        rect9.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    //боковая сторона
+    for(i=104;i<305;i=i+20){
+        rect9.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    // нижняя сторона
+    for(i=305;i<320;i++){
+        rect9.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    rect9.alpha=0;
+
+
     // 💜 10 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=80;i<99;i++){
-        // i=19;
         rect10.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
@@ -530,12 +557,31 @@ grid: function(){
     }
     rect10.alpha=0;
 
-    //***************************************
+
+    // 🎀 11 ректангл 
+    // Левая часть ректангла
+    // верхняя сторона
+    for(i=105;i<120;i++){
+        rect11.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    //боковая сторона
+    for(i=125;i<286;i=i+20){
+        rect11.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    // нижняя сторона
+    for(i=286;i<300;i++){
+        rect11.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    rect11.alpha=0;
+
+
     // 💜 12 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=100;i<114;i++){
-        // i=19;
         rect12.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
@@ -551,12 +597,31 @@ grid: function(){
     }
     rect12.alpha=0;
 
-    //***************************************
+
+    // 🎀 13 ректангл 
+    // Левая часть ректангла
+    // верхняя сторона
+    for(i=126;i<140;i++){
+        rect13.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    //боковая сторона
+    for(i=146;i<267;i=i+20){
+        rect13.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    // нижняя сторона
+    for(i=267;i<280;i++){
+        rect13.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    rect13.alpha=0;
+
+
     // 💜 14 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=120;i<133;i++){
-        // i=19;
         rect14.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
@@ -573,12 +638,30 @@ grid: function(){
     rect14.alpha=0;
 
     
-    //***************************************
+    // 🎀 15 ректангл 
+    // Левая часть ректангла
+    // верхняя сторона
+    for(i=147;i<160;i++){
+        rect15.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    //боковая сторона
+    for(i=167;i<248;i=i+20){
+        rect15.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    // нижняя сторона
+    for(i=248;i<260;i++){
+        rect15.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    rect15.alpha=0;
+
+
     // 💜 16 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=140;i<159;i++){
-        // i=19;
         rect16.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
@@ -594,12 +677,31 @@ grid: function(){
     }
     rect16.alpha=0;
 
-    //***************************************
+
+    // 🎀 17 ректангл 
+    // Левая часть ректангла
+    // верхняя сторона
+    for(i=168;i<180;i++){
+        rect17.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    //боковая сторона
+    for(i=188;i<229;i=i+20){
+        rect17.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    // нижняя сторона
+    for(i=229;i<240;i++){
+        rect17.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    rect17.alpha=0;
+
+
     // 💜 18 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=160;i<171;i++){
-        // i=19;
         rect18.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
@@ -615,20 +717,48 @@ grid: function(){
     }
     rect18.alpha=0;
 
-    //***************************************
+
+
+    // 🎀 19 ректангл 
+    // Левая часть ректангла
+    // верхняя сторона
+    for(i=189;i<200;i++){
+        rect17.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    for(i=209;i<220;i++){
+        rect17.add(points_pink.children[i]);
+        points_pink.addAt(game.add.sprite(0,0),i);
+    }
+    rect19.alpha=0;
+
+
     // 💜 20 ректангл  
     // Левая часть ректангла
     // верхняя сторона
     for(i=180;i<190;i++){
-        // i=19;
         rect20.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect20.alpha=0;
-
+    // rect20.alpha=0;
+    for(i=0;i<rect20.length;i++){
+        game.add.tween(rect20.children[i]).from({
+            x:0
+        },1000+(100*i),'Linear',true);
+    }
 },
         
 update:function(){
+
+
+    if(left.x<width/4){
+    // rect20.alpha=1;
+        
+        game.add.tween(rect20).to({
+            x:0,
+            y:0
+        },3000,'Linear',true);
+    }
 
     //Т А Й Л Я Т С Я    З В Е З Д Ы
     //#region
@@ -702,18 +832,12 @@ update:function(){
 
     //  Д   Ы   М    ИЗ ПОД КОЛЕС  ****** НЕ СДЕЛАН
     //#region
-  
-
     //Отключает анимацию стрелки
     if(xposL>left.x || xposR<right.x){
         
     }
 
     if (leftKey.isDown){   
-        
-
-
-
         // this.purpleFireBullet();
     }
 
