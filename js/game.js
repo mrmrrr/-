@@ -300,7 +300,7 @@ grid: function(){
     y_pos2=row_height/2;
     for(v=0;v<19;v++){
         for(i=0;i<19;i++){
-            points_purple.create(x_pos2+(col_width2/2), y_pos2+(row_height2/2),'purpleBullet').scale.setTo(0.03);
+            points_purple.create(x_pos2+(col_width2/2), y_pos2+(row_height2/2),'greenBullet').scale.setTo(0.03);
             x_pos2 = x_pos2+col_width2;
         }
         y_pos2 = y_pos2+row_height2;
@@ -742,7 +742,7 @@ grid: function(){
     rect17.alpha=0;
     rect18.alpha=0;
     rect19.alpha=0;
-    rect20.alpha=1;
+    rect20.alpha=0;
 
     arr.add(rect1);
     arr.add(rect2);
@@ -771,24 +771,132 @@ grid: function(){
 },
 
 rectAnim: function(){
-    for(i=20;i<arr.length;i++){
+
+    revealTime = 80;
+    fadeTime = 100;
+    ease = Phaser.Easing.Linear.In;
+
+    r20=game.add.tween(rect20);
+    r20.to({alpha:1},revealTime,ease,true).onComplete.add(r18,this);
+    
+    function r18(){
+        tween=game.add.tween(rect18);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r16,this);
+        game.add.tween(rect20).to({alpha:0},fadeTime,ease,true);
+
+        game.add.tween(rect19).to({alpha:0},fadeTime,ease,true);
+    }
+    function r16(){
+        tween=game.add.tween(rect16);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r14,this);
+        game.add.tween(rect18).to({alpha:0},fadeTime,ease,true);
+
+        game.add.tween(rect17).to({alpha:0},fadeTime,ease,true);
+    }
+    function r14(){
+        tween=game.add.tween(rect14);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r12,this);
+        game.add.tween(rect15).to({alpha:0},fadeTime,ease,true);
+
+        game.add.tween(rect16).to({alpha:0},fadeTime,ease,true);
+    }
+    function r12(){
+        tween=game.add.tween(rect12);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r10,this);
+        game.add.tween(rect13).to({alpha:0},fadeTime,ease,true);
+
+        game.add.tween(rect14).to({alpha:0},fadeTime,ease,true);
+    }
+    function r10(){
+        tween=game.add.tween(rect10);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r8,this);
+        game.add.tween(rect11).to({alpha:0},fadeTime,ease,true);
+
+        game.add.tween(rect12).to({alpha:0},fadeTime,ease,true);
+    }
+    function r8(){
+        tween=game.add.tween(rect8);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r6,this);
+        game.add.tween(rect9).to({alpha:0},fadeTime,ease,true);
+
+        game.add.tween(rect10).to({alpha:0},fadeTime,ease,true);
+    }
+    function r6(){
+        tween=game.add.tween(rect6);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r4,this);
+        game.add.tween(rect7).to({alpha:0},fadeTime,ease,true);
+
+        game.add.tween(rect8).to({alpha:0},fadeTime,ease,true);
 
     }
+    function r4(){
+        tween=game.add.tween(rect4);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r2,this);
+        game.add.tween(rect5).to({alpha:0},fadeTime,ease,true);
 
+        game.add.tween(rect6).to({alpha:0},fadeTime,ease,true);
+
+    }
+    function r2(){
+        tween=game.add.tween(rect2);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r1,this);
+        game.add.tween(rect3).to({alpha:0},fadeTime,ease,true);
+    }
+    function r1(){
+        tween=game.add.tween(rect1);
+        tween.to({alpha:1},revealTime,ease,true);
+        game.add.tween(rect2).to({alpha:0},fadeTime,ease,true);
+
+        game.add.tween(rect4).to({alpha:0},fadeTime,ease,true);
+    }
+
+    //Inner points
+    function r19(){
+        tween=game.add.tween(rect19);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r18,this);
+        game.add.tween(rect20).to({alpha:0},fadeTime,ease,true);
+    }
+    function r17(){
+        tween=game.add.tween(rect17);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r16,this);
+        game.add.tween(rect18).to({alpha:0},fadeTime,ease,true);
+    }
+    function r15(){
+        tween=game.add.tween(rect15);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r14,this);
+        game.add.tween(rect16).to({alpha:0},fadeTime,ease,true);
+    }
+    function r13(){
+        tween=game.add.tween(rect13);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r12,this);
+        game.add.tween(rect14).to({alpha:0},fadeTime,ease,true);
+    }
+    function r11(){
+        tween=game.add.tween(rect11);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r10,this);
+        game.add.tween(rect12).to({alpha:0},fadeTime,ease,true);
+    }
+    function r9(){
+        tween=game.add.tween(rect9);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r8,this);
+        game.add.tween(rect10).to({alpha:0},fadeTime,ease,true);
+    }
+    function r7(){
+        tween=game.add.tween(rect7);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r6,this);
+        game.add.tween(rect8).to({alpha:0},fadeTime,ease,true);
+    }
+    function r5(){
+        tween=game.add.tween(rect5);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r4,this);
+        game.add.tween(rect6).to({alpha:0},fadeTime,ease,true);
+    }
+    function r3(){
+        tween=game.add.tween(rect3);
+        tween.to({alpha:1},revealTime,ease,true).onComplete.add(r2,this);
+        game.add.tween(rect4).to({alpha:0},fadeTime,ease,true);
+    }
     
-    // arr.forEach(function(item,i,arr){
-    //     // item.alpha=1;
-    //     for(b=0;b<item.length;b++){
-    //         game.add.tween(item.children[b]).to({
-    //             x:width/2,
-    //             y:height/2,
-    //             width:0.01,
-    //             height:0.01
-    //         },game.rnd.integerInRange(2000,3000),'Linear',true);
-    //     }
-    // });
-
-            
 
 
     
