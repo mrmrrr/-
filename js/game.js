@@ -78,9 +78,7 @@ create:function (){
     
     
     // STARS = [];
-
     // for( k = 0; k < 50; k++ ){
-
     //     star = game.add.sprite(
     //         game.rnd.integerInRange(0,width/2),
     //         game.rnd.integerInRange(0,height),
@@ -206,8 +204,7 @@ create:function (){
     points_purple = game.add.group();
     pointSR = game.add.group();
     arr=game.add.group();
-    timer=game.time.create(false);
-    timer.loop(1500,timerFunc);
+    
     this.grid();
 
 },
@@ -279,6 +276,8 @@ rightDuck: function(){
 },
 
 grid: function(){
+
+    //#region POINTS GROUPs
     // розовые points_pink
     col_width = (width/2)/20;
     row_height = (height)/20;
@@ -723,7 +722,7 @@ grid: function(){
         rect20.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-
+//#endregion
     rect1.alpha=0;
     rect2.alpha=0;
     rect3.alpha=0;
@@ -743,7 +742,7 @@ grid: function(){
     rect17.alpha=0;
     rect18.alpha=0;
     rect19.alpha=0;
-    rect20.alpha=0;
+    rect20.alpha=1;
 
     arr.add(rect1);
     arr.add(rect2);
@@ -766,17 +765,17 @@ grid: function(){
     arr.add(rect19);
     arr.add(rect20);
     
-    timer.start();
-    // this.rectAnim();
+    
+    this.rectAnim();
     
 },
-timerFunc: function(){
-    for(i=0;i<arr.length;i++){
-        arr.children[i].alpha=1;
-    }
-},
+
 rectAnim: function(){
-   
+    for(i=20;i<arr.length;i++){
+
+    }
+
+    
     // arr.forEach(function(item,i,arr){
     //     // item.alpha=1;
     //     for(b=0;b<item.length;b++){
@@ -789,20 +788,7 @@ rectAnim: function(){
     //     }
     // });
 
-    arr.forEach(function(item,i,arr){
-        for(b=0;b<item.length;b++){
-            item.children[b].alpha=1;
-
-
-        }
-    });
-
-        // for(i=0;i<rect20.length;i++){
-        //     rect20.children[i].alpha=0;
-        //     game.add.tween(rect20.children[i]).to({
-        //         alpha:1
-        //     },1000,'Linear',true);
-        // }
+            
 
 
     
@@ -917,9 +903,6 @@ rectAnim: function(){
 },
         
 update:function(){
-
-      
-
     //Т А Й Л Я Т С Я    З В Е З Д Ы
     //#region
     if(leftRocket.alpha == 1){
@@ -1115,7 +1098,6 @@ abyss: function (){
     // sprite.height = width;
     sprite.filters = [ filterbeforeimage ];
 },  
-
 
 render: function(){
     // game.debug.spriteBounds(dotsR);
