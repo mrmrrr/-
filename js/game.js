@@ -201,7 +201,6 @@ create:function (){
     rect18 = game.add.group(); /* 💜 */
     rect19 = game.add.group(); /* 🎀 */
     rect20 = game.add.group(); /* 💜 */
-    rect21 = game.add.group(); /* 🎀 */
     
     points_pink = game.add.group();
     points_purple = game.add.group();
@@ -372,7 +371,6 @@ grid: function(){
     //     },game.rnd.integerInRange(2000,3000),
     //     Phaser.Easing.Exponential.InOut,true);
     // }
-    rect1.alpha=0;
 
 
     // 💜 2 ректангл  
@@ -392,7 +390,8 @@ grid: function(){
         rect2.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect2.alpha=0;
+    
+    
 
 
     // 🎀 3 ректангл 
@@ -412,7 +411,6 @@ grid: function(){
         rect3.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect3.alpha=0;
 
     
     // 💜 4 ректангл  
@@ -432,9 +430,7 @@ grid: function(){
         rect4.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect4.alpha=0;
-
-
+    
 
     // 🎀 5 ректангл 
     // Левая часть ректангла
@@ -453,7 +449,6 @@ grid: function(){
         rect5.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect5.alpha=0;
 
 
 
@@ -474,8 +469,7 @@ grid: function(){
         rect6.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect6.alpha=0;
-
+   
 
 
     // 🎀 7 ректангл 
@@ -495,8 +489,7 @@ grid: function(){
         rect7.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect7.alpha=0;
-
+    
 
     // 💜 8 ректангл  
     // Левая часть ректангла
@@ -515,8 +508,7 @@ grid: function(){
         rect8.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect8.alpha=0;
-
+    
 
     // 🎀 9 ректангл 
     // Левая часть ректангла
@@ -535,8 +527,7 @@ grid: function(){
         rect9.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect9.alpha=0;
-
+    
 
     // 💜 10 ректангл  
     // Левая часть ректангла
@@ -555,8 +546,7 @@ grid: function(){
         rect10.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect10.alpha=0;
-
+    
 
     // 🎀 11 ректангл 
     // Левая часть ректангла
@@ -575,8 +565,7 @@ grid: function(){
         rect11.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect11.alpha=0;
-
+    
 
     // 💜 12 ректангл  
     // Левая часть ректангла
@@ -595,8 +584,7 @@ grid: function(){
         rect12.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect12.alpha=0;
-
+    
 
     // 🎀 13 ректангл 
     // Левая часть ректангла
@@ -615,8 +603,7 @@ grid: function(){
         rect13.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect13.alpha=0;
-
+    
 
     // 💜 14 ректангл  
     // Левая часть ректангла
@@ -635,8 +622,7 @@ grid: function(){
         rect14.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect14.alpha=0;
-
+    
     
     // 🎀 15 ректангл 
     // Левая часть ректангла
@@ -655,8 +641,7 @@ grid: function(){
         rect15.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect15.alpha=0;
-
+    
 
     // 💜 16 ректангл  
     // Левая часть ректангла
@@ -675,8 +660,7 @@ grid: function(){
         rect16.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect16.alpha=0;
-
+    
 
     // 🎀 17 ректангл 
     // Левая часть ректангла
@@ -695,8 +679,7 @@ grid: function(){
         rect17.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect17.alpha=0;
-
+  
 
     // 💜 18 ректангл  
     // Левая часть ректангла
@@ -715,8 +698,7 @@ grid: function(){
         rect18.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    rect18.alpha=0;
-
+    
 
 
     // 🎀 19 ректангл 
@@ -730,8 +712,7 @@ grid: function(){
         rect17.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    rect19.alpha=0;
-
+    
 
     // 💜 20 ректангл  
     // Левая часть ректангла
@@ -740,25 +721,172 @@ grid: function(){
         rect20.add(points_purple.children[i]);
         points_purple.addAt(game.add.sprite(0,0),i);
     }
-    // rect20.alpha=0;
-    for(i=0;i<rect20.length;i++){
-        game.add.tween(rect20.children[i]).from({
-            x:0
-        },1000+(100*i),'Linear',true);
-    }
+
+    rect1.alpha=0;
+    rect2.alpha=0;
+    rect3.alpha=0;
+    rect4.alpha=0;
+    rect5.alpha=0;
+    rect6.alpha=0;
+    rect7.alpha=0;
+    rect8.alpha=0;
+    rect9.alpha=0;
+    rect10.alpha=0;
+    rect11.alpha=0;
+    rect12.alpha=0;
+    rect13.alpha=0;
+    rect14.alpha=0;
+    rect15.alpha=0;
+    rect16.alpha=0;
+    rect17.alpha=0;
+    rect18.alpha=0;
+    
+    
+    rect19.alpha=1;
+    rect19.name='rect19';
+    rect20.alpha=0;
+    rect20.name='rect20';
+
+    arr=game.add.group();
+
+    arr.add(rect19);
+    arr.add(rect20);
+    this.rectAnim();
+    
+},
+
+rectAnim: function(){
+   
+    // arr.forEach(function(item,i,arr){
+    //     for(b=0;b<item.length;b++){
+    //         game.add.tween(item.children[b]).to({
+    //             x:1
+    //         },2000,'Linear',true);
+    //     }
+    // });
+
+        // for(i=0;i<rect20.length;i++){
+        //     rect20.children[i].alpha=0;
+        //     game.add.tween(rect20.children[i]).to({
+        //         alpha:1
+        //     },1000,'Linear',true);
+        // }
+
+
+    
+    // for(i=0;i<rect18.length;i++){
+    //     rect18.children[i].alpha=0;
+    //     game.add.tween(rect18.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect17.length;i++){
+    //     rect17.children[i].alpha=0;
+    //     game.add.tween(rect17.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect16.length;i++){
+    //     rect16.children[i].alpha=0;
+    //     game.add.tween(rect16.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect15.length;i++){
+    //     rect15.children[i].alpha=0;
+    //     game.add.tween(rect15.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect14.length;i++){
+    //     rect14.children[i].alpha=0;
+    //     game.add.tween(rect14.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect13.length;i++){
+    //     rect13.children[i].alpha=0;
+    //     game.add.tween(rect13.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect12.length;i++){
+    //     rect12.children[i].alpha=0;
+    //     game.add.tween(rect12.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect11.length;i++){
+    //     rect11.children[i].alpha=0;
+    //     game.add.tween(rect11.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect10.length;i++){
+    //     rect10.children[i].alpha=0;
+    //     game.add.tween(rect10.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect9.length;i++){
+    //     rect9.children[i].alpha=0;
+    //     game.add.tween(rect9.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect8.length;i++){
+    //     rect8.children[i].alpha=0;
+    //     game.add.tween(rect8.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect7.length;i++){
+    //     rect7.children[i].alpha=0;
+    //     game.add.tween(rect7.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect6.length;i++){
+    //     rect6.children[i].alpha=0;
+    //     game.add.tween(rect6.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect5.length;i++){
+    //     rect5.children[i].alpha=0;
+    //     game.add.tween(rect5.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect4.length;i++){
+    //     rect4.children[i].alpha=0;
+    //     game.add.tween(rect4.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect3.length;i++){
+    //     rect3.children[i].alpha=0;
+    //     game.add.tween(rect3.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect2.length;i++){
+    //     rect2.children[i].alpha=0;
+    //     game.add.tween(rect2.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
+    // for(i=0;i<rect1.length;i++){
+    //     rect1.children[i].alpha=0;
+    //     game.add.tween(rect1.children[i]).to({
+    //         alpha:1
+    //     },1000,'Linear',true);
+    // }
 },
         
 update:function(){
 
-
-    if(left.x<width/4){
-    // rect20.alpha=1;
-        
-        game.add.tween(rect20).to({
-            x:0,
-            y:0
-        },3000,'Linear',true);
-    }
+      
 
     //Т А Й Л Я Т С Я    З В Е З Д Ы
     //#region
