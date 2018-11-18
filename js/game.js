@@ -1048,7 +1048,7 @@ grid: function(){
 rectAnim: function(){
 
     revealTime = 10;
-    fadeTime = 80;
+    fadeTime = 500;
     ease = Phaser.Easing.Linear.In;
     
     //К краям анимация
@@ -1139,7 +1139,7 @@ rectAnim: function(){
                                                                         game.add.tween(rect17).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
                                                                             game.add.tween(rect18).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
                                                                                 game.add.tween(rect19).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                                    game.add.tween(rect20).to({alpha:1},revealTime,ease,true);
+                                                                                    game.add.tween(rect20).to({alpha:1},revealTime,ease,true).onComplete.add(pointsToCenter);
                                                                                 })
                                                                             })
                                                                         })
@@ -1163,133 +1163,250 @@ rectAnim: function(){
 
     function pointsToCenter(){
         // rect1.alpha=1;
-        // rect2.alpha=1;
-        // rect3.alpha=1;
-        // rect4.alpha=1;
-        // rect5.alpha=1;
-        // rect6.alpha=1;
-        // rect7.alpha=1;
-        // rect8.alpha=1;
-        // rect9.alpha=1;
-        // rect10.alpha=1;
-        // rect11.alpha=1;
-        // rect12.alpha=1;
-        // rect13.alpha=1;
-        // rect14.alpha=1;
-        // rect15.alpha=1;
-        // rect16.alpha=1;
-        // rect17.alpha=1;
-        rect18.alpha=1;
-        // rect19.alpha=1;
-        // rect20.alpha=1;
+        rect2.alpha=0;
+        rect3.alpha=0;
+        rect4.alpha=0;
+        rect5.alpha=0;
+        rect6.alpha=0;
+        rect7.alpha=0;
+        rect8.alpha=0;
+        rect9.alpha=0;
+        rect10.alpha=0;
+        rect11.alpha=0;
+        rect12.alpha=0;
+        rect13.alpha=0;
+        rect14.alpha=0;
+        rect15.alpha=0;
+        rect16.alpha=0;
+        rect17.alpha=0;
+        rect18.alpha=0;
+        rect19.alpha=0;
+        rect20.alpha=0;
+    toCenterTime = game.rnd.integerInRange(500,2000);
+
+        //#region For Loop
+        game.add.tween(rect20);
+        for (i = 0; i < rect20.length; i++) {
+            rect20.children[i].alpha = 0;
+            game.add.tween(rect20.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect19);
+        for (i = 0; i < rect19.length; i++) {
+            rect19.children[i].alpha = 0;
+            game.add.tween(rect19.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect18);
         for (i = 0; i < rect18.length; i++) {
             rect18.children[i].alpha = 0;
             game.add.tween(rect18.children[i]).to({
-                alpha: 1
-            }, 1000, 'Linear', true);
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
         }
-        // for (i = 0; i < rect17.length; i++) {
-        //     rect17.children[i].alpha = 0;
-        //     game.add.tween(rect17.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect16.length; i++) {
-        //     rect16.children[i].alpha = 0;
-        //     game.add.tween(rect16.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect15.length; i++) {
-        //     rect15.children[i].alpha = 0;
-        //     game.add.tween(rect15.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect14.length; i++) {
-        //     rect14.children[i].alpha = 0;
-        //     game.add.tween(rect14.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect13.length; i++) {
-        //     rect13.children[i].alpha = 0;
-        //     game.add.tween(rect13.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect12.length; i++) {
-        //     rect12.children[i].alpha = 0;
-        //     game.add.tween(rect12.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect11.length; i++) {
-        //     rect11.children[i].alpha = 0;
-        //     game.add.tween(rect11.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect10.length; i++) {
-        //     rect10.children[i].alpha = 0;
-        //     game.add.tween(rect10.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect9.length; i++) {
-        //     rect9.children[i].alpha = 0;
-        //     game.add.tween(rect9.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect8.length; i++) {
-        //     rect8.children[i].alpha = 0;
-        //     game.add.tween(rect8.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect7.length; i++) {
-        //     rect7.children[i].alpha = 0;
-        //     game.add.tween(rect7.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect6.length; i++) {
-        //     rect6.children[i].alpha = 0;
-        //     game.add.tween(rect6.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect5.length; i++) {
-        //     rect5.children[i].alpha = 0;
-        //     game.add.tween(rect5.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect4.length; i++) {
-        //     rect4.children[i].alpha = 0;
-        //     game.add.tween(rect4.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect3.length; i++) {
-        //     rect3.children[i].alpha = 0;
-        //     game.add.tween(rect3.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect2.length; i++) {
-        //     rect2.children[i].alpha = 0;
-        //     game.add.tween(rect2.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
-        // for (i = 0; i < rect1.length; i++) {
-        //     rect1.children[i].alpha = 0;
-        //     game.add.tween(rect1.children[i]).to({
-        //         alpha: 1
-        //     }, 1000, 'Linear', true);
-        // }
+        game.add.tween(rect17);
+        for (i = 0; i < rect17.length; i++) {
+            rect17.children[i].alpha = 0;
+            game.add.tween(rect17.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect16);
+        for (i = 0; i < rect16.length; i++) {
+            rect16.children[i].alpha = 0;
+            game.add.tween(rect16.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect15);
+        for (i = 0; i < rect15.length; i++) {
+            rect15.children[i].alpha = 0;
+            game.add.tween(rect15.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect14);
+        for (i = 0; i < rect14.length; i++) {
+            rect14.children[i].alpha = 0;
+            game.add.tween(rect14.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect13);
+        for (i = 0; i < rect13.length; i++) {
+            rect13.children[i].alpha = 0;
+            game.add.tween(rect13.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect12);
+        for (i = 0; i < rect12.length; i++) {
+            rect12.children[i].alpha = 0;
+            game.add.tween(rect12.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect11);
+        for (i = 0; i < rect11.length; i++) {
+            rect11.children[i].alpha = 0;
+            game.add.tween(rect11.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect10);
+        for (i = 0; i < rect10.length; i++) {
+            rect10.children[i].alpha = 0;
+            game.add.tween(rect10.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect9);
+        for (i = 0; i < rect9.length; i++) {
+            rect9.children[i].alpha = 0;
+            game.add.tween(rect9.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect8);
+        for (i = 0; i < rect8.length; i++) {
+            rect8.children[i].alpha = 0;
+            game.add.tween(rect8.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect7);
+        for (i = 0; i < rect7.length; i++) {
+            rect7.children[i].alpha = 0;
+            game.add.tween(rect7.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect6);
+        for (i = 0; i < rect6.length; i++) {
+            rect6.children[i].alpha = 0;
+            game.add.tween(rect6.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect5);
+        for (i = 0; i < rect5.length; i++) {
+            rect5.children[i].alpha = 0;
+            game.add.tween(rect5.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect4);
+        for (i = 0; i < rect4.length; i++) {
+            rect4.children[i].alpha = 0;
+            game.add.tween(rect4.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect3);
+        for (i = 0; i < rect3.length; i++) {
+            rect3.children[i].alpha = 0;
+            game.add.tween(rect3.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+        game.add.tween(rect2);
+        for (i = 0; i < rect2.length; i++) {
+            rect2.children[i].alpha = 0;
+            game.add.tween(rect2.children[i]).to({
+                alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, toCenterTime, ease, true);
+        }
+
+        //#endregion
+        game.add.tween(rect1);
+        for (i = 0; i < rect1.length; i++) {
+            // rect1.children[i].alpha = 0;
+            game.add.tween(rect1.children[i]).to({
+                // alpha: 1,
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0
+            }, game.rnd.integerInRange(1000,5000), ease, true);
+        }
     }
 
     //Обратный путь к центру, альфа 1
@@ -1335,7 +1452,6 @@ rectAnim: function(){
     //     );
     // };
 
-    toCenterTime = game.rnd.integerInRange(400,1000);
     
     // function toCenter(){
     //     // game.add.tween(rect1).from({width:0,height:0,x:width/2,y:height/2},toCenterTime,ease,true).loop();
