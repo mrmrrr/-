@@ -91,10 +91,7 @@ create:function (){
         
     //     STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
 
-    //     tweenA = game.add.tween(STARS[k]).to({width:20,height:20},1000,'Linear',true);
-    //     tweenB = game.add.tween(STARS[k]).to({width:0,height:0},1000,'Linear',true);
-    //     tweenA.chain(tweenB);
-    // }
+
 
 
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
