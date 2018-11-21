@@ -11,8 +11,9 @@ var greenBullets;
 var greenBulletTime = 0;
 
 var bmd;
-// var Left;
 var starTween;
+
+rocketTriger = true;
 
 
 var gameState = {
@@ -22,7 +23,7 @@ preload:function(){
     game.load.image('q2','img/q2.png');
 
     game.load.image('purpleBullet','img/purpleBullet.png');
-    game.load.image('greenBullet','img/greenBullet.png');
+    // game.load.image('greenBullet','img/greenBullet.png');
     game.load.image('whiteBullet','img/whiteBullet.png');
     game.load.image('backBullet','img/backBullet.png');
     
@@ -38,18 +39,21 @@ preload:function(){
     
     game.load.image('leftRocket','img/leftRocket.png');
     game.load.image('rightRocket','img/rightRocket.png');
+
+
+
+    game.load.spritesheet('rocketAnimL','img/rocketAnimL.png', 460, 228, 4);
+    // game.load.spritesheet('rocketAnimR','img/rocketAnimR.png');
     
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
-    game.load.spritesheet('arrowLeft','img/arrowLeft.png',334,171,7);
-    game.load.spritesheet('arrowRight','img/arrowRight.png',334,171,7);
-    game.load.spritesheet('dots','img/dots.png',680,768,40);
-    // game.load.spritesheet('m','img/m.png',61,768,32);
+    game.load.spritesheet('arrowLeft','img/arrowLeft.png', 334, 171, 7);
+    game.load.spritesheet('arrowRight','img/arrowRight.png', 334, 171, 7);
+    game.load.spritesheet('dots','img/dots.png', 680, 768, 40);
+    game.load.spritesheet('m','img/m.png', 61, 768, 32);
 
-    game.load.spritesheet('proval','img/proval.png',664,648,49);
-    game.load.spritesheet('arrow','img/arrow.png',680,768,34);
-    game.load.spritesheet('speed','img/speed.png', 680,768,39);
-
-
+    game.load.spritesheet('proval','img/proval.png', 664, 648, 49);
+    game.load.spritesheet('arrow','img/arrow.png', 680, 768, 34);
+    game.load.spritesheet('speed','img/speed.png', 680, 768, 39);
 },
 
 create:function (){
@@ -58,51 +62,29 @@ create:function (){
     // game.stage.backgroundColor = '#fb2345';
    
     game.stage.backgroundColor = '#000';
-    
-
-  
 
     //Г Р А Д И Е Н Т Ы
-    q = game.add.sprite(width/2, 0, 'q2');
-    q.width=0;
-    q.height=height;
+    // q = game.add.sprite(width/2, 0, 'q2');
+    // q.width=0;
+    // q.height=height;
 
-    q2 = game.add.sprite(width/2, 0, 'q2');
-    q2.width=0;
-    q2.height=height;
+    // q2 = game.add.sprite(width/2, 0, 'q2');
+    // q2.width=0;
+    // q2.height=height;
 
-    q.alpha=0;
-    q2.alpha=0;
+    // q.alpha=0;
+    // q2.alpha=0;
 
-    qTween = game.add.tween(q);
-    q2Tween = game.add.tween(q2);
+    // qTween = game.add.tween(q);
+    // q2Tween = game.add.tween(q2);
+    
     //C L O S E   Г Р А Д И Е Н Т Ы
-    
-    
-    // STARS = [];
-    // for( k = 0; k < 50; k++ ){
-    //     star = game.add.sprite(
-    //         game.rnd.integerInRange(0,width/2),
-    //         game.rnd.integerInRange(0,height),
-    //         'greenParticleCircle'
-    //     );
-        
-    //     STARS.push(star);
-        
-    //     STARS[k].scale.setTo(game.rnd.realInRange(0,0.6));
-
-
-
-
     //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
     //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
-
-
-
     //КОНЕЦ В А У ЭФФЕКТА
 
 
-    //
+    //Тайлы ЗВЕЗДЫ
     tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
     tilesprite.alpha=0;
     // tilesprite.alpha=1;
@@ -134,14 +116,23 @@ create:function (){
     leftKey.onDown.add(this.leftDuck, this);
     rightKey.onDown.add(this.rightDuck, this);
     
-    // this.bullets();
+    //Какието штуки вылетают появляются когда нажимаешь кнопку
+    // this.bullets(); 
     
     leftRocket = game.add.sprite(0, 0, 'leftRocket');
     leftRocket.alpha = 0;
 
+    rocketAnimL = game.add.sprite(0,0, 'rocketAnimL');
+    rocketAnimL.alpha = 0;
+    rocketAnimL.animations.add('rocketPink');
+
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
+
+    // rocketAnimR = game.add.sprite(0,0, 'rocketAnimR');
+    // rocketAnimR.alpha = 0;
     
+    //#region SPEED
     speed = game.add.sprite(0,0,'speed');
     speed.animations.add('speed');
 
@@ -150,6 +141,9 @@ create:function (){
     speedR.anchor.setTo(.5,.5);
     speedR.scale.x *= -1;
     speedR.position.setTo(width+(speedR.width/2),speedR.height/2);
+    //#endregion
+    
+    
     //ARROW
     //#region 
     // arrowLeft = game.add.sprite(50,0,'arrowLeft');
@@ -166,27 +160,26 @@ create:function (){
     
     //Rocket Fire
     //#region
-    fire = game.add.emitter(100,100, 50);
+    fire = game.add.emitter(100, 100, 50);
     fire.makeParticles('greenParticleCircle');
-    fire.setXSpeed(0,1000);
+    fire.setXSpeed(0, 1000);
 
-    fire2 = game.add.emitter(100,100, 50);
+    fire2 = game.add.emitter(100, 100, 50);
     fire2.makeParticles('purpleParticleCircle');
-    fire2.setXSpeed(-1000,0);
+    fire2.setXSpeed(-1000, 0);
     //#endregion
-    // sprite.filters = [ filterbeforeimage ];
     xposL = left.x;
     xposR = right.x;
     
-    rect1 = game.add.group(); /* 🎀 */
-    rect2 = game.add.group(); /* 💜 */
-    rect3 = game.add.group(); /* 🎀 */
-    rect4 = game.add.group(); /* 💜 */
-    rect5 = game.add.group();
-    rect6 = game.add.group(); /* 💜 */
-    rect7 = game.add.group(); /* 🎀 */
-    rect8 = game.add.group(); /* 💜 */
-    rect9 = game.add.group(); /* 🎀 */
+    rect1  = game.add.group(); /* 🎀 */
+    rect2  = game.add.group(); /* 💜 */
+    rect3  = game.add.group(); /* 🎀 */
+    rect4  = game.add.group(); /* 💜 */
+    rect5  = game.add.group(); /* 🎀 */
+    rect6  = game.add.group(); /* 💜 */
+    rect7  = game.add.group(); /* 🎀 */
+    rect8  = game.add.group(); /* 💜 */
+    rect9  = game.add.group(); /* 🎀 */
     rect10 = game.add.group(); /* 💜 */
     rect11 = game.add.group(); /* 🎀 */
     rect12 = game.add.group(); /* 💜 */
@@ -199,13 +192,36 @@ create:function (){
     rect19 = game.add.group(); /* 🎀 */
     rect20 = game.add.group(); /* 💜 */
     
+    move = game.add.group();
+
+    move.add(rect2);
+    move.add(rect3);
+    move.add(rect4);
+    move.add(rect5);
+    move.add(rect6);
+    move.add(rect7);
+    move.add(rect8);
+    move.add(rect9);
+    move.add(rect10);
+    move.add(rect11);
+    move.add(rect12);
+    move.add(rect13);
+    move.add(rect14);
+    move.add(rect15);
+    move.add(rect16);
+    move.add(rect17);
+    move.add(rect18);
+    move.add(rect19);
+    move.add(rect20);
+    move.add(rect1);
+
+
     points_back = game.add.group();
     points_pink = game.add.group();
     points_purple = game.add.group();
     points_pink_right = game.add.group();
     points_purple_right = game.add.group();
     pointSR = game.add.group();
-    arr=game.add.group();
     
     this.grid();
 
@@ -213,71 +229,59 @@ create:function (){
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я и появляется РАКЕТА и чтото с тайлами
 leftDuck: function(){
-    
-    if(leftKey.isDown && left.x < width/4 ){
-        // qTween.to({
-        //         alpha:1,
-        //         // x:0+1,
-        //         width:-width/2
-        //     },1000,'Linear',true, 400
-        // );
-        tileTweenL.to({
-            x:0,
-            y:0
-        },1000,'Linear',true);
 
-        left.angle=10;
-        left.x -=15;
+    if(leftKey.isDown && left.x < width/4 ){
+        left.angle = 10;
+        left.x -= 15;
         
-        leftRocket.alpha =1;
-        leftRocket.angle=15;
+        leftRocket.alpha = 1;
+        leftRocket.angle = 15;
         leftRocket.scale.setTo(0.5);
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
-
-        speed.animations.play('speed', 20,true);
+        
+        speed.animations.play('speed', 20, true);
+        
         
         fire.position.setTo(leftRocket.x+leftRocket.width-150, leftRocket.y-(leftRocket.height/2)+50)
-        fire.start(true,500,null,10);
+        fire.start(true, 500, null, 10);
+        
+        //Анимация включения двигателя
+        rocketAnimL.position.setTo(left.x,left.y+(left.height/2));
+        rocketAnimL.scale.setTo(0.5);
+        rocketAnimL.alpha=1;
 
-        
-        
-    }else{
-        left.x -=43;
+        if(rocketTriger){
+            rocketTriger = false;
+            game.add.tween(rocketAnimL).to({x:width/2},100,ease,true).onComplete.add(this.movePoints);
+        }
+
+        rocketAnimL.animations.play('rocketPink', 20, false,true);
+
+    } else{
+        left.x -= 43;
     }
 },
 
 rightDuck: function(){
-
     if(rightKey.isDown && right.x>((width/2)+(width/4))-right.width){
-        
-        // q2Tween.to({
-        //     alpha:1,
-        //     // x:(width/2)+1,
-        //     width:width/2
-        // },1000,'Linear',true, 400);
-        
-        tileTweenR.to({
-            x:width/2,
-            y:0
-        },1000,'Linear',true);
-        
-        right.angle=-10;
-        right.x +=15;
+        right.angle = -10;
+        right.x += 15;
 
-        rightRocket.alpha =1;
-        rightRocket.angle=-10;
+        rightRocket.alpha = 1;
+        rightRocket.angle = -10;
         rightRocket.scale.setTo(0.5);
         
-        speedR.animations.play('speedR', 20,true);
+        speedR.animations.play('speedR', 20, true);
 
         fire2.position.setTo(rightRocket.x-50, rightRocket.y-(rightRocket.height/2))
-        fire2.start(true,500,null,10);
-    }else{
-        right.x +=43;
+        fire2.start(true, 500, null, 10);
+    } else{
+        right.x += 43;
     }
 },
 
 grid: function(){
+    
     //#region Back POINTS
     col_width_back = (width/2)/20;
     row_height_back = (height)/20;
@@ -332,7 +336,7 @@ grid: function(){
         x_pos2_back = (width/2)+(col_width2_back/2);
     }
 
-    points_back.alpha=0.3
+    points_back.alpha=0.1
 
     //#endregion
     
@@ -1018,32 +1022,10 @@ grid: function(){
     rect19.alpha=0;
     rect20.alpha=0;
 
-    arr.add(rect1);
-    arr.add(rect2);
-    arr.add(rect3);
-    arr.add(rect4);
-    arr.add(rect5);
-    arr.add(rect6);
-    arr.add(rect7);
-    arr.add(rect8);
-    arr.add(rect9);
-    arr.add(rect10);
-    arr.add(rect11);
-    arr.add(rect12);
-    arr.add(rect13);
-    arr.add(rect14);
-    arr.add(rect15);
-    arr.add(rect16);
-    arr.add(rect17);
-    arr.add(rect18);
-    arr.add(rect19);
-    arr.add(rect20);
-    
     this.rectAnim();
 },
 
 rectAnim: function(){
-
     revealTime = 10;
     fadeTime = 500;
     ease = Phaser.Easing.Linear.In;
@@ -1110,7 +1092,6 @@ rectAnim: function(){
         });
     });
 
- 
     //В центр анимация
     function toCenter(){
         game.add.tween(rect1).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
@@ -1132,7 +1113,7 @@ rectAnim: function(){
                                                                         game.add.tween(rect17).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
                                                                             game.add.tween(rect18).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
                                                                                 game.add.tween(rect19).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                                    game.add.tween(rect20).to({alpha:1},revealTime,ease,true).onComplete.add(pointsToCenter);
+                                                                                    game.add.tween(rect20).to({alpha:1},revealTime,ease,true);
                                                                                 })
                                                                             })
                                                                         })
@@ -1153,300 +1134,78 @@ rectAnim: function(){
             });
         });
     }
-
-    function pointsToCenter(){
-        
-        move=game.add.group();
-        move.add(rect2);
-        move.add(rect3);
-        move.add(rect4);
-        move.add(rect5);
-        move.add(rect6);
-        move.add(rect7);
-        move.add(rect8);
-        move.add(rect9);
-        move.add(rect10);
-        move.add(rect11);
-        move.add(rect12);
-        move.add(rect13);
-        move.add(rect14);
-        move.add(rect15);
-        move.add(rect16);
-        move.add(rect17);
-        move.add(rect18);
-        move.add(rect19);
-        move.add(rect20);
-
-        move.add(rect1);
-
-        // rect1.alpha=1;
-     
-        
-        // toCenterTime = game.rnd.integerInRange(1000,2000);
-
-        //#region For Loop
-
-        for(i=0;i<move.length;i++){
-            for(k=0;k<move.children[i].length;k++){
-                game.add.tween(move.children[i].children[k]).to({
-                    x:width/2,
-                    y:height/2,
-                    width:0,
-                    height:0  
-                }, game.rnd.integerInRange(1000,5000), ease, true);
-            }
-        }
-
-        // game.add.tween(rect20);
-        // for (i = 0; i < rect20.length; i++) {
-        //     game.add.tween(rect20.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect19);
-        // for (i = 0; i < rect19.length; i++) {
-        //     game.add.tween(rect19.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect18);
-        // for (i = 0; i < rect18.length; i++) {
-        //     game.add.tween(rect18.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect17);
-        // for (i = 0; i < rect17.length; i++) {
-        //     game.add.tween(rect17.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect16);
-        // for (i = 0; i < rect16.length; i++) {
-        //     game.add.tween(rect16.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect15);
-        // for (i = 0; i < rect15.length; i++) {
-        //     game.add.tween(rect15.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect14);
-        // for (i = 0; i < rect14.length; i++) {
-        //     game.add.tween(rect14.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect13);
-        // for (i = 0; i < rect13.length; i++) {
-        //     game.add.tween(rect13.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect12);
-        // for (i = 0; i < rect12.length; i++) {
-        //     game.add.tween(rect12.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect11);
-        // for (i = 0; i < rect11.length; i++) {
-        //     game.add.tween(rect11.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect10);
-        // for (i = 0; i < rect10.length; i++) {
-        //     game.add.tween(rect10.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect9);
-        // for (i = 0; i < rect9.length; i++) {
-        //     game.add.tween(rect9.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect8);
-        // for (i = 0; i < rect8.length; i++) {
-        //     game.add.tween(rect8.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect7);
-        // for (i = 0; i < rect7.length; i++) {
-        //     game.add.tween(rect7.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect6);
-        // for (i = 0; i < rect6.length; i++) {
-        //     game.add.tween(rect6.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect5);
-        // for (i = 0; i < rect5.length; i++) {
-        //     game.add.tween(rect5.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect4);
-        // for (i = 0; i < rect4.length; i++) {
-        //     game.add.tween(rect4.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect3);
-        // for (i = 0; i < rect3.length; i++) {
-        //     game.add.tween(rect3.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-        // game.add.tween(rect2);
-        // for (i = 0; i < rect2.length; i++) {
-        //     game.add.tween(rect2.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-
-        // //#endregion
-        // game.add.tween(rect1);
-        // for (i = 0; i < rect1.length; i++) {
-        //     game.add.tween(rect1.children[i]).to({
-        //         x:width/2,
-        //         y:height/2,
-        //         width:0,
-        //         height:0
-        //     }, game.rnd.integerInRange(1000,5000), ease, true);
-        // }
-    }
-
-    // function r19(){
-    //     game.add.tween(rect19).to({alpha:1},revealTime,ease,true).onComplete.add(r18,this);
-    //     game.add.tween(rect20).to({alpha:0},fadeTime,ease,true);
-    // }
-    // function r17(){
-    //     game.add.tween(rect17).to({alpha:1},revealTime,ease,true).onComplete.add(r16,this);
-    //     game.add.tween(rect18).to({alpha:0},fadeTime,ease,true);
-    // }
-    // function r15(){
-    //     game.add.tween(rect15).to({alpha:1},revealTime,ease,true).onComplete.add(r14,this);
-    //     game.add.tween(rect16).to({alpha:0},fadeTime,ease,true);
-    // }
-    // function r13(){
-    //     game.add.tween(rect13).to({alpha:1},revealTime,ease,true).onComplete.add(r12,this);
-    //     game.add.tween(rect14).to({alpha:0},fadeTime,ease,true);
-    // }
-    // function r11(){
-    //     game.add.tween(rect11).to({alpha:1},revealTime,ease,true).onComplete.add(r10,this);
-    //     game.add.tween(rect12).to({alpha:0},fadeTime,ease,true);
-    // }
-    // function r9(){
-    //     game.add.tween(rect9).to({alpha:1},revealTime,ease,true).onComplete.add(r8,this);
-    //     game.add.tween(rect10).to({alpha:0},fadeTime,ease,true);
-    // }
-    // function r7(){
-    //     game.add.tween(rect7).to({alpha:1},revealTime,ease,true).onComplete.add(r6,this);
-    //     game.add.tween(rect8).to({alpha:0},fadeTime,ease,true);
-    // }
-    // function r5(){
-    //     game.add.tween(rect5).to({alpha:1},revealTime,ease,true).onComplete.add(r4,this);
-    //     game.add.tween(rect6).to({alpha:0},fadeTime,ease,true);
-    // }
-    // function r3(){
-    //     game.add.tween(rect3).to({alpha:1},revealTime,ease,true).onComplete.add(pointsToCenter);
-    //     game.add.tween(rect4).to({alpha:0},fadeTime,ease,true);
-    // }
+    
+    move.add(rect1);
+    move.add(rect2);
+    move.add(rect3);
+    move.add(rect4);
+    move.add(rect5);
+    move.add(rect6);
+    move.add(rect7);
+    move.add(rect8);
+    move.add(rect9);
+    move.add(rect10);
+    move.add(rect11);
+    move.add(rect12);
+    move.add(rect13);
+    move.add(rect14);
+    move.add(rect15);
+    move.add(rect16);
+    move.add(rect17);
+    move.add(rect18);
+    move.add(rect19);
+    move.add(rect20);
 },
 
+movePoints: function(){
+    for(i=0;i<move.length;i++){
+        for(k=0;k<move.children[i].length;k++){
+            game.add.tween(move.children[i].children[k]).to({
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0  
+            }, game.rnd.integerInRange(1000,5000), ease, true);
+        }
+    }
+},
 
-update:function(){
+update: function(){
+    
     //Т А Й Л Я Т С Я    З В Е З Д Ы
     //#region
-    if(leftRocket.alpha == 1){
-        tilesprite.tilePosition.x += 10;
-        tilesprite.tilePosition.y += 10;
-
-    }else{
-        tilesprite.tilePosition.x += 0.5;
-    }
+    // if(leftRocket.alpha == 1){
+    //     tilesprite.tilePosition.x += 10;
+    //     tilesprite.tilePosition.y += 10;
+    // }else{
+    //     tilesprite.tilePosition.x += 0.5;
+    // }
     
-    if(rightRocket.alpha == 1){
-        tilesprite2.tilePosition.x -= 10;
-        tilesprite2.tilePosition.y += 10;
+    // if(rightRocket.alpha == 1){
+    //     tilesprite2.tilePosition.x -= 10;
+    //     tilesprite2.tilePosition.y += 10;
 
-    }else{
-        tilesprite2.tilePosition.x -= 0.5;
-    }
+    // }else{
+    //     tilesprite2.tilePosition.x -= 0.5;
+    // }
     //#endregion
 
 
     //Б Э К Г Р А У Н Д  становится   Б Е Л Ы Й
-    if(leftRocket.alpha == 1 && rightRocket.alpha == 1){
-        game.stage.backgroundColor = '#fff';
-    }
-    
-    // filterbeforeimage.update();
+    // if(leftRocket.alpha == 1 && rightRocket.alpha == 1){
+    //     // game.stage.backgroundColor = '#fff';
+
+    //     for(i=0;i<move.length;i++){
+    //         for(k=0;k<move.children[i].length;k++){
+    //             game.add.tween(move.children[i].children[k]).to({
+    //                 x:width/2,
+    //                 y:height/2,
+    //                 width:0,
+    //                 height:0  
+    //             }, game.rnd.integerInRange(1000,5000), ease, true);
+    //         }
+    //     }
+    // }
 
 
     //  Н А    С Т А Р Т Е
@@ -1494,17 +1253,17 @@ update:function(){
     //  Д   Ы   М    ИЗ ПОД КОЛЕС  ****** НЕ СДЕЛАН
     //#region
     //Отключает анимацию стрелки
-    if(xposL>left.x || xposR<right.x){
+    // if(xposL>left.x || xposR<right.x){
         
-    }
+    // }
 
-    if (leftKey.isDown){   
-        // this.purpleFireBullet();
-    }
+    // if (leftKey.isDown){   
+    //     // this.purpleFireBullet();
+    // }
 
-    if (rightKey.isDown){   
-        // this.greenFireBullet();
-    }
+    // if (rightKey.isDown){   
+    //     // this.greenFireBullet();
+    // }
 
     //#endregion
 },
@@ -1605,22 +1364,23 @@ rightWIN : function (){
     glass.scale.setTo(0.5,0.5);
     glass.animations.add('glassCrack');
     glass.animations.play('glassCrack', 10,false);
-},
+}
 
-abyss: function (){
-    // filterbeforeimage = new Phaser.Filter(game, null, fragmentSrcB);
 
-    // filterbeforeimage.setResolution(800, 800);
-    // sprite = game.add.sprite();
-    // sprite.width = width;
-    // sprite.height = width;
-    sprite.filters = [ filterbeforeimage ];
-},  
 
-render: function(){
-    // game.debug.spriteBounds(dotsR);
-},
+// render: function(){
+//     // game.debug.spriteBounds(dotsR);
+// },
 
+// abyss: function (){
+//     // filterbeforeimage = new Phaser.Filter(game, null, fragmentSrcB);
+
+//     // filterbeforeimage.setResolution(800, 800);
+//     // sprite = game.add.sprite();
+//     // sprite.width = width;
+//     // sprite.height = width;
+//     // sprite.filters = [ filterbeforeimage ];
+// },  
 // gridAnimation: function() {
 //     dotsL = game.add.sprite(0, 0, 'dots');
 //     dotsL.width = width / 2;
@@ -1681,7 +1441,6 @@ render: function(){
 //     arrowInsideTimer.start();
 // }
 }
-
 
 
 
