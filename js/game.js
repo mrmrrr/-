@@ -12,6 +12,7 @@ var greenBulletTime = 0;
 
 var bmd;
 var starTween;
+var jumpButton = null;
 
 rocketTriger = true;
 
@@ -43,7 +44,7 @@ preload:function(){
 
 
 
-    game.load.spritesheet('rocketAnimL','img/rocketAnimL.png', 460, 228, 4);
+    // game.load.spritesheet('rocketAnimL','img/rocketAnimL.png', 460, 228, 4);
     // game.load.spritesheet('rocketAnimR','img/rocketAnimR.png');
     
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
@@ -55,6 +56,9 @@ preload:function(){
     game.load.spritesheet('proval','img/proval.png', 664, 648, 49);
     game.load.spritesheet('arrow','img/arrow.png', 680, 768, 34);
     game.load.spritesheet('speed','img/speed.png', 680, 768, 39);
+
+    game.load.spritesheet('duckRotate','img/duckRotate.png', 544, 408, 20);
+
 },
 
 create:function (){
@@ -64,8 +68,19 @@ create:function (){
    
     game.stage.backgroundColor = '#000';
 
-    game.input.gamepad.start();
 
+ 
+    // controller = game.input.gamepad.pad1;
+ 
+    // controller.addCallbacks(this, {
+    //     onConnect: function() {
+    //         // you could use a different button here if you want...
+    //         jumpButton = controller.getButton(Phaser.Gamepad.BUTTON_1);
+    //     }
+    // });
+
+    // game.input.gamepad.start();
+    // pad1 = game.input.gamepad.pad1;
 
     //Г Р А Д И Е Н Т Ы
     // q = game.add.sprite(width/2, 0, 'q2');
@@ -126,9 +141,9 @@ create:function (){
     leftRocket = game.add.sprite(0, 0, 'leftRocket');
     leftRocket.alpha = 0;
 
-    rocketAnimL = game.add.sprite(0,0, 'rocketAnimL');
-    rocketAnimL.alpha = 0;
-    rocketAnimL.animations.add('rocketPink');
+    // rocketAnimL = game.add.sprite(0,0, 'rocketAnimL');
+    // rocketAnimL.alpha = 0;
+    // rocketAnimL.animations.add('rocketPink');
 
     rightRocket = game.add.sprite(0, 0, 'rightRocket');
     rightRocket.alpha = 0;
@@ -237,7 +252,10 @@ create:function (){
     
     this.grid();
     this.gridDefault();
+    // game.input.gamepad.start();
+    console.log(left.width,left.height);
 },
+
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я и появляется РАКЕТА
 leftDuck: function(){
@@ -259,15 +277,15 @@ leftDuck: function(){
         fire.start(true, 500, null, 10);
         
         //Анимация включения двигателя
-        rocketAnimL.position.setTo(left.x,left.y+(left.height/2));
-        rocketAnimL.scale.setTo(0.5);
-        rocketAnimL.alpha=1;
-        rocketAnimL.animations.play('rocketPink', 20, false,true);
+        // rocketAnimL.position.setTo(left.x,left.y+(left.height/2));
+        // rocketAnimL.scale.setTo(0.5);
+        // rocketAnimL.alpha=1;
+        // rocketAnimL.animations.play('rocketPink', 20, false,true);
 
         if(left.x < width/6){
             if(rocketTriger){
                 rocketTriger = false;
-                game.add.tween(rocketAnimL).to({x:width/2},100,ease,true).onComplete.add(this.movePoints);
+                // game.add.tween(rocketAnimL).to({x:width/2},100,ease,true).onComplete.add(this.movePoints);
                 this.rectAnimDef();
             }
         }
@@ -1783,12 +1801,33 @@ gridDefault: function(){
 
 rectAnimDef: function(){
     rect1Def.alpha=1;
+    rect2Def.alpha=1;
+    rect3Def.alpha=1;
+    rect4Def.alpha=1;
+    rect5Def.alpha=1;
+    rect6Def.alpha=1;
+
 //Анимация частиц ректангла из центра
 
     for(i=0;i<rect1Def.length;i++){
         game.add.tween(rect1Def.children[i]).from({x:width/2,y:height/2,width:0,height:0},game.rnd.integerInRange(1000,2000),'Linear',true).loop();
     }
 
+    for(i=0;i<rect2Def.length;i++){
+        game.add.tween(rect2Def.children[i]).from({x:width/2,y:height/2,width:0,height:0},game.rnd.integerInRange(1000,2000),'Linear',true).loop();
+    }
+    for(i=0;i<rect3Def.length;i++){
+        game.add.tween(rect3Def.children[i]).from({x:width/2,y:height/2,width:0,height:0},game.rnd.integerInRange(1000,2000),'Linear',true).loop();
+    }
+    for(i=0;i<rect4Def.length;i++){
+        game.add.tween(rect4Def.children[i]).from({x:width/2,y:height/2,width:0,height:0},game.rnd.integerInRange(1000,2000),'Linear',true).loop();
+    }
+    for(i=0;i<rect5Def.length;i++){
+        game.add.tween(rect5Def.children[i]).from({x:width/2,y:height/2,width:0,height:0},game.rnd.integerInRange(1000,2000),'Linear',true).loop();
+    }
+    for(i=0;i<rect6Def.length;i++){
+        game.add.tween(rect6Def.children[i]).from({x:width/2,y:height/2,width:0,height:0},game.rnd.integerInRange(1000,2000),'Linear',true).loop();
+    }
 //Анимация ректангла в центра
 
     rect2Def.alpha=1;
@@ -1948,8 +1987,13 @@ movePoints: function(){
     }
 },
 
+
+
 update: function(){
-    
+    // if (jumpButton.isDown) {
+    //     // jump code goes here!
+    //     left.x+=50;
+    // }
     //Т А Й Л Я Т С Я    З В Е З Д Ы
     //#region
     // if(leftRocket.alpha == 1){
