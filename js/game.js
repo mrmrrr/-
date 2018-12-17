@@ -17,9 +17,13 @@ var jumpButton = null;
 var arrow;
 
 var rocketTriger = true;
+var rocketTrigerR = true;
 var naklonTriger = true;
+var naklonTrigerR = true;
 
-var ChangeGame = false;
+var ChangeGameL = false;
+var ChangeGameR = false;
+
 var gameState = {
 
 preload:function(){
@@ -35,8 +39,6 @@ preload:function(){
     game.load.image('greenParticleCircle','img/greenParticleCircle.png');
     game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
     
-    game.load.image('right','img/right.png');
-    // game.load.image('left','img/left.png');
     
     game.load.image('like','img/like.png');
     game.load.image('sad','img/sad.png');
@@ -49,7 +51,7 @@ preload:function(){
 
 
     game.load.spritesheet('left','img/left.png', 449, 404, 24);
-
+    game.load.spritesheet('right','img/right.png', 449, 404, 24);
 
 
 
@@ -114,25 +116,25 @@ create:function (){
     
     
     right = game.add.sprite(0,0,'right');
+    right.animations.add('main',[4],20,false);
+    right.animations.add('naklon',[3,2,1,0],24,false);
+    right.animations.add('rotate',[9,8,7,6,5,14,13,12,11,10,19,18,17,16,15,,24,23,22,21],24,false);
+    right.animations.play('main');
     right.scale.setTo(0.5);
     right.position.x = (width/2);
     right.position.y =  (height/2)-(right.height/2);
     right.bringToTop();
-    
-
 
     left = game.add.sprite(0,0,'left');
     left.animations.add('main',[0],20,false);
-    left.animations.add('naklon',[1,2,3,4],20,false);
-    left.animations.add('rotate',[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],20,false);
+    left.animations.add('naklon',[1,2,3,4],24,false);
+    left.animations.add('rotate',[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],24,false);
     left.animations.play('main');
     left.scale.setTo(0.5);
-    left.position.x = (width/2)-right.width - 45;
+    left.position.x = (width/2)-right.width;
     left.position.y = (height/2) - (left.height/2) ;
     left.bringToTop();
     
-
-
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 
@@ -234,7 +236,6 @@ create:function (){
 
 //  Ш А Г    У В Е Л И Ч Е Н И Я и появляется РАКЕТА
 leftDuck: function(){
-
     if(left.x < width/4 ){
         if(naklonTriger){
             left.animations.stop('main');
@@ -242,7 +243,7 @@ leftDuck: function(){
             naklonTriger = false;
         }
         
-        left.x -= 15;
+        left.x -= 10;
         
         leftRocket.alpha = 1;
         leftRocket.angle = 15;
@@ -261,17 +262,14 @@ leftDuck: function(){
         // rocketAnimL.animations.play('rocketPink', 20, false,true);
 
         if(left.x<width/10){
-            ChangeGame = true;
+            ChangeGameL = true;
 
             left.animations.stop('naklon');
             
-            //отменяет функцию при нажатии и назначаем новую
-            game.input.keyboard.removeKey(Phaser.Keyboard.LEFT);
+                // leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+            leftKey.onDown.add(this.leftDuckChange, this);
 
-            leftKeyChange = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-            leftKeyChange.onDown.add(this.leftDuckChange, this);
             
-
             if(rocketTriger){
                 left.animations.play('rotate');
                 rocketTriger = false;
@@ -280,44 +278,63 @@ leftDuck: function(){
             }
         }
     } else{
-        left.x -= 23;
+        left.x -= 15;
     }
 },
 
 rightDuck: function(){
-    if(right.x>((width/2)+(width/4))-right.width){
-        right.angle = -10;
-        right.x += 15;
+
+    if( right.x > ((width/2 + width/4)-right.width) ){
+        if(naklonTrigerR){
+            right.animations.stop('main');
+            right.animations.play('naklon',false,false);   
+            naklonTrigerR = false;
+        }
+        right.x += 10;
 
         rightRocket.alpha = 1;
         rightRocket.angle = -10;
         rightRocket.scale.setTo(0.5);
-        
+
         // speedR.animations.play('speedR', 20, true);
 
         fire2.position.setTo(rightRocket.x-50, rightRocket.y-(rightRocket.height/2))
         fire2.start(true, 500, null, 10);
+
+        //Анимация включения двигателя
+        //тоже самое только для правого переделать
+        // rocketAnimL.position.setTo(left.x,left.y+(left.height/2));
+        // rocketAnimL.scale.setTo(0.5);
+        // rocketAnimL.alpha=1;
+        // rocketAnimL.animations.play('rocketPink', 20, false,true);
+
+        if( right.x > (width/2 + (width/2-width/10))-right.width ){
+            
+            ChangeGameR = true;
+            
+            right.animations.stop('naklon');
+
+            rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+            rightKey.onDown.add(this.rightDuckChange, this);
+
+            if(rocketTrigerR){
+                right.animations.play('rotate');
+                rocketTrigerR = false;
+                // this.movePoints();
+                // this.rectAnimDef();
+            }
+        }
     } else{
-        right.x += 23;
+        right.x +=15;
     }
 },
 
 //вызывается если нажимается на клавишу
 leftDuckChange: function(){
-    console.log('R O T A T E');
-    left.x+=10;
-    // qwe=2;
-    // переменная которая есть в апдейте и она меняется
-
-    // if(left.hitArea === 0){
-        // rightKey.enabled = false;
-        // leftKey.enabled = false;
-        
-        // tilesprite.kill();
-        // tilesprite2.kill();
-
-        // this.leftWIN();
-    // } 
+    left.x +=20;
+},
+rightDuckChange: function(){
+    right.x-=20;
 },
 
 grid: function(){
@@ -1327,15 +1344,33 @@ movePoints: function(){
 },
 
 update: function(){
-    if(ChangeGame===true){
-        left.x-=1;
-        
+
+    //  Н А    С Т А Р Т Е      И     Т Р И Г Е Р
+    //Чтобы стояли на старте, посередине экрана.
+    //Иначе двигаются к центру обратно.
+
+    if(ChangeGameL===true){
+        left.x -=0.5;
     }else if(left.x==(width/2)-left.width ){
         left.x = (width/2)-left.width;
     }   else {
-        left.x+=1;
+        left.x+=0.5;
         leftRocket.position.setTo(left.x, left.y+(left.height/2));
     }
+
+    if(ChangeGameR === true){
+        right.x +=0.5;
+    } else if(right.x==width/2){
+        right.x = width/2;
+    }   else{
+        right.x-=0.5;
+        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
+    }
+    
+    // if(ChangeGameL || ChangeGameR){
+    //     console.log('O B A     T R U');
+
+    // }
 
   //#region
     //Т А Й Л Я Т С Я    З В Е З Д Ы
@@ -1374,22 +1409,11 @@ update: function(){
     // }
 //#endregion
 
-    //  Н А    С Т А Р Т Е
-    //Чтобы стояли на старте, посередине экрана.
-    //Иначе двигаются к центру обратно.
-    //#region 
+   
     
     
 
-    if(right.x==width/2){
-        
-        right.x = width/2;
-
-    }else{
-        right.x-=1;
-        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
-    }
-    //#endregion 
+    
 
 
     // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
