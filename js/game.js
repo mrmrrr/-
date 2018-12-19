@@ -1,5 +1,6 @@
 var height= window.innerHeight;
 var width = window.innerWidth;
+
 var glass;
 
 var purpleBulletTime = 0;
@@ -12,7 +13,7 @@ var greenBulletTime = 0;
 
 var bmd;
 var starTween;
-var jumpButton = null;
+// var jumpButton = null;
 
 var arrow;
 
@@ -54,9 +55,8 @@ preload:function(){
     game.load.spritesheet('right','img/right.png', 449, 404, 24);
 
 
-
-    game.load.spritesheet('rocketAnimL','img/rocketAnimL.png', 460, 228, 4);
-    // game.load.spritesheet('rocketAnimR','img/rocketAnimR.png');
+    game.load.spritesheet('engineAnimL','img/rocketAnimL.png', 460, 228, 4);
+    game.load.spritesheet('engineAnimR','img/rocketAnimR.png');
     
     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
     game.load.spritesheet('arrowLeft','img/arrowLeft.png', 334, 171, 7);
@@ -222,8 +222,8 @@ create:function (){
     points_purple_right = game.add.group();
     pointSR = game.add.group();
     
-    points_pinkDef = game.add.group();
-    points_purpleDef = game.add.group();
+    points_FromCenterLeft = game.add.group();
+    points_FromCenterRight = game.add.group();
 
     //#endregion
 
@@ -243,12 +243,12 @@ leftDuck: function(){
             naklonTriger = false;
         }
         
-        left.x -= 10;
+        left.x -= 15;
         
         leftRocket.alpha = 1;
         leftRocket.angle = 15;
         leftRocket.scale.setTo(0.5);
-        leftRocket.position.setTo(left.x, left.y+(left.height/2));
+        // leftRocket.position.setTo(left.x, left.y+(left.height/2));
         
         // speed.animations.play('speed', 20, true);
         
@@ -260,40 +260,25 @@ leftDuck: function(){
         // rocketAnimL.scale.setTo(0.5);
         // rocketAnimL.alpha=1;
         // rocketAnimL.animations.play('rocketPink', 20, false,true);
-
-        if(left.x<width/10){
-            ChangeGameL = true;
-
-            left.animations.stop('naklon');
-            
-                // leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-            leftKey.onDown.add(this.leftDuckChange, this);
-
-            
-            if(rocketTriger){
-                left.animations.play('rotate');
-                rocketTriger = false;
-                this.movePoints();
-                this.rectAnimDef();
-            }
-        }
     } else{
-        left.x -= 15;
+        left.x -= 25;
     }
 },
 
 rightDuck: function(){
 
     if( right.x > ((width/2 + width/4)-right.width) ){
+        console.log('РАКЕТА')
         if(naklonTrigerR){
             right.animations.stop('main');
             right.animations.play('naklon',false,false);   
             naklonTrigerR = false;
         }
-        right.x += 10;
+
+        right.x += 15;
 
         rightRocket.alpha = 1;
-        rightRocket.angle = -10;
+        rightRocket.angle = -15;
         rightRocket.scale.setTo(0.5);
 
         // speedR.animations.play('speedR', 20, true);
@@ -308,33 +293,257 @@ rightDuck: function(){
         // rocketAnimL.alpha=1;
         // rocketAnimL.animations.play('rocketPink', 20, false,true);
 
-        if( right.x > (width/2 + (width/2-width/10))-right.width ){
-            
-            ChangeGameR = true;
-            
-            right.animations.stop('naklon');
+        
+    }
+     else{
+        right.x +=25;
+    }
+},
+//вызывается если нажимается на клавишу
+leftDuckChange: function(){
+    //25
+    left.x +=30;
+    if(left.x+left.width > width/3 ){
+        left.x+=7;
 
-            rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-            rightKey.onDown.add(this.rightDuckChange, this);
-
-            if(rocketTrigerR){
-                right.animations.play('rotate');
-                rocketTrigerR = false;
-                // this.movePoints();
-                // this.rectAnimDef();
-            }
+        // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
+        if((left.x + left.width)-50 > width/2){
+            this.leftWIN();
         }
-    } else{
-        right.x +=15;
+    }
+},
+rightDuckChange: function(){
+    //25
+    right.x-=30;
+    if(right.x < width/3 + width/2 ){
+        right.x-=7;
+
+        // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
+        if(right.x < width/2-50){
+            this.rightWIN();
+        }
     }
 },
 
-//вызывается если нажимается на клавишу
-leftDuckChange: function(){
-    left.x +=20;
+update: function(){
+    // console.log(left.x+left.width);
+    //  Н А    С Т А Р Т Е      И     Т Р И Г Е Р
+    //Чтобы стояли на старте, посередине экрана.
+    //Иначе двигаются к центру обратно.
+    
+    if( left.x < width/10 ) {
+        ChangeGameL = true;
+
+        left.animations.stop('naklon');
+        
+        leftKey.onDown.add(this.leftDuckChange, this);
+
+        if(rocketTriger){
+            left.animations.play('rotate');
+            rocketTriger = false;
+
+            this.pointsToCenterLEFT();
+            this.pointsFromCenterLEFT();
+        }
+    }
+
+    if( right.x > (width/2 + (width/2-width/10))-right.width ){
+        ChangeGameR = true;
+        
+        right.animations.stop('naklon');
+
+        rightKey.onDown.add(this.rightDuckChange, this);
+
+        if(rocketTrigerR){
+            right.animations.play('rotate');
+            rocketTrigerR = false;
+
+            this.pointsToCenterRIGHT();
+            this.pointsFromCenterRIGHT();
+        }
+    }
+
+
+
+    if(left.x==(width/2)-left.width){
+        left.x = (width/2)-left.width;
+    }   else {
+            left.x+=1;
+            leftRocket.position.setTo(left.x+50, left.y+(left.height/2));
+        }
+            if(ChangeGameL){
+                left.x -=3;
+    }
+
+    if(right.x==width/2){
+        right.x = width/2;
+    }   else {
+            right.x-=1;
+            rightRocket.position.setTo(right.x-50, right.y+(right.height/2)+rightRocket.height/2);
+        }
+            if(ChangeGameR){
+                right.x+=3;
+    }
+
+    // if(right.x > (width/2 + (width/2-width/10))-right.width){
+    //     right.x -=5;
+    // }
+    
+
+  //#region   //Т А Й Л Я Т С Я    З В Е З Д Ы
+    
+    
+    // if(leftRocket.alpha == 1){
+    //     tilesprite.tilePosition.x += 10;
+    //     tilesprite.tilePosition.y += 10;
+    // }else{
+    //     tilesprite.tilePosition.x += 0.5;
+    // }
+    
+    // if(rightRocket.alpha == 1){
+    //     tilesprite2.tilePosition.x -= 10;
+    //     tilesprite2.tilePosition.y += 10;
+
+    // }else{
+    //     tilesprite2.tilePosition.x -= 0.5;
+    // }
+    
+
+
+    //Б Э К Г Р А У Н Д  становится   Б Е Л Ы Й
+    // if(leftRocket.alpha == 1 && rightRocket.alpha == 1){
+    //     // game.stage.backgroundColor = '#fff';
+
+    //     for(i=0;i<move.length;i++){
+    //         for(k=0;k<move.children[i].length;k++){
+    //             game.add.tween(move.children[i].children[k]).to({
+    //                 x:width/2,
+    //                 y:height/2,
+    //                 width:0,
+    //                 height:0  
+    //             }, game.rnd.integerInRange(1000,5000), ease, true);
+    //         }
+    //     }
+    // }
+//#endregion
+    
+    
+     
+    //#region  //  Д   Ы   М    ИЗ ПОД КОЛЕС  ****** НЕ СДЕЛАН
+    //Отключает анимацию стрелки
+    // if(xposL>left.x || xposR<right.x){
+        
+    // }
+
+    // if (leftKey.isDown){   
+    //     // this.purpleFireBullet();
+    // }
+
+    // if (rightKey.isDown){   
+    //     // this.greenFireBullet();
+    // }
+
+    //#endregion
+
 },
-rightDuckChange: function(){
-    right.x-=20;
+
+leftWIN: function (){
+    game.input.keyboard.removeKey(Phaser.Keyboard.LEFT);
+    game.input.keyboard.removeKey(Phaser.Keyboard.RIGHT);
+
+    left.x = 0;
+    left.alpha = 0;
+    leftRocket.alpha = 0;
+
+    game.camera.shake(0.05, 700);
+
+    for(i=0;i<4;i++){
+        PpurpleEmitter = game.add.emitter(width/2-300, height/2 , 200);
+        game.physics.arcade.enable(PpurpleEmitter);
+        PpurpleEmitter.checkWorldBounds = true;
+        PpurpleEmitter.outOfBoundsKill = true;
+        
+        PpurpleEmitter.makeParticles('like');
+        PpurpleEmitter.setXSpeed(1000, -1000)
+        PpurpleEmitter.setYSpeed(1000, -1000)
+        PpurpleEmitter.start(false, 900, 10);
+    }
+
+    game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
+    // game.add.text(width/2 +50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
+    
+    //SAD EMITTER
+    s = game.add.sprite(game.rnd.integerInRange(width/2, width), 0, 'sad');
+    game.physics.arcade.enable(s);
+    s.scale.setTo(10);
+    s.angle =game.rnd.integerInRange(-40,40);
+    s.body.collideWorldBounds = true;
+    s.body.bounce.setTo(0.5, 0.8);
+    s.body.gravity.y =2000;
+
+    // П Р О В А Л    РАЗНОЦВЕТНЫЙ
+    proval = game.add.sprite(0,0,'proval');
+    proval.alpha=0;
+    proval.scale.setTo(1.3,1.3);
+    proval.position.setTo(width/2-100,height-proval.height);
+    proval.animations.add('p');
+    
+    provalTimer = game.time.create(false);
+    provalTimer.loop(500,function(){
+        proval.alpha=1;
+        proval.animations.play('p', 20, true);
+    },this);
+    provalTimer.start();
+
+    //GLASS ANIM
+    glass = game.add.sprite(width/2,0,'glass');
+    glass.scale.setTo(0.5,0.5);
+    glass.animations.add('glassCrack');
+    glass.animations.play('glassCrack', 10,false);
+},
+rightWIN : function (){
+    game.input.keyboard.removeKey(Phaser.Keyboard.LEFT);
+    game.input.keyboard.removeKey(Phaser.Keyboard.RIGHT);
+
+    right.x = 0;
+    right.alpha = 0;
+    rightRocket.alpha = 0;
+
+    game.camera.shake(0.05, 700);
+
+    //L I K E
+    for(i=0;i<4;i++){
+        PpurpleEmitter = game.add.emitter(width/2+300, height/2 , 200);
+        game.physics.arcade.enable(PpurpleEmitter);
+        PpurpleEmitter.checkWorldBounds = true;
+        PpurpleEmitter.outOfBoundsKill = true;
+        
+        PpurpleEmitter.makeParticles('like');
+        PpurpleEmitter.setXSpeed(1000, -1000)
+        PpurpleEmitter.setYSpeed(1000, -1000)
+        PpurpleEmitter.start(false, 900, 4);
+    }
+
+    game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
+    game.add.text(50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
+
+    //S A D
+    s = game.add.sprite(game.rnd.integerInRange(0, width/2-500), 0, 'sad');
+    game.physics.arcade.enable(s);
+    s.angle =game.rnd.integerInRange(-40,40);
+    s.scale.setTo(10);
+    s.body.collideWorldBounds = true;
+    s.body.bounce.setTo(0.5, 0.8);
+    s.body.gravity.y =2000;
+
+    //GLASS ANIM
+    glass = game.add.sprite(0, 0, 'glass');
+    glass.scale.setTo(0.5,0.5);
+    glass.animations.add('glassCrack');
+    glass.animations.play('glassCrack', 10,false);
+},
+render: function(){
+    // game.debug.spriteBounds(left);
 },
 
 grid: function(){
@@ -399,7 +608,7 @@ grid: function(){
     
     
     //#region POINTS GROUPs
-    //Left
+//Left
     col_width = (width/2)/20;
     row_height = (height)/20;
     x_pos=0;
@@ -417,6 +626,7 @@ grid: function(){
     row_height2 = (height)/20;
     x_pos2=col_width/2;
     y_pos2=row_height/2;
+    
     for(v=0;v<19;v++){
         for(i=0;i<19;i++){
             points_purple.create(x_pos2+(col_width2/2), y_pos2+(row_height2/2),'whiteBullet').scale.setTo(0.03);
@@ -426,7 +636,7 @@ grid: function(){
         x_pos2 = col_width/2;
     }
 
-    //Right
+//Right
     col_width_right = (width/2)/20;
     row_height_right = (height)/20;
     x_pos_right = width/2;
@@ -1084,114 +1294,63 @@ grid: function(){
 
 // Оставить для целых ректанглов
 // Можно наверно уже удалить из центра сделал 
-gridDefault: function(){
-    //#region POINTS GROUPs
-   
-    // L e f t      points_pinkDef
-    // три вертикальные 
-    // col_widthDef = (width/2)/20;
-    // row_heightDef= (height)/20;
-    // x_posDef=0;
-    // y_posDef=0;
 
-    // for(v=0;v<20;v++){
-    //     for(i=0;i<3;i++){
-    //         points_pinkDef.create(x_posDef+(col_widthDef/2), y_posDef+(row_heightDef/2), 'defaultBullet').scale.setTo(0.03);
-    //         x_posDef = x_posDef+col_widthDef;
-    //     }
-    //     y_posDef = y_posDef+row_heightDef;
-    //     x_posDef = 0;
-    // }
-    
-    
-    // //три горизонтальные    
-    // col_widthDef2 = (width/2)/20;
-    // row_heightDef2 = (height)/20;
-    // x_posDef2=points_pinkDef.children[2].x + col_widthDef2/2;
-    // y_posDef2=0;
 
-    // for(v=0;v<3;v++){
-    //     for(i=0;i<17;i++){
-    //         points_pinkDef.create(x_posDef2+(col_widthDef2/2), y_posDef2+(row_heightDef2/2),'defaultBullet').scale.setTo(0.03);
-    //         x_posDef2 = x_posDef2+col_widthDef2;
-    //     }
-    //     y_posDef2 = y_posDef2+row_heightDef2;
-    //     x_posDef2 = points_pinkDef.children[2].x + col_widthDef2/2;
-    // }
-
-    // //три с низу    
-    // col_widthDef2 = (width/2)/20;
-    // row_heightDef2 = (height)/20;
-    // x_posNIZ=points_pinkDef.children[53].x + col_widthDef2/2;
-    // y_posNIZ=points_pinkDef.children[53].y;
-
-    // for(v=0;v<3;v++){
-    //     for(i=0;i<17;i++){
-    //         points_pinkDef.create(x_posNIZ+(col_widthDef2/2), y_posNIZ,'defaultBullet').scale.setTo(0.03);
-    //         x_posNIZ = x_posNIZ+col_widthDef2;
-    //     }
-    //     y_posNIZ = y_posNIZ+row_heightDef2;
-    //     x_posNIZ = points_pinkDef.children[53].x+ col_widthDef2/2 ;
-    // }
-
-    // // R i g h t        points_purpleDef
-    // // три вертикальные 
-    // col_widthDef = (width/2)/20;
-    // row_heightDef= (height)/20;
-    // x_posDef=0;
-    // y_posDef=0;
-
-    // for(v=0;v<20;v++){
-    //     for(i=0;i<3;i++){
-    //         points_purpleDef.create(x_posDef+(col_widthDef/2), y_posDef+(row_heightDef/2), 'defaultBullet').scale.setTo(0.03);
-    //         x_posDef = x_posDef+col_widthDef;
-    //     }
-    //     y_posDef = y_posDef+row_heightDef;
-    //     x_posDef = 0;
-    // }
-    
-    
-    // //три горизонтальные    
-    // col_widthDef2 = (width/2)/20;
-    // row_heightDef2 = (height)/20;
-    // x_posDef2=points_purpleDef.children[2].x + col_widthDef2/2;
-    // y_posDef2=0;
-
-    // for(v=0;v<3;v++){
-    //     for(i=0;i<17;i++){
-    //         points_purpleDef.create(x_posDef2+(col_widthDef2/2), y_posDef2+(row_heightDef2/2),'defaultBullet').scale.setTo(0.03);
-    //         x_posDef2 = x_posDef2+col_widthDef2;
-    //     }
-    //     y_posDef2 = y_posDef2+row_heightDef2;
-    //     x_posDef2 = points_purpleDef.children[2].x + col_widthDef2/2;
-    // }
-
-    // //три с низу    
-    // col_widthDef2 = (width/2)/20;
-    // row_heightDef2 = (height)/20;
-    // x_posNIZ=points_purpleDef.children[53].x + col_widthDef2/2;
-    // y_posNIZ=points_purpleDef.children[53].y;
-
-    // for(v=0;v<3;v++){
-    //     for(i=0;i<17;i++){
-    //         points_purpleDef.create(x_posNIZ+(col_widthDef2/2), y_posNIZ,'defaultBullet').scale.setTo(0.03);
-    //         x_posNIZ = x_posNIZ+col_widthDef2;
-    //     }
-    //     y_posNIZ = y_posNIZ+row_heightDef2;
-    //     x_posNIZ = points_purpleDef.children[53].x+ col_widthDef2/2 ;
-    // }
-   
-    //#endregion
-  },
-
-rectAnimDef: function(){
-    //Анимация частиц ректангла из центра
+//Анимация частиц из центра
+pointsFromCenterLEFT: function(){
     for(i=0;i<100;i++){
-        points_purpleDef.create(game.rnd.integerInRange(0,width),game.rnd.integerInRange(0,height), 'defaultBullet').scale.setTo(0.03);
-        game.add.tween(points_purpleDef.children[i]).from({x:width/2,y:height/2,width:0,height:0},game.rnd.integerInRange(700,1500),'Linear',true).loop();
+        points_FromCenterLeft.create(game.rnd.integerInRange(0,width/2),game.rnd.integerInRange(0,height), 'defaultBullet').scale.setTo(
+            game.rnd.realInRange(0.01,0.05)
+        );
+        game.add.tween(points_FromCenterLeft.children[i]).from({
+            x:width/2,
+            y:height/2,
+            width:0,
+            height:0
+        },game.rnd.integerInRange(700,1500),'Linear',true).loop();
     }
+},
+pointsFromCenterRIGHT: function(){
+    for(i=0;i<100;i++){
+        points_FromCenterRight.create(game.rnd.integerInRange(width/2,width),game.rnd.integerInRange(0,height), 'defaultBullet').scale.setTo(
+            game.rnd.realInRange(0.01,0.05)
+        );
+        game.add.tween(points_FromCenterRight.children[i]).from({
+            x:width/2,
+            y:height/2,
+            width:0,
+            height:0
+        },game.rnd.integerInRange(700,1500),'Linear',true).loop();
+    }
+},
 
-    //Анимация ректангла в центра
+pointsToCenterLEFT: function(){
+    for(i=0;i<move.length;i++){
+        for(k=0;k<move.children[i].length;k++){
+            if(move.children[i].children[k].x<width/2){
+                game.add.tween(move.children[i].children[k]).to({
+                    x:width/2,
+                    y:height/2,
+                    width:0,
+                    height:0  
+                }, game.rnd.integerInRange(1000,5000), 'Linear', true);
+            }
+        }
+    }
+},
+pointsToCenterRIGHT: function(){
+    for(i=0;i<move.length;i++){
+        for(k=0;k<move.children[i].length;k++){
+            if(move.children[i].children[k].x>width/2){
+                game.add.tween(move.children[i].children[k]).to({
+                    x:width/2,
+                    y:height/2,
+                    width:0,
+                    height:0  
+                }, game.rnd.integerInRange(1000,5000), 'Linear', true);
+            }
+        }
+    }
 },
 
 //Начальная анимация ректанглов
@@ -1326,6 +1485,10 @@ rectAnim: function(){
     move.add(rect19);
     move.add(rect20);
 },
+
+
+
+//  Н Е   И С П О Л Ь З У Е Т С Я
 movePoints: function(){
     for(i=0;i<move.length;i++){
         for(k=0;k<move.children[i].length;k++){
@@ -1342,209 +1505,103 @@ movePoints: function(){
         }
     }
 },
-
-update: function(){
-
-    //  Н А    С Т А Р Т Е      И     Т Р И Г Е Р
-    //Чтобы стояли на старте, посередине экрана.
-    //Иначе двигаются к центру обратно.
-
-    if(ChangeGameL===true){
-        left.x -=0.5;
-    }else if(left.x==(width/2)-left.width ){
-        left.x = (width/2)-left.width;
-    }   else {
-        left.x+=0.5;
-        leftRocket.position.setTo(left.x, left.y+(left.height/2));
-    }
-
-    if(ChangeGameR === true){
-        right.x +=0.5;
-    } else if(right.x==width/2){
-        right.x = width/2;
-    }   else{
-        right.x-=0.5;
-        rightRocket.position.setTo(right.x-(rightRocket.width-right.width), right.y+(right.height/2));
-    }
-    
-    // if(ChangeGameL || ChangeGameR){
-    //     console.log('O B A     T R U');
-
-    // }
-
-  //#region
-    //Т А Й Л Я Т С Я    З В Е З Д Ы
-    
-    // if(leftRocket.alpha == 1){
-    //     tilesprite.tilePosition.x += 10;
-    //     tilesprite.tilePosition.y += 10;
-    // }else{
-    //     tilesprite.tilePosition.x += 0.5;
-    // }
-    
-    // if(rightRocket.alpha == 1){
-    //     tilesprite2.tilePosition.x -= 10;
-    //     tilesprite2.tilePosition.y += 10;
-
-    // }else{
-    //     tilesprite2.tilePosition.x -= 0.5;
-    // }
-    
-
-
-    //Б Э К Г Р А У Н Д  становится   Б Е Л Ы Й
-    // if(leftRocket.alpha == 1 && rightRocket.alpha == 1){
-    //     // game.stage.backgroundColor = '#fff';
-
-    //     for(i=0;i<move.length;i++){
-    //         for(k=0;k<move.children[i].length;k++){
-    //             game.add.tween(move.children[i].children[k]).to({
-    //                 x:width/2,
-    //                 y:height/2,
-    //                 width:0,
-    //                 height:0  
-    //             }, game.rnd.integerInRange(1000,5000), ease, true);
-    //         }
-    //     }
-    // }
-//#endregion
-
+gridDefault: function(){
+    //#region POINTS GROUPs
    
+    // L e f t      points_pinkDef
+    // три вертикальные 
+    // col_widthDef = (width/2)/20;
+    // row_heightDef= (height)/20;
+    // x_posDef=0;
+    // y_posDef=0;
+
+    // for(v=0;v<20;v++){
+    //     for(i=0;i<3;i++){
+    //         points_pinkDef.create(x_posDef+(col_widthDef/2), y_posDef+(row_heightDef/2), 'defaultBullet').scale.setTo(0.03);
+    //         x_posDef = x_posDef+col_widthDef;
+    //     }
+    //     y_posDef = y_posDef+row_heightDef;
+    //     x_posDef = 0;
+    // }
     
     
+    // //три горизонтальные    
+    // col_widthDef2 = (width/2)/20;
+    // row_heightDef2 = (height)/20;
+    // x_posDef2=points_pinkDef.children[2].x + col_widthDef2/2;
+    // y_posDef2=0;
 
-    
-
-
-    // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
-    
-    
-    // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
-    if((right.x+right.width) > width ){
-        rightKey.enabled = false;
-        leftKey.enabled = false;
-        
-        tilesprite.kill();
-        tilesprite2.kill();
-
-        this.rightWIN();
-    }
-
-    //  Д   Ы   М    ИЗ ПОД КОЛЕС  ****** НЕ СДЕЛАН
-    //#region
-    //Отключает анимацию стрелки
-    // if(xposL>left.x || xposR<right.x){
-        
+    // for(v=0;v<3;v++){
+    //     for(i=0;i<17;i++){
+    //         points_pinkDef.create(x_posDef2+(col_widthDef2/2), y_posDef2+(row_heightDef2/2),'defaultBullet').scale.setTo(0.03);
+    //         x_posDef2 = x_posDef2+col_widthDef2;
+    //     }
+    //     y_posDef2 = y_posDef2+row_heightDef2;
+    //     x_posDef2 = points_pinkDef.children[2].x + col_widthDef2/2;
     // }
 
-    // if (leftKey.isDown){   
-    //     // this.purpleFireBullet();
+    // //три с низу    
+    // col_widthDef2 = (width/2)/20;
+    // row_heightDef2 = (height)/20;
+    // x_posNIZ=points_pinkDef.children[53].x + col_widthDef2/2;
+    // y_posNIZ=points_pinkDef.children[53].y;
+
+    // for(v=0;v<3;v++){
+    //     for(i=0;i<17;i++){
+    //         points_pinkDef.create(x_posNIZ+(col_widthDef2/2), y_posNIZ,'defaultBullet').scale.setTo(0.03);
+    //         x_posNIZ = x_posNIZ+col_widthDef2;
+    //     }
+    //     y_posNIZ = y_posNIZ+row_heightDef2;
+    //     x_posNIZ = points_pinkDef.children[53].x+ col_widthDef2/2 ;
     // }
 
-    // if (rightKey.isDown){   
-    //     // this.greenFireBullet();
+    // // R i g h t        points_purpleDef
+    // // три вертикальные 
+    // col_widthDef = (width/2)/20;
+    // row_heightDef= (height)/20;
+    // x_posDef=0;
+    // y_posDef=0;
+
+    // for(v=0;v<20;v++){
+    //     for(i=0;i<3;i++){
+    //         points_purpleDef.create(x_posDef+(col_widthDef/2), y_posDef+(row_heightDef/2), 'defaultBullet').scale.setTo(0.03);
+    //         x_posDef = x_posDef+col_widthDef;
+    //     }
+    //     y_posDef = y_posDef+row_heightDef;
+    //     x_posDef = 0;
+    // }
+    
+    
+    // //три горизонтальные    
+    // col_widthDef2 = (width/2)/20;
+    // row_heightDef2 = (height)/20;
+    // x_posDef2=points_purpleDef.children[2].x + col_widthDef2/2;
+    // y_posDef2=0;
+
+    // for(v=0;v<3;v++){
+    //     for(i=0;i<17;i++){
+    //         points_purpleDef.create(x_posDef2+(col_widthDef2/2), y_posDef2+(row_heightDef2/2),'defaultBullet').scale.setTo(0.03);
+    //         x_posDef2 = x_posDef2+col_widthDef2;
+    //     }
+    //     y_posDef2 = y_posDef2+row_heightDef2;
+    //     x_posDef2 = points_purpleDef.children[2].x + col_widthDef2/2;
     // }
 
+    // //три с низу    
+    // col_widthDef2 = (width/2)/20;
+    // row_heightDef2 = (height)/20;
+    // x_posNIZ=points_purpleDef.children[53].x + col_widthDef2/2;
+    // y_posNIZ=points_purpleDef.children[53].y;
+
+    // for(v=0;v<3;v++){
+    //     for(i=0;i<17;i++){
+    //         points_purpleDef.create(x_posNIZ+(col_widthDef2/2), y_posNIZ,'defaultBullet').scale.setTo(0.03);
+    //         x_posNIZ = x_posNIZ+col_widthDef2;
+    //     }
+    //     y_posNIZ = y_posNIZ+row_heightDef2;
+    //     x_posNIZ = points_purpleDef.children[53].x+ col_widthDef2/2 ;
+    // }
+   
     //#endregion
-},
-
-leftWIN: function (){
-    game.input.keyboard.removeKey(Phaser.Keyboard.LEFT);
-    game.input.keyboard.removeKey(Phaser.Keyboard.RIGHT);
-
-
-    left.x = 0;
-    left.alpha = 0;
-    leftRocket.alpha = 0;
-
-    game.camera.shake(0.05, 700);
-
-    for(i=0;i<4;i++){
-        PpurpleEmitter = game.add.emitter(width/2-300, height/2 , 200);
-        game.physics.arcade.enable(PpurpleEmitter);
-        PpurpleEmitter.checkWorldBounds = true;
-        PpurpleEmitter.outOfBoundsKill = true;
-        
-        PpurpleEmitter.makeParticles('like');
-        PpurpleEmitter.setXSpeed(1000, -1000)
-        PpurpleEmitter.setYSpeed(1000, -1000)
-        PpurpleEmitter.start(false, 900, 10);
-    }
-
-    game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
-    
-    //SAD EMITTER
-    s = game.add.sprite(game.rnd.integerInRange(width/2, width), 0, 'sad');
-    game.physics.arcade.enable(s);
-    s.scale.setTo(10);
-    s.angle =game.rnd.integerInRange(-40,40);
-    s.body.collideWorldBounds = true;
-    s.body.bounce.setTo(0.5, 0.8);
-    s.body.gravity.y =2000;
-
-    // game.add.text(width/2 +50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
-    
-    proval = game.add.sprite(0,0,'proval');
-    proval.alpha=0;
-    proval.scale.setTo(1.3,1.3);
-    proval.position.setTo(width/2-100,height-proval.height);
-    proval.animations.add('p');
-    
-    provalTimer = game.time.create(false);
-    provalTimer.loop(500,function(){
-        proval.alpha=1;
-        proval.animations.play('p', 20, true);
-    },this);
-    provalTimer.start();
-
-    //GLASS ANIM
-    glass = game.add.sprite(width/2,0,'glass');
-    glass.scale.setTo(0.5,0.5);
-    glass.animations.add('glassCrack');
-    glass.animations.play('glassCrack', 10,false);
-
-
-},
-rightWIN : function (){
-    rightKey.enabled = false;
-    leftKey.enabled = false;
-
-    right.x = 0;
-    right.alpha = 0;
-    rightRocket.alpha = 0;
-
-    game.camera.shake(0.05, 700);
-
-    //L I K E
-    for(i=0;i<4;i++){
-        PpurpleEmitter = game.add.emitter(width/2+300, height/2 , 200);
-        game.physics.arcade.enable(PpurpleEmitter);
-        PpurpleEmitter.checkWorldBounds = true;
-        PpurpleEmitter.outOfBoundsKill = true;
-        
-        PpurpleEmitter.makeParticles('like');
-        PpurpleEmitter.setXSpeed(1000, -1000)
-        PpurpleEmitter.setYSpeed(1000, -1000)
-        PpurpleEmitter.start(false, 900, 4);
-    }
-
-    game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
-
-    //S A D
-    s = game.add.sprite(game.rnd.integerInRange(0, width/2-500), 0, 'sad');
-    game.physics.arcade.enable(s);
-    s.angle =game.rnd.integerInRange(-40,40);
-    s.scale.setTo(10);
-    s.body.collideWorldBounds = true;
-    s.body.bounce.setTo(0.5, 0.8);
-    s.body.gravity.y =2000;
-
-    game.add.text(50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
-
-    //GLASS ANIM
-    glass = game.add.sprite(0, 0, 'glass');
-    glass.scale.setTo(0.5,0.5);
-    glass.animations.add('glassCrack');
-    glass.animations.play('glassCrack', 10,false);
 }
 }
