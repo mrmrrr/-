@@ -45,14 +45,13 @@ preload:function(){
     game.load.image('sad','img/sad.png');
     game.load.image('tile','img/tile.png');
     
-    game.load.image('leftRocket','img/leftRocket.png');
-    game.load.image('rightRocket','img/rightRocket.png');
 
 
 
+    game.load.spritesheet('left','img/left.png', 329, 498, 26);
+    game.load.spritesheet('right','img/right.png', 329, 498, 29);
 
-    game.load.spritesheet('left','img/left.png', 449, 404, 24);
-    game.load.spritesheet('right','img/right.png', 449, 404, 24);
+
 
 
     game.load.spritesheet('engineAnimL','img/rocketAnimL.png', 460, 228, 4);
@@ -116,23 +115,23 @@ create:function (){
     
     
     right = game.add.sprite(0,0,'right');
-    right.animations.add('main',[4],20,false);
-    right.animations.add('naklon',[3,2,1,0],24,false);
-    right.animations.add('rotate',[9,8,7,6,5,14,13,12,11,10,19,18,17,16,15,,24,23,22,21],24,false);
+    right.animations.add('main',[9],20,false);
+    right.animations.add('naklon',[8,7,6,5,4],20,false);
+    right.animations.add('rotate',[3,2,1,0,19,18,17,16,15,14,13,12,11,10,29,28,27,26,25,24],20,false);
     right.animations.play('main');
-    right.scale.setTo(0.5);
+    right.scale.setTo(0.7);
     right.position.x = (width/2);
-    right.position.y =  (height/2)-(right.height/2);
+    right.position.y =  (height/2)-(right.height/2) + 80;
     right.bringToTop();
 
     left = game.add.sprite(0,0,'left');
     left.animations.add('main',[0],20,false);
-    left.animations.add('naklon',[1,2,3,4],24,false);
-    left.animations.add('rotate',[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],24,false);
+    left.animations.add('naklon',[1,2,3,4,5],20,false);
+    left.animations.add('rotate',[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],20,false);
     left.animations.play('main');
-    left.scale.setTo(0.5);
-    left.position.x = (width/2)-right.width;
-    left.position.y = (height/2) - (left.height/2) ;
+    left.scale.setTo(0.7);
+    left.position.x = (width/2)-left.width;
+    left.position.y = (height/2) - (left.height/2) + 80;
     left.bringToTop();
     
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -141,19 +140,7 @@ create:function (){
     leftKey.onDown.add(this.leftDuck, this);
     rightKey.onDown.add(this.rightDuck, this);
     
-    leftRocket = game.add.sprite(0, 0, 'leftRocket');
-    leftRocket.alpha = 0;
 
-    rocketAnimL = game.add.sprite(0,0, 'rocketAnimL');
-    rocketAnimL.alpha = 0;
-    rocketAnimL.animations.add('rocketPink');
-
-    rightRocket = game.add.sprite(0, 0, 'rightRocket');
-    rightRocket.alpha = 0;
-
-    // rocketAnimR = game.add.sprite(0,0, 'rocketAnimR');
-    // rocketAnimR.alpha = 0;
-    
     //#region SPEED
     // speed = game.add.sprite(0,0,'speed');
     // speed.animations.add('speed');
@@ -188,9 +175,8 @@ create:function (){
     fire2.makeParticles('purpleParticleCircle');
     fire2.setXSpeed(-1000, 0);
     //#endregion
-    xposL = left.x;
-    xposR = right.x;
     
+        
     //#region Группы точек
     rect1  = game.add.group(); /* 🎀 */
     rect2  = game.add.group(); /* 💜 */
@@ -245,14 +231,9 @@ leftDuck: function(){
         
         left.x -= 15;
         
-        leftRocket.alpha = 1;
-        leftRocket.angle = 15;
-        leftRocket.scale.setTo(0.5);
-        // leftRocket.position.setTo(left.x, left.y+(left.height/2));
-        
         // speed.animations.play('speed', 20, true);
         
-        fire.position.setTo(leftRocket.x+leftRocket.width-150, leftRocket.y-(leftRocket.height/2)+50)
+        fire.position.setTo((left.x+left.width)*0.7, (left.y+left.height/2 +70)*0.7)
         fire.start(true, 500, null, 10);
         
         //Анимация включения двигателя
@@ -266,9 +247,7 @@ leftDuck: function(){
 },
 
 rightDuck: function(){
-
     if( right.x > ((width/2 + width/4)-right.width) ){
-        console.log('РАКЕТА')
         if(naklonTrigerR){
             right.animations.stop('main');
             right.animations.play('naklon',false,false);   
@@ -277,23 +256,13 @@ rightDuck: function(){
 
         right.x += 15;
 
-        rightRocket.alpha = 1;
-        rightRocket.angle = -15;
-        rightRocket.scale.setTo(0.5);
-
         // speedR.animations.play('speedR', 20, true);
 
-        fire2.position.setTo(rightRocket.x-50, rightRocket.y-(rightRocket.height/2))
+        fire2.position.setTo(right.x-70, (right.y+(right.height/2 +70))*0.7 )
         fire2.start(true, 500, null, 10);
 
         //Анимация включения двигателя
         //тоже самое только для правого переделать
-        // rocketAnimL.position.setTo(left.x,left.y+(left.height/2));
-        // rocketAnimL.scale.setTo(0.5);
-        // rocketAnimL.alpha=1;
-        // rocketAnimL.animations.play('rocketPink', 20, false,true);
-
-        
     }
      else{
         right.x +=25;
@@ -302,20 +271,32 @@ rightDuck: function(){
 //вызывается если нажимается на клавишу
 leftDuckChange: function(){
     //25
+    fire.position.setTo( (left.x*0.7),(left.y+left.height/2 +70)*0.7);
+
     left.x +=30;
     if(left.x+left.width > width/3 ){
+        fire.start(true, 500, null, 10);
+        
+        fire.position.setTo( (left.x*0.7)+50 ,(left.y+left.height/2 +70)*0.7);
+
         left.x+=7;
 
         // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
-        if((left.x + left.width)-50 > width/2){
+        if( (left.x + left.width)-50 > width/2 ){
             this.leftWIN();
         }
     }
 },
 rightDuckChange: function(){
     //25
+    fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
+
     right.x-=30;
     if(right.x < width/3 + width/2 ){
+        fire2.start(true, 500, null, 10);
+        
+        fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
+
         right.x-=7;
 
         // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
@@ -326,12 +307,13 @@ rightDuckChange: function(){
 },
 
 update: function(){
-    // console.log(left.x+left.width);
     //  Н А    С Т А Р Т Е      И     Т Р И Г Е Р
     //Чтобы стояли на старте, посередине экрана.
     //Иначе двигаются к центру обратно.
-    
+   
     if( left.x < width/10 ) {
+        fire.position.setTo(left.x*0.7,(left.y+left.height/2 +70)*0.7);
+
         ChangeGameL = true;
 
         left.animations.stop('naklon');
@@ -339,15 +321,20 @@ update: function(){
         leftKey.onDown.add(this.leftDuckChange, this);
 
         if(rocketTriger){
+            fire.position.setTo(left.x*0.7,(left.y+left.height/2 +70)*0.7);
+
             left.animations.play('rotate');
             rocketTriger = false;
-
             this.pointsToCenterLEFT();
             this.pointsFromCenterLEFT();
+
+            fire.setXSpeed(0, -1000);
         }
     }
 
     if( right.x > (width/2 + (width/2-width/10))-right.width ){
+        fire2.position.setTo( (right.x+right.width)*0.7,(right.y+right.height/2 +70)*0.7);
+        
         ChangeGameR = true;
         
         right.animations.stop('naklon');
@@ -355,6 +342,9 @@ update: function(){
         rightKey.onDown.add(this.rightDuckChange, this);
 
         if(rocketTrigerR){
+            fire2.position.setTo( (right.x+right.width)*0.7,(right.y+right.height/2 +70)*0.7);
+            fire2.setXSpeed(0, 1000);
+
             right.animations.play('rotate');
             rocketTrigerR = false;
 
@@ -364,12 +354,10 @@ update: function(){
     }
 
 
-
     if(left.x==(width/2)-left.width){
         left.x = (width/2)-left.width;
     }   else {
             left.x+=1;
-            leftRocket.position.setTo(left.x+50, left.y+(left.height/2));
         }
             if(ChangeGameL){
                 left.x -=3;
@@ -379,15 +367,10 @@ update: function(){
         right.x = width/2;
     }   else {
             right.x-=1;
-            rightRocket.position.setTo(right.x-50, right.y+(right.height/2)+rightRocket.height/2);
         }
             if(ChangeGameR){
                 right.x+=3;
     }
-
-    // if(right.x > (width/2 + (width/2-width/10))-right.width){
-    //     right.x -=5;
-    // }
     
 
   //#region   //Т А Й Л Я Т С Я    З В Е З Д Ы
@@ -453,7 +436,7 @@ leftWIN: function (){
 
     left.x = 0;
     left.alpha = 0;
-    leftRocket.alpha = 0;
+    // leftRocket.alpha = 0;
 
     game.camera.shake(0.05, 700);
 
@@ -507,7 +490,7 @@ rightWIN : function (){
 
     right.x = 0;
     right.alpha = 0;
-    rightRocket.alpha = 0;
+    // rightRocket.alpha = 0;
 
     game.camera.shake(0.05, 700);
 
@@ -543,7 +526,7 @@ rightWIN : function (){
     glass.animations.play('glassCrack', 10,false);
 },
 render: function(){
-    // game.debug.spriteBounds(left);
+    // game.debug.spriteBounds(right);
 },
 
 grid: function(){
