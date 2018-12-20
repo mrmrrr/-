@@ -13,7 +13,6 @@ var greenBulletTime = 0;
 
 var bmd;
 var starTween;
-// var jumpButton = null;
 
 var arrow;
 
@@ -77,13 +76,13 @@ create:function (){
     game.stage.backgroundColor = '#000';
 
     //#region Г Р А Д И Е Н Т Ы
-    // q = game.add.sprite(width/2, 0, 'q2');
-    // q.width=0;
-    // q.height=height;
+    q = game.add.sprite(width/2, 0, 'q');
+    q.width=0;
+    q.height=height;
 
-    // q2 = game.add.sprite(width/2, 0, 'q2');
-    // q2.width=0;
-    // q2.height=height;
+    q2 = game.add.sprite(width/2, 0, 'q2');
+    q2.width=0;
+    q2.height=height;
 
     // q.alpha=0;
     // q2.alpha=0;
@@ -215,6 +214,9 @@ create:function (){
 
     // arrowTimer.start();
     this.grid();
+    
+    // game.add.tween(q).to({width:width/2,x:0},1000,'Linear',true).loop();
+    // game.add.tween(q2).to({width:width/2},1000,'Linear',true).loop();
 },
 
 // АНИМАЦИЯ В КАКУЮ СТОРОНУ НАЖИМАТЬ
@@ -228,7 +230,6 @@ leftDuck: function(){
             left.animations.play('naklon',false,false);   
             naklonTriger = false;
         }
-        
         left.x -= 15;
         
         // speed.animations.play('speed', 20, true);
@@ -282,7 +283,7 @@ leftDuckChange: function(){
         left.x+=7;
 
         // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
-        if( (left.x + left.width)-50 > width/2 ){
+        if( (left.x + left.width) > width/2 ){
             this.leftWIN();
         }
     }
@@ -300,13 +301,14 @@ rightDuckChange: function(){
         right.x-=7;
 
         // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
-        if(right.x < width/2-50){
+        if(right.x < width/2){
             this.rightWIN();
         }
     }
 },
 
 update: function(){
+
     //  Н А    С Т А Р Т Е      И     Т Р И Г Е Р
     //Чтобы стояли на старте, посередине экрана.
     //Иначе двигаются к центру обратно.
@@ -1290,7 +1292,7 @@ pointsFromCenterLEFT: function(){
             y:height/2,
             width:0,
             height:0
-        },game.rnd.integerInRange(700,1500),'Linear',true).loop();
+        },game.rnd.integerInRange(700,1500),Phaser.Easing.Quartic.In,true).loop();
     }
 },
 pointsFromCenterRIGHT: function(){
@@ -1303,7 +1305,7 @@ pointsFromCenterRIGHT: function(){
             y:height/2,
             width:0,
             height:0
-        },game.rnd.integerInRange(700,1500),'Linear',true).loop();
+        },game.rnd.integerInRange(700,1500),Phaser.Easing.Quartic.In,true).loop();
     }
 },
 
@@ -1343,109 +1345,130 @@ rectAnim: function(){
     ease = Phaser.Easing.Linear.In;
     
     //К краям анимация
-    game.add.tween(rect20).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-        game.add.tween(rect20).to({alpha:0},fadeTime,ease,true);
-        game.add.tween(rect19).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-            game.add.tween(rect19).to({alpha:0},fadeTime,ease,true);
-            game.add.tween(rect18).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                game.add.tween(rect18).to({alpha:0},fadeTime,ease,true);
-                game.add.tween(rect17).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                    game.add.tween(rect17).to({alpha:0},fadeTime,ease,true)
-                    game.add.tween(rect16).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                        game.add.tween(rect16).to({alpha:0},fadeTime,ease,true);
-                        game.add.tween(rect15).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                            game.add.tween(rect15).to({alpha:0},fadeTime,ease,true);
-                            game.add.tween(rect14).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                game.add.tween(rect14).to({alpha:0},fadeTime,ease,true);
-                                game.add.tween(rect13).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                    game.add.tween(rect13).to({alpha:0},fadeTime,ease,true);
-                                    game.add.tween(rect12).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                        game.add.tween(rect12).to({alpha:0},fadeTime,ease,true);
-                                        game.add.tween(rect11).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                            game.add.tween(rect11).to({alpha:0},fadeTime,ease,true);
-                                            game.add.tween(rect10).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                game.add.tween(rect10).to({alpha:0},fadeTime,ease,true);
-                                                game.add.tween(rect9).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                    game.add.tween(rect9).to({alpha:0},fadeTime,ease,true);
-                                                    game.add.tween(rect8).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                        game.add.tween(rect8).to({alpha:0},fadeTime,ease,true);
-                                                        game.add.tween(rect7).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                            game.add.tween(rect7).to({alpha:0},fadeTime,ease,true);
-                                                            game.add.tween(rect6).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                game.add.tween(rect6).to({alpha:0},fadeTime,ease,true);
-                                                                game.add.tween(rect5).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                    game.add.tween(rect5).to({alpha:0},fadeTime,ease,true);
-                                                                    game.add.tween(rect4).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                        game.add.tween(rect4).to({alpha:0},fadeTime,ease,true);
-                                                                        game.add.tween(rect3).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                            game.add.tween(rect3).to({alpha:0},fadeTime,ease,true);
-                                                                            game.add.tween(rect2).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                                game.add.tween(rect2).to({alpha:0},fadeTime,ease,true);
-                                                                                game.add.tween(rect1).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                                    game.add.tween(rect1).to({alpha:0},fadeTime,ease,true).onComplete.add(toCenter);
-                                                                                })
-                                                                            })
-                                                                        })
-                                                                    })
-                                                                })
-                                                            })
-                                                        })
-                                                    })
-                                                })
-                                            })
-                                        })
-                                    })
-                                })
-                            })
-                        })
-                    })
-                });
-            });
-        });
-    });
+    // game.add.tween(rect20).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //     game.add.tween(rect20).to({alpha:0},fadeTime,ease,true);
+    //     game.add.tween(rect19).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //         game.add.tween(rect19).to({alpha:0},fadeTime,ease,true);
+    //         game.add.tween(rect18).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //             game.add.tween(rect18).to({alpha:0},fadeTime,ease,true);
+    //             game.add.tween(rect17).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                 game.add.tween(rect17).to({alpha:0},fadeTime,ease,true)
+    //                 game.add.tween(rect16).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                     game.add.tween(rect16).to({alpha:0},fadeTime,ease,true);
+    //                     game.add.tween(rect15).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                         game.add.tween(rect15).to({alpha:0},fadeTime,ease,true);
+    //                         game.add.tween(rect14).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                             game.add.tween(rect14).to({alpha:0},fadeTime,ease,true);
+    //                             game.add.tween(rect13).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                 game.add.tween(rect13).to({alpha:0},fadeTime,ease,true);
+    //                                 game.add.tween(rect12).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                     game.add.tween(rect12).to({alpha:0},fadeTime,ease,true);
+    //                                     game.add.tween(rect11).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                         game.add.tween(rect11).to({alpha:0},fadeTime,ease,true);
+    //                                         game.add.tween(rect10).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                             game.add.tween(rect10).to({alpha:0},fadeTime,ease,true);
+    //                                             game.add.tween(rect9).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                 game.add.tween(rect9).to({alpha:0},fadeTime,ease,true);
+    //                                                 game.add.tween(rect8).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                     game.add.tween(rect8).to({alpha:0},fadeTime,ease,true);
+    //                                                     game.add.tween(rect7).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                         game.add.tween(rect7).to({alpha:0},fadeTime,ease,true);
+    //                                                         game.add.tween(rect6).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                             game.add.tween(rect6).to({alpha:0},fadeTime,ease,true);
+    //                                                             game.add.tween(rect5).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                 game.add.tween(rect5).to({alpha:0},fadeTime,ease,true);
+    //                                                                 game.add.tween(rect4).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                     game.add.tween(rect4).to({alpha:0},fadeTime,ease,true);
+    //                                                                     game.add.tween(rect3).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                         game.add.tween(rect3).to({alpha:0},fadeTime,ease,true);
+    //                                                                         game.add.tween(rect2).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                             game.add.tween(rect2).to({alpha:0},fadeTime,ease,true);
+    //                                                                             game.add.tween(rect1).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                                 game.add.tween(rect1).to({alpha:0},fadeTime,ease,true).onComplete.add(toCenter);
+    //                                                                             })
+    //                                                                         })
+    //                                                                     })
+    //                                                                 })
+    //                                                             })
+    //                                                         })
+    //                                                     })
+    //                                                 })
+    //                                             })
+    //                                         })
+    //                                     })
+    //                                 })
+    //                             })
+    //                         })
+    //                     })
+    //                 })
+    //             });
+    //         });
+    //     });
+    // });
 
     //В центр анимация
-    function toCenter(){
-        game.add.tween(rect1).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-            game.add.tween(rect2).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                game.add.tween(rect3).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                    game.add.tween(rect4).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                        game.add.tween(rect5).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                            game.add.tween(rect6).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                game.add.tween(rect7).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                    game.add.tween(rect8).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                        game.add.tween(rect9).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                            game.add.tween(rect10).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                game.add.tween(rect11).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                    game.add.tween(rect12).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                        game.add.tween(rect13).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                            game.add.tween(rect14).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                game.add.tween(rect15).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                    game.add.tween(rect16).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                        game.add.tween(rect17).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                            game.add.tween(rect18).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                                game.add.tween(rect19).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
-                                                                                    game.add.tween(rect20).to({alpha:1},revealTime,ease,true);
-                                                                                })
-                                                                            })
-                                                                        })
-                                                                    })
-                                                                })
-                                                            })
-                                                        })
-                                                    })
-                                                })
-                                            })
-                                        })
-                                    })
-                                })
-                            })
-                        })
-                    });
-                });
-            });
-        });
-    }
+    // function toCenter(){
+    //     game.add.tween(rect1).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //         game.add.tween(rect2).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //             game.add.tween(rect3).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                 game.add.tween(rect4).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                     game.add.tween(rect5).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                         game.add.tween(rect6).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                             game.add.tween(rect7).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                 game.add.tween(rect8).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                     game.add.tween(rect9).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                         game.add.tween(rect10).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                             game.add.tween(rect11).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                 game.add.tween(rect12).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                     game.add.tween(rect13).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                         game.add.tween(rect14).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                             game.add.tween(rect15).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                 game.add.tween(rect16).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                     game.add.tween(rect17).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                         game.add.tween(rect18).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                             game.add.tween(rect19).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
+    //                                                                                 game.add.tween(rect20).to({alpha:1},revealTime,ease,true);
+    //                                                                             })
+    //                                                                         })
+    //                                                                     })
+    //                                                                 })
+    //                                                             })
+    //                                                         })
+    //                                                     })
+    //                                                 })
+    //                                             })
+    //                                         })
+    //                                     })
+    //                                 })
+    //                             })
+    //                         })
+    //                     })
+    //                 });
+    //             });
+    //         });
+    //     });
+    // }
+
+    rect1.alpha=1;
+    rect2.alpha=1;
+    rect3.alpha=1;
+    rect4.alpha=1;
+    rect5.alpha=1;
+    rect6.alpha=1;
+    rect7.alpha=1;
+    rect8.alpha=1;
+    rect9.alpha=1;
+    rect10.alpha=1;
+    rect11.alpha=1;
+    rect12.alpha=1;
+    rect13.alpha=1;
+    rect14.alpha=1;
+    rect15.alpha=1;
+    rect16.alpha=1;
+    rect17.alpha=1;
+    rect18.alpha=1;
+    rect19.alpha=1;
+    rect20.alpha=1;
 
     move.add(rect1);
     move.add(rect2);
@@ -1467,6 +1490,21 @@ rectAnim: function(){
     move.add(rect18);
     move.add(rect19);
     move.add(rect20);
+
+    for(i=0;i<move.length;i++){
+        for(k=0;k<move.children[i].length;k++){
+            game.add.tween(move.children[i].children[k]).from({
+                x:width/2,
+                y:height/2,
+                width:0,
+                height:0  
+            }, game.rnd.integerInRange(1000,5000),Phaser.Easing.Quartic.Out, true);
+
+            // if(move.children[i].children[k].x==width/2 && move.children[i].children[k].y==height/2){
+            //     move.children[i].children[k].kill();
+            // }
+        }
+    }
 },
 
 
