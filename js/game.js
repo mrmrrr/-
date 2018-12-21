@@ -507,7 +507,6 @@ leftWIN: function (){
         PpurpleEmitter.start(false, 900, 10);
     }
     
-    // game.add.text(width/2 +50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
     
     //SAD EMITTER
     s = game.add.sprite(game.rnd.integerInRange(width/2, width), 0, 'sad');
@@ -569,8 +568,6 @@ rightWIN : function (){
         PpurpleEmitter.start(false, 900, 4);
     }
 
-    game.add.text(width/2 +50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
-    game.add.text(50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
 
     //S A D
     s = game.add.sprite(game.rnd.integerInRange(0, width/2-500), 0, 'sad');
