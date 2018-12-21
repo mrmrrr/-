@@ -520,8 +520,10 @@ leftWIN: function (){
     // П Р О В А Л    РАЗНОЦВЕТНЫЙ
     proval = game.add.sprite(0,0,'proval');
     proval.alpha=0;
+    proval.anchor.setTo(0.5,0.5);
+
     proval.scale.setTo(1.3,1.3);
-    proval.position.setTo(width/2-100,height-proval.height);
+    proval.position.setTo(width/2+width/4,height/2);
     proval.animations.add('p');
     
     
@@ -577,6 +579,22 @@ rightWIN : function (){
     s.body.collideWorldBounds = true;
     s.body.bounce.setTo(0.5, 0.8);
     s.body.gravity.y =2000;
+
+    // П Р О В А Л    РАЗНОЦВЕТНЫЙ
+    proval = game.add.sprite(0,0,'proval');
+    proval.alpha=0;
+    proval.scale.setTo(1.3,1.3);
+    proval.anchor.setTo(0.5,0.5);
+    proval.position.setTo(width/4,height/2);
+    proval.animations.add('p');
+    
+    
+    provalTimer = game.time.create(false);
+    provalTimer.loop(500,function(){
+        proval.alpha=1;
+        proval.animations.play('p', 20, true);
+    },this);
+    provalTimer.start();
 
     //GLASS ANIM
     glass = game.add.sprite(0, 0, 'glass');
