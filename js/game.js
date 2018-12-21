@@ -20,6 +20,9 @@ var rocketTriger = true;
 var rocketTrigerR = true;
 var naklonTriger = true;
 var naklonTrigerR = true;
+var backL = true;
+var backR = true;
+
 
 var ChangeGameL = false;
 var ChangeGameR = false;
@@ -29,6 +32,8 @@ var gameState = {
 preload:function(){
     game.load.image('q','img/q.png');
     game.load.image('q2','img/q2.png');
+
+
 
     game.load.image('purpleBullet','img/purpleBullet.png');
     // game.load.image('greenBullet','img/greenBullet.png');
@@ -43,13 +48,14 @@ preload:function(){
     game.load.image('like','img/like.png');
     game.load.image('sad','img/sad.png');
     game.load.image('tile','img/tile.png');
-    
-
+    game.load.image('white','img/white.png');
+    game.load.image('white2','img/white.png');
 
 
     game.load.spritesheet('left','img/left.png', 329, 498, 26);
     game.load.spritesheet('right','img/right.png', 329, 498, 29);
 
+    game.load.spritesheet('win','img/win.png',640,480,41);
 
 
 
@@ -72,8 +78,19 @@ preload:function(){
 
 create:function (){
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
     game.stage.backgroundColor = '#000';
+
+ 
+    rectR = game.add.sprite(width/2,0,'white');
+    rectR.alpha=0;
+    rectR.width=width/2;
+    rectR.height=height;
+
+    rectL = game.add.sprite(0,0,'white2');
+    rectL.alpha=0;
+    rectL.width=width/2;
+    rectL.height=height;  
+
 
     //#region Г Р А Д И Е Н Т Ы
     q = game.add.sprite(width/2, 0, 'q');
@@ -83,6 +100,8 @@ create:function (){
     q2 = game.add.sprite(width/2, 0, 'q2');
     q2.width=0;
     q2.height=height;
+
+    points_back = game.add.group();
 
     // q.alpha=0;
     // q2.alpha=0;
@@ -200,7 +219,6 @@ create:function (){
     
     move = game.add.group();
 
-    points_back = game.add.group();
     points_pink = game.add.group();
     points_purple = game.add.group();
     points_pink_right = game.add.group();
@@ -217,6 +235,8 @@ create:function (){
     
     // game.add.tween(q).to({width:width/2,x:0},1000,'Linear',true).loop();
     // game.add.tween(q2).to({width:width/2},1000,'Linear',true).loop();
+   
+      
 },
 
 // АНИМАЦИЯ В КАКУЮ СТОРОНУ НАЖИМАТЬ
@@ -273,38 +293,80 @@ rightDuck: function(){
 leftDuckChange: function(){
     //25
     fire.position.setTo( (left.x*0.7),(left.y+left.height/2 +70)*0.7);
-
     left.x +=30;
+    
     if(left.x+left.width > width/3 ){
-        fire.start(true, 500, null, 10);
-        
-        fire.position.setTo( (left.x*0.7)+50 ,(left.y+left.height/2 +70)*0.7);
+        if(left.x+left.width > width/2 - 200){
+            if(backL){
+                for(i=0;i<points_back.length;i++){
+                    points_back.children[i].anchor.setTo(0.5,0.5);
+                    if(points_back.children[i].x<width/2){
+                        let d=game.rnd.integerInRange(400,9000);
+                        let q = game.rnd.integerInRange(20,80);
+                        game.add.tween(points_back.children[i]).to({
+                            width:q,
+                            height:q,
+                            alpha:1
+                        },game.rnd.integerInRange(1000,10000),Phaser.Easing.Elastic.Out,true,d);
+                    }
+                }
+                backL=false;
+            }
 
-        left.x+=7;
+            fire.start(true, 500, null, 10);
+            fire.position.setTo( (left.x*0.7)+50 ,(left.y+left.height/2 +70)*0.7);
+            left.x+=8;
 
-        // П О Б Е Д И Т Е Л Ь  П Р А В Ы Й
-        if( (left.x + left.width) > width/2 ){
-            this.leftWIN();
+            // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь           П Р А В Ы Й
+            if( (left.x + left.width) > width/2 ){
+                this.leftWIN();
+            }
         }
+    }
+
+    if(left.x>width/2-width/3){
+        rectL.alpha=1;
     }
 },
 rightDuckChange: function(){
     //25
     fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
-
+   
     right.x-=30;
     if(right.x < width/3 + width/2 ){
-        fire2.start(true, 500, null, 10);
         
-        fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
+        if(right.x < width/2 + 200){
+            if(backR){
+                for(i=0;i<points_back.length;i++){
+                    points_back.children[i].anchor.setTo(0.5,0.5);
+                    if(points_back.children[i].x>width/2){
+                        let d=game.rnd.integerInRange(400,9000);
+                        let q = game.rnd.integerInRange(20,80);
+                        game.add.tween(points_back.children[i]).to({
+                            width:q,
+                            height:q,
+                            alpha:1
+                        },game.rnd.integerInRange(1000,10000),Phaser.Easing.Elastic.Out,true,d).loop();
+                    }
+                }
+                backR=false;
+            }
+        }
 
+        fire2.start(true, 500, null, 10);
+        fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
         right.x-=7;
 
-        // П О Б Е Д И Т Е Л Ь  Л Е В Ы Й
+        // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь       Л Е В Ы Й
         if(right.x < width/2){
             this.rightWIN();
         }
+        if(right.x < width/2 + 200){
+            rectR.alpha=1;
+        }
     }
+
+    
 },
 
 update: function(){
@@ -313,7 +375,7 @@ update: function(){
     //Чтобы стояли на старте, посередине экрана.
     //Иначе двигаются к центру обратно.
    
-    if( left.x < width/10 ) {
+    if( left.x < width/10-100 ) {
         fire.position.setTo(left.x*0.7,(left.y+left.height/2 +70)*0.7);
 
         ChangeGameL = true;
@@ -330,11 +392,13 @@ update: function(){
             this.pointsToCenterLEFT();
             this.pointsFromCenterLEFT();
 
+            
+
             fire.setXSpeed(0, -1000);
         }
     }
 
-    if( right.x > (width/2 + (width/2-width/10))-right.width ){
+    if( right.x > (width/2 + (width/2-width/10))-right.width +100 ){
         fire2.position.setTo( (right.x+right.width)*0.7,(right.y+right.height/2 +70)*0.7);
         
         ChangeGameR = true;
@@ -373,6 +437,9 @@ update: function(){
             if(ChangeGameR){
                 right.x+=3;
     }
+
+    // Б Э К Г Р А У Н Д  становится   Б Е Л Ы Й
+    
     
 
   //#region   //Т А Й Л Я Т С Я    З В Е З Д Ы
@@ -395,21 +462,7 @@ update: function(){
     
 
 
-    //Б Э К Г Р А У Н Д  становится   Б Е Л Ы Й
-    // if(leftRocket.alpha == 1 && rightRocket.alpha == 1){
-    //     // game.stage.backgroundColor = '#fff';
-
-    //     for(i=0;i<move.length;i++){
-    //         for(k=0;k<move.children[i].length;k++){
-    //             game.add.tween(move.children[i].children[k]).to({
-    //                 x:width/2,
-    //                 y:height/2,
-    //                 width:0,
-    //                 height:0  
-    //             }, game.rnd.integerInRange(1000,5000), ease, true);
-    //         }
-    //     }
-    // }
+  
 //#endregion
     
     
@@ -453,8 +506,7 @@ leftWIN: function (){
         PpurpleEmitter.setYSpeed(1000, -1000)
         PpurpleEmitter.start(false, 900, 10);
     }
-
-    game.add.text(50, 100, "Ю ВИН", {font:'bold 100px Arial', fill:'#fff'});
+    
     // game.add.text(width/2 +50, 100, "Ю ЛУУЗ", {font:'bold 100px Arial', fill:'#fff'});
     
     //SAD EMITTER
@@ -473,6 +525,7 @@ leftWIN: function (){
     proval.position.setTo(width/2-100,height-proval.height);
     proval.animations.add('p');
     
+    
     provalTimer = game.time.create(false);
     provalTimer.loop(500,function(){
         proval.alpha=1;
@@ -485,6 +538,13 @@ leftWIN: function (){
     glass.scale.setTo(0.5,0.5);
     glass.animations.add('glassCrack');
     glass.animations.play('glassCrack', 10,false);
+    
+    
+    win=game.add.sprite(0,0,'win');
+    win.anchor.setTo(0.5,0.5);
+    win.animations.add('playwin');
+    win.position.setTo(width/4,height/2);
+    win.animations.play('playwin',20,true);
 },
 rightWIN : function (){
     game.input.keyboard.removeKey(Phaser.Keyboard.LEFT);
@@ -526,10 +586,14 @@ rightWIN : function (){
     glass.scale.setTo(0.5,0.5);
     glass.animations.add('glassCrack');
     glass.animations.play('glassCrack', 10,false);
+
+    win=game.add.sprite(0,0,'win');
+    win.anchor.setTo(0.5,0.5);
+    win.animations.add('playwin');
+    win.position.setTo(width/2+width/4,height/2);
+    win.animations.play('playwin',20,true);
 },
-render: function(){
-    // game.debug.spriteBounds(right);
-},
+
 
 grid: function(){
     
@@ -587,8 +651,9 @@ grid: function(){
         x_pos2_back = (width/2)+(col_width2_back/2);
     }
 
-    points_back.alpha = 0.1;
-
+    for(i=0;i<points_back.length;i++){
+        points_back.children[i].alpha=0;
+    }
     //#endregion
     
     
@@ -1283,7 +1348,7 @@ grid: function(){
 
 //Анимация частиц из центра
 pointsFromCenterLEFT: function(){
-    for(i=0;i<100;i++){
+    for(i=0;i<200;i++){
         points_FromCenterLeft.create(game.rnd.integerInRange(0,width/2),game.rnd.integerInRange(0,height), 'defaultBullet').scale.setTo(
             game.rnd.realInRange(0.01,0.05)
         );
@@ -1292,11 +1357,11 @@ pointsFromCenterLEFT: function(){
             y:height/2,
             width:0,
             height:0
-        },game.rnd.integerInRange(700,1500),Phaser.Easing.Quartic.In,true).loop();
+        },game.rnd.integerInRange(700,1500),Phaser.Easing.Exponential.In,true).loop();
     }
 },
 pointsFromCenterRIGHT: function(){
-    for(i=0;i<100;i++){
+    for(i=0;i<200;i++){
         points_FromCenterRight.create(game.rnd.integerInRange(width/2,width),game.rnd.integerInRange(0,height), 'defaultBullet').scale.setTo(
             game.rnd.realInRange(0.01,0.05)
         );
@@ -1305,7 +1370,7 @@ pointsFromCenterRIGHT: function(){
             y:height/2,
             width:0,
             height:0
-        },game.rnd.integerInRange(700,1500),Phaser.Easing.Quartic.In,true).loop();
+        },game.rnd.integerInRange(700,1500),Phaser.Easing.Exponential.In,true).loop();
     }
 },
 
@@ -1318,7 +1383,7 @@ pointsToCenterLEFT: function(){
                     y:height/2,
                     width:0,
                     height:0  
-                }, game.rnd.integerInRange(1000,5000), 'Linear', true);
+                }, game.rnd.integerInRange(1000,5000), Phaser.Easing.Circular.In, true);
             }
         }
     }
@@ -1332,7 +1397,7 @@ pointsToCenterRIGHT: function(){
                     y:height/2,
                     width:0,
                     height:0  
-                }, game.rnd.integerInRange(1000,5000), 'Linear', true);
+                }, game.rnd.integerInRange(1000,5000), Phaser.Easing.Circular.In, true);
             }
         }
     }
@@ -1343,7 +1408,8 @@ rectAnim: function(){
     revealTime = 10;
     fadeTime = 500;
     ease = Phaser.Easing.Linear.In;
-    
+
+    //#region
     //К краям анимация
     // game.add.tween(rect20).to({alpha:1},revealTime,ease,true).onComplete.add(function(){
     //     game.add.tween(rect20).to({alpha:0},fadeTime,ease,true);
@@ -1448,7 +1514,8 @@ rectAnim: function(){
     //         });
     //     });
     // }
-
+    //#endregion
+    
     rect1.alpha=1;
     rect2.alpha=1;
     rect3.alpha=1;
@@ -1498,7 +1565,7 @@ rectAnim: function(){
                 y:height/2,
                 width:0,
                 height:0  
-            }, game.rnd.integerInRange(1000,5000),Phaser.Easing.Quartic.Out, true);
+            }, game.rnd.integerInRange(1000,5000),Phaser.Easing.Circular.Out, true);
 
             // if(move.children[i].children[k].x==width/2 && move.children[i].children[k].y==height/2){
             //     move.children[i].children[k].kill();
@@ -1508,6 +1575,9 @@ rectAnim: function(){
 },
 
 
+render: function(){
+    // game.debug.spriteBounds(right);
+},
 
 //  Н Е   И С П О Л Ь З У Е Т С Я
 movePoints: function(){
