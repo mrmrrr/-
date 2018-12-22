@@ -250,7 +250,9 @@ leftDuck: function(){
             left.animations.play('naklon',false,false);   
             naklonTriger = false;
         }
-        left.x -= 15;
+        left.x -= (((width/2)/100)*3);
+        console.log(left.x);
+
         
         // speed.animations.play('speed', 20, true);
         
@@ -263,7 +265,7 @@ leftDuck: function(){
         // rocketAnimL.alpha=1;
         // rocketAnimL.animations.play('rocketPink', 20, false,true);
     } else{
-        left.x -= 25;
+        left.x -= ((width/2/100)*4);
     }
 },
 
@@ -275,7 +277,7 @@ rightDuck: function(){
             naklonTrigerR = false;
         }
 
-        right.x += 15;
+        right.x += ((width/2)/100)*3;
 
         // speedR.animations.play('speedR', 20, true);
 
@@ -286,91 +288,52 @@ rightDuck: function(){
         //тоже самое только для правого переделать
     }
      else{
-        right.x +=25;
+        right.x +=((width/2/100)*4);
     }
 },
 //вызывается если нажимается на клавишу
 leftDuckChange: function(){
     //25
     fire.position.setTo( (left.x*0.7),(left.y+left.height/2 +70)*0.7);
-    left.x +=30;
     
-    if(left.x+left.width > width/3 ){
-        if(left.x+left.width > width/2 - 200){
-            if(backL){
-                for(i=0;i<points_back.length;i++){
-                    points_back.children[i].anchor.setTo(0.5,0.5);
-                    if(points_back.children[i].x<width/2){
-                        let d=game.rnd.integerInRange(400,9000);
-                        let q = game.rnd.integerInRange(20,80);
-                        game.add.tween(points_back.children[i]).to({
-                            width:q,
-                            height:q,
-                            alpha:1
-                        },game.rnd.integerInRange(1000,10000),Phaser.Easing.Elastic.Out,true,d);
-                    }
-                }
-                backL=false;
-            }
+    left.x += (((width/2)/100)*5);
+    
+    if(left.x+left.width  > width/2-width/3 ){
 
-            fire.start(true, 500, null, 10);
-            fire.position.setTo( (left.x*0.7)+50 ,(left.y+left.height/2 +70)*0.7);
-            left.x+=8;
+        fire.start(true, 500, null, 10);
+        
+        fire.position.setTo( (left.x*0.7)+50 ,(left.y+left.height/2 +70)*0.7);
 
-            // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь           П Р А В Ы Й
-            if( (left.x + left.width) > width/2 ){
-                this.leftWIN();
-            }
+        left.x+=(((width/2)/100)*0.9);
+
+        // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь           П Р А В Ы Й
+        if( (left.x + left.width) > width/2 ){
+            this.leftWIN();
         }
-    }
-
-    if(left.x>width/2-width/3){
-        rectL.alpha=1;
     }
 },
 rightDuckChange: function(){
     //25
     fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
    
-    right.x-=30;
-    if(right.x < width/3 + width/2 ){
-        
-        if(right.x < width/2 + 200){
-            if(backR){
-                for(i=0;i<points_back.length;i++){
-                    points_back.children[i].anchor.setTo(0.5,0.5);
-                    if(points_back.children[i].x>width/2){
-                        let d=game.rnd.integerInRange(400,9000);
-                        let q = game.rnd.integerInRange(20,80);
-                        game.add.tween(points_back.children[i]).to({
-                            width:q,
-                            height:q,
-                            alpha:1
-                        },game.rnd.integerInRange(1000,10000),Phaser.Easing.Elastic.Out,true,d).loop();
-                    }
-                }
-                backR=false;
-            }
-        }
+    right.x -= (((width/2)/100)*5);
 
+    if(right.x  < (width/2-width/3) + width/2 + right.width){
+        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', right.x);
+        
         fire2.start(true, 500, null, 10);
         fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
-        right.x-=7;
+        
+        right.x-=(((width/2)/100)*0.9);
 
         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь       Л Е В Ы Й
         if(right.x < width/2){
             this.rightWIN();
         }
-        if(right.x < width/2 + 200){
-            rectR.alpha=1;
-        }
     }
-
-    
 },
 
 update: function(){
-
     //  Н А    С Т А Р Т Е      И     Т Р И Г Е Р
     //Чтобы стояли на старте, посередине экрана.
     //Иначе двигаются к центру обратно.
@@ -391,8 +354,6 @@ update: function(){
             rocketTriger = false;
             this.pointsToCenterLEFT();
             this.pointsFromCenterLEFT();
-
-            
 
             fire.setXSpeed(0, -1000);
         }
@@ -423,19 +384,21 @@ update: function(){
     if(left.x==(width/2)-left.width){
         left.x = (width/2)-left.width;
     }   else {
-            left.x+=1;
-        }
-            if(ChangeGameL){
-                left.x -=3;
+            left.x+=(((width/2)/100)*0.2);
+    }
+
+    if(ChangeGameL){
+        left.x -=(((width/2)/100)*0.5);
     }
 
     if(right.x==width/2){
         right.x = width/2;
     }   else {
-            right.x-=1;
-        }
-            if(ChangeGameR){
-                right.x+=3;
+            right.x-=(((width/2)/100)*0.2);
+    }
+
+    if(ChangeGameR){
+        right.x += (((width/2)/100)*0.5);
     }
 
     // Б Э К Г Р А У Н Д  становится   Б Е Л Ы Й
@@ -1357,8 +1320,7 @@ grid: function(){
     this.rectAnim();
 },
 
-// Оставить для целых ректанглов
-// Можно наверно уже удалить из центра сделал 
+
 
 
 //Анимация частиц из центра
@@ -1372,7 +1334,7 @@ pointsFromCenterLEFT: function(){
             y:height/2,
             width:0,
             height:0
-        },game.rnd.integerInRange(700,1500),Phaser.Easing.Exponential.In,true).loop();
+        },game.rnd.integerInRange(700,1500),Phaser.Easing.Quadratic.In,true).loop();
     }
 },
 pointsFromCenterRIGHT: function(){
@@ -1385,7 +1347,8 @@ pointsFromCenterRIGHT: function(){
             y:height/2,
             width:0,
             height:0
-        },game.rnd.integerInRange(700,1500),Phaser.Easing.Exponential.In,true).loop();
+        },game.rnd.integerInRange(700,1500),Phaser.Easing.Quadratic.In,true).loop();
+        points_FromCenterRight.angle=game.rnd.integerInRange(10,20);
     }
 },
 
@@ -1398,7 +1361,7 @@ pointsToCenterLEFT: function(){
                     y:height/2,
                     width:0,
                     height:0  
-                }, game.rnd.integerInRange(1000,5000), Phaser.Easing.Circular.In, true);
+                }, game.rnd.integerInRange(1000,5000), Phaser.Easing.Quadratic.In, true);
             }
         }
     }
@@ -1412,7 +1375,7 @@ pointsToCenterRIGHT: function(){
                     y:height/2,
                     width:0,
                     height:0  
-                }, game.rnd.integerInRange(1000,5000), Phaser.Easing.Circular.In, true);
+                }, game.rnd.integerInRange(1000,5000), Phaser.Easing.Quadratic.In, true);
             }
         }
     }
