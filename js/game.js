@@ -29,52 +29,52 @@ var ChangeGameR = false;
 
 var gameState = {
 
-preload:function(){
-    game.load.image('q','img/q.png');
-    game.load.image('q2','img/q2.png');
+// preload:function(){
+//     game.load.image('q','img/q.png');
+//     game.load.image('q2','img/q2.png');
 
 
 
-    game.load.image('purpleBullet','img/purpleBullet.png');
-    // game.load.image('greenBullet','img/greenBullet.png');
-    game.load.image('whiteBullet','img/whiteBullet.png');
-    game.load.image('backBullet','img/backBullet.png');
-    game.load.image('defaultBullet','img/defaultBullet.png');
+//     game.load.image('purpleBullet','img/purpleBullet.png');
+//     // game.load.image('greenBullet','img/greenBullet.png');
+//     game.load.image('whiteBullet','img/whiteBullet.png');
+//     game.load.image('backBullet','img/backBullet.png');
+//     game.load.image('defaultBullet','img/defaultBullet.png');
     
-    game.load.image('greenParticleCircle','img/greenParticleCircle.png');
-    game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
+//     game.load.image('greenParticleCircle','img/greenParticleCircle.png');
+//     game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
     
     
-    game.load.image('like','img/like.png');
-    game.load.image('sad','img/sad.png');
-    game.load.image('tile','img/tile.png');
-    game.load.image('white','img/white.png');
-    game.load.image('white2','img/white.png');
+//     game.load.image('like','img/like.png');
+//     game.load.image('sad','img/sad.png');
+//     game.load.image('tile','img/tile.png');
+//     game.load.image('white','img/white.png');
+//     game.load.image('white2','img/white.png');
 
 
-    game.load.spritesheet('left','img/left.png', 329, 498, 26);
-    game.load.spritesheet('right','img/right.png', 329, 498, 29);
+//     game.load.spritesheet('left','img/left.png', 329, 498, 26);
+//     game.load.spritesheet('right','img/right.png', 329, 498, 29);
 
-    game.load.spritesheet('win','img/win.png',640,480,41);
+//     game.load.spritesheet('win','img/win.png',640,480,41);
 
 
 
-    game.load.spritesheet('engineAnimL','img/rocketAnimL.png', 460, 228, 4);
-    game.load.spritesheet('engineAnimR','img/rocketAnimR.png');
+//     game.load.spritesheet('engineAnimL','img/rocketAnimL.png', 460, 228, 4);
+//     game.load.spritesheet('engineAnimR','img/rocketAnimR.png');
     
-    game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
-    game.load.spritesheet('arrowLeft','img/arrowLeft.png', 334, 171, 7);
-    game.load.spritesheet('arrowRight','img/arrowRight.png', 334, 171, 7);
-    game.load.spritesheet('dots','img/dots.png', 680, 768, 40);
-    game.load.spritesheet('m','img/m.png', 61, 768, 32);
+//     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
+//     game.load.spritesheet('arrowLeft','img/arrowLeft.png', 334, 171, 7);
+//     game.load.spritesheet('arrowRight','img/arrowRight.png', 334, 171, 7);
+//     game.load.spritesheet('dots','img/dots.png', 680, 768, 40);
+//     game.load.spritesheet('m','img/m.png', 61, 768, 32);
 
-    game.load.spritesheet('proval','img/proval.png', 640, 480, 43);
-    game.load.spritesheet('arrow','img/arrow.png', 680, 768, 34);
-    game.load.spritesheet('speed','img/speed.png', 680, 768, 39);
+//     game.load.spritesheet('proval','img/proval.png', 640, 480, 43);
+//     game.load.spritesheet('arrow','img/arrow.png', 680, 768, 34);
+//     game.load.spritesheet('speed','img/speed.png', 680, 768, 39);
 
-    game.load.spritesheet('duckRotate','img/duckRotate.png', 544, 408, 20);
+//     game.load.spritesheet('duckRotate','img/duckRotate.png', 544, 408, 20);
 
-},
+// },
 
 create:function (){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -235,8 +235,6 @@ create:function (){
     
     // game.add.tween(q).to({width:width/2,x:0},1000,'Linear',true).loop();
     // game.add.tween(q2).to({width:width/2},1000,'Linear',true).loop();
-   
-      
 },
 
 // АНИМАЦИЯ В КАКУЮ СТОРОНУ НАЖИМАТЬ
@@ -1348,7 +1346,6 @@ pointsFromCenterRIGHT: function(){
             width:0,
             height:0
         },game.rnd.integerInRange(700,1500),Phaser.Easing.Quadratic.In,true).loop();
-        points_FromCenterRight.angle=game.rnd.integerInRange(10,20);
     }
 },
 
@@ -1361,7 +1358,7 @@ pointsToCenterLEFT: function(){
                     y:height/2,
                     width:0,
                     height:0  
-                }, game.rnd.integerInRange(1000,5000), Phaser.Easing.Quadratic.In, true);
+                }, game.rnd.integerInRange(1000,3000), Phaser.Easing.Circular.Out, true);
             }
         }
     }
@@ -1375,7 +1372,7 @@ pointsToCenterRIGHT: function(){
                     y:height/2,
                     width:0,
                     height:0  
-                }, game.rnd.integerInRange(1000,5000), Phaser.Easing.Quadratic.In, true);
+                }, game.rnd.integerInRange(1000,3000), Phaser.Easing.Circular.Out, true);
             }
         }
     }

@@ -7,5 +7,5 @@ window.onload = function(){
     //с рывками и тд
     
     game.state.add('game', gameState);
-    game.state.start('game');//ПОМЕНЯТЬ НА boot
+    game.state.start('boot');//ПОМЕНЯТЬ НА boot
 }
