@@ -26,58 +26,51 @@ var backR = true;
 
 var ChangeGameL = false;
 var ChangeGameR = false;
-var countL = 0;
-var countR = 0;
-
+var pad1;
 var gameState = {
 
-// preload:function(){
-//     game.load.image('q','img/q.png');
-//     game.load.image('q2','img/q2.png');
+preload:function(){
+    game.load.image('q','img/q.png');
+    game.load.image('q2','img/q2.png');
 
 
 
-//     game.load.image('purpleBullet','img/purpleBullet.png');
-//     // game.load.image('greenBullet','img/greenBullet.png');
-//     game.load.image('whiteBullet','img/whiteBullet.png');
-//     game.load.image('backBullet','img/backBullet.png');
-//     game.load.image('defaultBullet','img/defaultBullet.png');
+    game.load.image('purpleBullet','img/purpleBullet.png');
+    // game.load.image('greenBullet','img/greenBullet.png');
+    game.load.image('whiteBullet','img/whiteBullet.png');
+    game.load.image('backBullet','img/backBullet.png');
+    game.load.image('defaultBullet','img/defaultBullet.png');
     
-//     game.load.image('greenParticleCircle','img/greenParticleCircle.png');
-//     game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
+    game.load.image('greenParticleCircle','img/greenParticleCircle.png');
+    game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
     
     
-//     game.load.image('like','img/like.png');
-//     game.load.image('sad','img/sad.png');
-//     game.load.image('tile','img/tile.png');
-//     game.load.image('white','img/white.png');
-//     game.load.image('white2','img/white.png');
+    game.load.image('like','img/like.png');
+    game.load.image('sad','img/sad.png');
+    game.load.image('tile','img/tile.png');
+    game.load.image('white','img/white.png');
+    game.load.image('white2','img/white.png');
 
 
-//     game.load.spritesheet('left','img/left.png', 329, 498, 26);
-//     game.load.spritesheet('right','img/right.png', 329, 498, 29);
+    game.load.spritesheet('left','img/left.png', 329, 498, 26);
+    game.load.spritesheet('right','img/right.png', 329, 498, 29);
 
-//     game.load.spritesheet('win','img/win.png',640,480,41);
+    game.load.spritesheet('win','img/win.png',640,480,41);
 
 
 
-//     // game.load.spritesheet('engineAnimL','img/rocketAnimL.png', 460, 228, 4);
-//     // game.load.spritesheet('engineAnimR','img/rocketAnimR.png');
+    // game.load.spritesheet('engineAnimL','img/rocketAnimL.png', 460, 228, 4);
+    // game.load.spritesheet('engineAnimR','img/rocketAnimR.png');
     
-//     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
-//     game.load.spritesheet('dots','img/dots.png', 680, 768, 40);
+    game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
+    game.load.spritesheet('arrowLeft','img/arrowLeft.png', 334, 171, 7);
+    game.load.spritesheet('arrowRight','img/arrowRight.png', 334, 171, 7);
+    game.load.spritesheet('dots','img/dots.png', 680, 768, 40);
 
-//     game.load.spritesheet('proval','img/proval.png', 640, 480, 43);
-    
-//     game.load.spritesheet('arrow','img/arrow.png', 840,577,38);
-//     game.load.spritesheet('arrowL','img/arrow.png', 840,577,38);
-//     game.load.spritesheet('arrowCL','img/arrow.png', 840,577,38);
-//     game.load.spritesheet('arrowCR','img/arrow.png', 840,577,38);
-
-
-
-//     game.load.spritesheet('speed','img/speed.png', 680, 768, 39);
-// },
+    game.load.spritesheet('proval','img/proval.png', 640, 480, 43);
+    game.load.spritesheet('arrow','img/arrow.png', 680, 768, 34);
+    game.load.spritesheet('speed','img/speed.png', 680, 768, 39);
+},
 
 create:function (){
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -155,11 +148,8 @@ create:function (){
     left.position.y = (height/2) - (left.height/2) + 80;
     left.bringToTop();
     
-    rightKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-    leftKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-    // rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-    // leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 
     leftKey.onDown.add(this.leftDuck, this);
     rightKey.onDown.add(this.rightDuck, this);
@@ -177,59 +167,16 @@ create:function (){
     //#endregion
     
     
-    //A R R O W     
+    //A R R O W     B L U E 
     //#region 
-  
-
-    arrowR = game.add.sprite(0,0,'arrow');
-    arrowL = game.add.sprite(0,0,'arrowL');
-    arrowR.alpha = 0;
-    arrowL.alpha = 0;
-
-    arrowR.anchor.setTo(0,0.5);
-    arrowR.position.y=height/2;
-    arrowR.position.x=width/2;
-    arrowR.animations.add('playRight',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],25,true);
-
-    arrowL.scale.x*=-1;
-    arrowL.anchor.setTo(0,0.5);
-    arrowL.position.x=width/2;
-    arrowL.position.y=height/2;
-    arrowL.animations.add('playLeft',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],25,true);
-   
-    arrowTimer = game.time.create(false);
-    arrowTimer.loop(5500,function(){
-        arrowL.alpha=1;
-        arrowR.alpha=1;
-        arrowL.animations.play('playLeft');
-        arrowR.animations.play('playRight');
-
-    },this);
-
-
-    arrowCR = game.add.sprite(0,0,'arrowCR');
-    arrowCL = game.add.sprite(0,0,'arrowCL');
-    arrowCR.alpha = 0;
-    arrowCL.alpha = 0;
-
-    arrowCL.anchor.setTo(0,0.5);
-    arrowCL.position.x=0;
-    arrowCL.position.y=height/2;
-    arrowCL.scale.setTo(0.5);
-    arrowCL.animations.add('playCL',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],25,true);
-
-
-    arrowCR.position.x=width;
-    arrowCR.position.y=height/2;
-    arrowCR.scale.setTo(0.5);
-    arrowCR.anchor.setTo(0,0.5);
-
-    arrowCR.scale.x*=-1;
-
-
-    arrowCR.animations.add('playCR',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],25,true);
-
-
+    // arrow = game.add.sprite(0,0,'arrow');
+    // arrow.alpha = 0;
+    // arrow.animations.add('arrowPlay');
+    // arrowTimer = game.time.create(false);
+    // arrowTimer.loop(2700,function(){
+    //     arrow.alpha=1;
+    //     arrow.animations.play('arrowPlay', 30, true);
+    // },this);
     //#endregion
     
     //Rocket Fire
@@ -279,11 +226,16 @@ create:function (){
 
     //#endregion
 
-    arrowTimer.start();
+    // arrowTimer.start();
     this.grid();
     
     // game.add.tween(q).to({width:width/2,x:0},1000,'Linear',true).loop();
     // game.add.tween(q2).to({width:width/2},1000,'Linear',true).loop();
+
+    game.input.gamepad.start();
+
+    pad1 = game.input.gamepad.pad1;
+    pad1.addCallbacks(this, {onConnect: this.addButtons});
 },
 
 // АНИМАЦИЯ В КАКУЮ СТОРОНУ НАЖИМАТЬ
@@ -292,7 +244,6 @@ create:function (){
 //  Ш А Г    У В Е Л И Ч Е Н И Я и появляется РАКЕТА
 leftDuck: function(){
     if(left.x < width/4 ){
-
         if(naklonTriger){
             left.animations.stop('main');
             left.animations.play('naklon',false,false);   
@@ -303,7 +254,7 @@ leftDuck: function(){
         
         // speed.animations.play('speed', 20, true);
         
-        fire.position.setTo(left.x+100, (right.y+(right.height/2) *0.7))
+        fire.position.setTo(left.x*0.7, (left.y+left.height/2 +70)*0.7)
         fire.start(true, 500, null, 10);
         
         //Анимация включения двигателя
@@ -328,7 +279,7 @@ rightDuck: function(){
 
         // speedR.animations.play('speedR', 20, true);
 
-        fire2.position.setTo(right.x-70, (right.y+(right.height/2) *0.7))
+        fire2.position.setTo(right.x-70, (right.y+(right.height/2 +70))*0.7 )
         fire2.start(true, 500, null, 10);
 
         //Анимация включения двигателя
@@ -341,28 +292,20 @@ rightDuck: function(){
 //вызывается если нажимается на клавишу
 leftDuckChange: function(){
     //25
-    // fire.position.setTo( left.x+200,(left.y+left.height/2 +70)*0.7);
+    // fire.position.setTo( (left.x*0.7),(left.y+left.height/2 +70)*0.7);
     
-    
-    // arrowL.position.x = 0;
-    // arrowL.position.y = 0;
-    arrowCL.alpha=1;
-    arrowCL.animations.play('playCL');
-
-    left.x += (((width/2)/100)*4);
+    left.x += (((width/2)/100)*5);
     
     if(left.x+left.width  > width/2-width/3 ){
-    // arrowL.alpha=0;
-
-        fire.position.setTo( left.x-70 ,(left.y+(left.height/2)-100));
 
         fire.start(true, 500, null, 10);
         
+        fire.position.setTo( ((left.x-left.width )*0.7)+50 ,(left.y+left.height/2 +70)*0.7);
 
-        left.x+=(((width/2)/100)*0.8);
+        left.x+=(((width/2)/100)*0.9);
 
         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь           П Р А В Ы Й
-        if( (left.x + left.width) > width/2 + 40){
+        if( (left.x + left.width) > width/2 ){
             this.leftWIN();
         }
     }
@@ -370,174 +313,56 @@ leftDuckChange: function(){
 rightDuckChange: function(){
     // 25
     // fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
-    arrowCR.alpha=1;
-    arrowCR.animations.play('playCR');
+   
+    right.x -= (((width/2)/100)*5);
 
-    right.x -= (((width/2)/100)*4);
-    
     if(right.x  < (width/2-width/3) + width/2 + right.width){
-        // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', right.x);
-        fire2.position.setTo( (right.x+right.width)-130,(right.y+(right.height/2)-100));
+        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', right.x);
         
         fire2.start(true, 500, null, 10);
+        // fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
         
-        right.x-=(((width/2)/100)*0.8);
+        right.x-=(((width/2)/100)*0.9);
 
         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь       Л Е В Ы Й
-        if(right.x < width/2 - 40){
+        if(right.x < width/2){
             this.rightWIN();
         }
     }
 },
 
+addButtons: function(){
+    leftBtn = pad1.getButton(Phaser.Gamepad.BUTTON_14);
+    rightBtn = pad1.getButton(Phaser.Gamepad.BUTTON_15);
+
+    leftBtn.onDown.add(function(){
+        console.log('trueDOWN');
+    },this);
+
+    leftBtn.onUp.add(function(){
+        console.log('trueUP');
+    },this);
+
+},
+
 update: function(){
-    
     //  Н А    С Т А Р Т Е      И     Т Р И Г Е Р
     //Чтобы стояли на старте, посередине экрана.
     //Иначе двигаются к центру обратно.
-  
-    
-    // #region
-    // if (pad1.justPressed(Phaser.Gamepad.BUTTON_14))    {
-        
-    //     if(firstPartL){
-    //         if(left.x < width/4 ){
-    //             if(naklonTriger){
-    //                 left.animations.stop('main');
-    //                 left.animations.play('naklon',false,false);   
-    //                 naklonTriger = false;
-    //             }
-    //             left.x -= (((width/2)/100)*3);
-    //             console.log(left.x);
-                
-    //             // speed.animations.play('speed', 20, true);
-                
-    //             fire.position.setTo(left.x*0.7, (left.y+left.height/2 +70)*0.7)
-    //             fire.start(true, 500, null, 10);
-                
-    //             //Анимация включения двигателя
-    //             // rocketAnimL.position.setTo(left.x,left.y+(left.height/2));
-    //             // rocketAnimL.scale.setTo(0.5);
-    //             // rocketAnimL.alpha=1;
-    //             // rocketAnimL.animations.play('rocketPink', 20, false,true);
-    //         } else{
-    //             left.x -= ((width/2/100)*4);
-    //         }  
-    //     }
+   
+    if (pad1.isDown(Phaser.Gamepad.BUTTON_15))
+    {
+     console.log('DA');
 
-    //     if( left.x < width/10-100 ) {
-    //         firstPartL=false;
+    }
+    if (pad1.isDown(Phaser.Gamepad.BUTTON_14))
+    {
+        console.log('net');
 
-    //         // fire.position.setTo(left.x*0.7,(left.y+left.height/2 +70)*0.7);
-    
-    //         // ChangeGameL = true;
-    
-    //         left.animations.stop('naklon');
-            
-    //         // leftKey.onDown.add(this.leftDuckChange, this);
-    
-    //         if(rocketTriger){
-    //             // fire.position.setTo(left.x/0.7,(left.y+left.height/2));
-    
-    //             left.animations.play('rotate');
-    //             rocketTriger = false;
-    //             this.pointsToCenterLEFT();
-    //             this.pointsFromCenterLEFT();
-    
-    //             fire.setXSpeed(0, -1000);
-    //         }
-
-    //         left.x += (((width/2)/100)*5);
-    //     }
-
-    //     if(left.x+left.width  > width/2-width/3 ){
-
-    //         fire.start(true, 500, null, 10);
-            
-    //         fire.position.setTo( ((left.x-left.width )*0.7)+50 ,(left.y+left.height/2 +70)*0.7);
-
-    //         left.x+=(((width/2)/100)*0.9);
-
-    //         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь           П Р А В Ы Й
-    //         if( (left.x + left.width) > width/2 ){
-    //             this.leftWIN();
-    //         }
-    //     }
-    // }
-
-    // if (pad1.justPressed(Phaser.Gamepad.BUTTON_15))    {
-
-    //     if(firstPartR){
-    //         if( right.x > ((width/2 + width/4)-right.width) ){
-    //             if(naklonTrigerR){
-    //                 right.animations.stop('main');
-    //                 right.animations.play('naklon',false,false);   
-    //                 naklonTrigerR = false;
-    //             }
-        
-    //             right.x += ((width/2)/100)*3;
-        
-    //             // speedR.animations.play('speedR', 20, true);
-        
-    //             fire2.position.setTo(right.x-70, (right.y+(right.height/2 +70))*0.7 )
-    //             fire2.start(true, 500, null, 10);
-        
-    //             //Анимация включения двигателя
-    //             //тоже самое только для правого переделать
-    //         }
-    //         else{
-    //             right.x +=((width/2/100)*4);
-    //         }
-    //     }
-
-
-    //     if( right.x > (width/2 + (width/2-width/10))-right.width +100 ){
-    //         firstPartR=false;
-    //         // fire2.position.setTo( (right.x+right.width)*0.7,(right.y+right.height/2 +70)*0.7);
-            
-    //         // ChangeGameR = true;
-            
-    //         right.animations.stop('naklon');
-    
-    //         // rightKey.onDown.add(this.rightDuckChange, this);
-    
-    //         if(rocketTrigerR){
-    //             fire2.position.setTo( (right.x+right.width)*0.7-70,(right.y+right.height/2 +70)*0.7);
-    //             fire2.setXSpeed(0, 1000);
-    
-    //             right.animations.play('rotate');
-    //             rocketTrigerR = false;
-    
-    //             this.pointsToCenterRIGHT();
-    //             this.pointsFromCenterRIGHT();
-    //         }
-            
-    //         right.x -= (((width/2)/100)*5);
-    //     }  
-        
-        
-    //     if(right.x  < (width/2-width/3) + width/2 + right.width){
-    //         console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', right.x);
-            
-    //         fire2.start(true, 500, null, 10);
-    //         fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
-            
-    //         right.x-=(((width/2)/100)*0.9);
-    
-    //         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь       Л Е В Ы Й
-    //         if(right.x < width/2){
-    //             this.rightWIN();
-    //         }
-    //     }
-        
-    // }
-
-    //#endregion
-    
+    }
+   
     if( left.x < width/10-100 ) {
-    // arrowL.alpha=0;
-
-        fire.position.setTo(left.x*0.7,(left.y+left.height/2 +70)*0.7);
+        // fire.position.setTo(left.x*0.7,(left.y+left.height/2 +70)*0.7);
 
         ChangeGameL = true;
 
@@ -546,9 +371,7 @@ update: function(){
         leftKey.onDown.add(this.leftDuckChange, this);
 
         if(rocketTriger){
-    // arrowL.alpha=0;
-
-            fire.position.setTo(left.x/0.7,(left.y+left.height/2));
+            // fire.position.setTo(left.x/0.7,(left.y+left.height/2));
 
             left.animations.play('rotate');
             rocketTriger = false;
@@ -569,7 +392,7 @@ update: function(){
         rightKey.onDown.add(this.rightDuckChange, this);
 
         if(rocketTrigerR){
-            // fire2.position.setTo( (right.x+right.width)*0.7-70,(right.y+right.height/2 +70)*0.7);
+            fire2.position.setTo( (right.x+right.width)*0.7-70,(right.y+right.height/2 +70)*0.7);
             fire2.setXSpeed(0, 1000);
 
             right.animations.play('rotate');
@@ -581,13 +404,6 @@ update: function(){
     }
 
 
-    if(right.x==width/2){
-        right.x = width/2;
-    }   else {
-            right.x-=(((width/2)/100)*0.2);
-    }
-    
-
     if(left.x==(width/2)-left.width){
         left.x = (width/2)-left.width;
     }   else {
@@ -595,15 +411,17 @@ update: function(){
     }
 
     if(ChangeGameL){
-        arrowL.alpha=0;
+        left.x -=(((width/2)/100)*0.5);
+    }
 
-        left.x -=(((width/2)/100)*0.3);
+    if(right.x==width/2){
+        right.x = width/2;
+    }   else {
+            right.x-=(((width/2)/100)*0.2);
     }
 
     if(ChangeGameR){
-        arrowR.alpha=0;
-
-        right.x += (((width/2)/100)*0.3);
+        right.x += (((width/2)/100)*0.5);
     }
 
     // Б Э К Г Р А У Н Д  становится   Б Е Л Ы Й
@@ -650,10 +468,9 @@ update: function(){
 },
 
 leftWIN: function (){
-    game.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
-    game.input.keyboard.removeKey(Phaser.Keyboard.ENTER);
-    arrowCR.alpha=0;
-    arrowCL.alpha=0;
+    game.input.keyboard.removeKey(Phaser.Keyboard.LEFT);
+    game.input.keyboard.removeKey(Phaser.Keyboard.RIGHT);
+
     left.x = 0;
     left.alpha = 0;
     right.alpha = 0;
@@ -686,7 +503,7 @@ leftWIN: function (){
     proval.alpha=0;
     proval.anchor.setTo(0.5,0);
 
-    proval.scale.setTo(2.7);
+    proval.scale.setTo(1.3,1.3);
     proval.position.setTo(width/2+width/4,height-proval.height);
     proval.animations.add('p');
     
@@ -699,10 +516,10 @@ leftWIN: function (){
     provalTimer.start();
 
     //GLASS ANIM
-    // glass = game.add.sprite(width/2,0,'glass');
-    // glass.scale.setTo(0.5,0.5);
-    // glass.animations.add('glassCrack');
-    // glass.animations.play('glassCrack', 10,false);
+    glass = game.add.sprite(width/2,0,'glass');
+    glass.scale.setTo(0.5,0.5);
+    glass.animations.add('glassCrack');
+    glass.animations.play('glassCrack', 10,false);
     
     //WIN 
     win=game.add.sprite(0,0,'win');
@@ -713,10 +530,9 @@ leftWIN: function (){
     win.animations.play('playwin',20,true);
 },
 rightWIN : function (){
-    game.input.keyboard.removeKey(Phaser.Keyboard.ENTER);
-    game.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
-    arrowCR.alpha=0;
-    arrowCL.alpha=0;
+    game.input.keyboard.removeKey(Phaser.Keyboard.LEFT);
+    game.input.keyboard.removeKey(Phaser.Keyboard.RIGHT);
+
     right.x = 0;
     right.alpha = 0;
     // rightRocket.alpha = 0;
@@ -749,7 +565,7 @@ rightWIN : function (){
     // П Р О В А Л    РАЗНОЦВЕТНЫЙ
     proval = game.add.sprite(0,0,'proval');
     proval.alpha=0;
-    proval.scale.setTo(2.7);
+    proval.scale.setTo(1.3,1.3);
     proval.anchor.setTo(0.5,0);
     proval.position.setTo(width/2-width/4,height-proval.height);
     proval.animations.add('p');
@@ -763,10 +579,10 @@ rightWIN : function (){
     provalTimer.start();
 
     //GLASS ANIM
-    // glass = game.add.sprite(0, 0, 'glass');
-    // glass.scale.setTo(0.5,0.5);
-    // glass.animations.add('glassCrack');
-    // glass.animations.play('glassCrack', 10,false);
+    glass = game.add.sprite(0, 0, 'glass');
+    glass.scale.setTo(0.5,0.5);
+    glass.animations.add('glassCrack');
+    glass.animations.play('glassCrack', 10,false);
 
     //WIN 
     win=game.add.sprite(0,0,'win');
@@ -1166,7 +982,7 @@ grid: function(){
         rect9.add(points_pink.children[i]);
         points_pink.addAt(game.add.sprite(0,0),i);
     }
-    for(i=115;i<296;i=i+20){
+    for(i=115;i<295;i=i+20){
         rect9.add(points_pink_right.children[i]);
         points_pink_right.addAt(game.add.sprite(0,0),i);
     }
@@ -1743,7 +1559,7 @@ rectAnim: function(){
                 y:height/2,
                 width:0,
                 height:0  
-            }, game.rnd.integerInRange(1000,5000),Phaser.Easing.Circular.In, true);
+            }, game.rnd.integerInRange(1000,5000),Phaser.Easing.Circular.Out, true);
 
             // if(move.children[i].children[k].x==width/2 && move.children[i].children[k].y==height/2){
             //     move.children[i].children[k].kill();

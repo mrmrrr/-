@@ -1,4 +1,4 @@
-var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, 'phaser-example');
+var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'phaser-example');
 
 window.onload = function(){
     game.state.add('boot', bootState);
@@ -7,5 +7,5 @@ window.onload = function(){
     //с рывками и тд
     
     game.state.add('game', gameState);
-    game.state.start('game');//ПОМЕНЯТЬ НА boot
+    game.state.start('boot');//ПОМЕНЯТЬ НА boot
 }
