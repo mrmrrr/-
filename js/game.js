@@ -388,10 +388,10 @@ rightDuckChange: function(){
         
         right.x-=(((width/2)/100)*0.8);
 
-        if( (right.x ) < width/2 +  100){
+        if( right.x   < width/2 +  100){
             right.scale.x -=0.02;
             right.scale.y -=0.02;
-            right.x-=8;
+            right.x-=3;
         }
         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь       Л Е В Ы Й
         if(right.x < width/2 - 40){
