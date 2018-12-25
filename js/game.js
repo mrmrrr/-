@@ -360,7 +360,12 @@ leftDuckChange: function(){
         
 
         left.x+=(((width/2)/100)*0.8);
-        left.scale.x -=0.01;
+
+        if( (left.x + left.width) > width/2 - 100){
+            left.scale.x -=0.02;
+            left.scale.y -=0.02;
+            left.x+=8;
+        }
         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь           П Р А В Ы Й
         if( (left.x + left.width) > width/2 + 40){
             this.leftWIN();
@@ -383,6 +388,11 @@ rightDuckChange: function(){
         
         right.x-=(((width/2)/100)*0.8);
 
+        if( (right.x ) < width/2 +  100){
+            right.scale.x -=0.02;
+            right.scale.y -=0.02;
+            right.x-=8;
+        }
         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь       Л Е В Ы Й
         if(right.x < width/2 - 40){
             this.rightWIN();
