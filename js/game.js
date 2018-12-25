@@ -360,7 +360,7 @@ leftDuckChange: function(){
         
 
         left.x+=(((width/2)/100)*0.8);
-
+        left.scale.x -=0.01;
         // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь           П Р А В Ы Й
         if( (left.x + left.width) > width/2 + 40){
             this.leftWIN();

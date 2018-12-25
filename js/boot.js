@@ -51,7 +51,7 @@ var bootState = {
     update: function(){
         count++;
         // text.setText("\n" + count + " %");
-        if(count===102){
+        if(count===100){
             game.state.start('game');
         }
     }
