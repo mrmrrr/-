@@ -31,116 +31,47 @@ var countR = 0;
 
 var gameState = {
 
-// preload:function(){
-//     game.load.image('q','img/q.png');
-//     game.load.image('q2','img/q2.png');
-
-
-
-//     game.load.image('purpleBullet','img/purpleBullet.png');
-//     // game.load.image('greenBullet','img/greenBullet.png');
-//     game.load.image('whiteBullet','img/whiteBullet.png');
-//     game.load.image('backBullet','img/backBullet.png');
-//     game.load.image('defaultBullet','img/defaultBullet.png');
+preload:function(){
+    game.load.image('purpleBullet','img/purpleBullet.png');
+    game.load.image('whiteBullet','img/whiteBullet.png');
+    game.load.image('backBullet','img/backBullet.png');
+    game.load.image('defaultBullet','img/defaultBullet.png');
     
-//     game.load.image('greenParticleCircle','img/greenParticleCircle.png');
-//     game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
+    game.load.image('greenParticleCircle','img/greenParticleCircle.png');
+    game.load.image('purpleParticleCircle','img/purpleParticleCircle.png');
     
+    game.load.image('like','img/like.png');
+    game.load.image('sad','img/sad.png');
+    game.load.image('tile','img/tile.png');
+
+    game.load.spritesheet('left','img/left.png', 329, 498, 26);
+    game.load.spritesheet('right','img/right.png', 329, 498, 29);
+
+    game.load.spritesheet('win','img/win.png',640,480,41);
     
-//     game.load.image('like','img/like.png');
-//     game.load.image('sad','img/sad.png');
-//     game.load.image('tile','img/tile.png');
-//     game.load.image('white','img/white.png');
-//     game.load.image('white2','img/white.png');
+    game.load.spritesheet('dots','img/dots.png', 680, 768, 40);
 
-
-//     game.load.spritesheet('left','img/left.png', 329, 498, 26);
-//     game.load.spritesheet('right','img/right.png', 329, 498, 29);
-
-//     game.load.spritesheet('win','img/win.png',640,480,41);
-
-
-
-//     // game.load.spritesheet('engineAnimL','img/rocketAnimL.png', 460, 228, 4);
-//     // game.load.spritesheet('engineAnimR','img/rocketAnimR.png');
+    game.load.spritesheet('proval','img/proval.png', 640, 480, 43);
     
-//     game.load.spritesheet('glass', 'img/glassSprite.png', 1243, 765, 7);
-//     game.load.spritesheet('dots','img/dots.png', 680, 768, 40);
-
-//     game.load.spritesheet('proval','img/proval.png', 640, 480, 43);
-    
-//     game.load.spritesheet('arrow','img/arrow.png', 840,577,38);
-//     game.load.spritesheet('arrowL','img/arrow.png', 840,577,38);
-//     game.load.spritesheet('arrowCL','img/arrow.png', 840,577,38);
-//     game.load.spritesheet('arrowCR','img/arrow.png', 840,577,38);
-
-
-
-//     game.load.spritesheet('speed','img/speed.png', 680, 768, 39);
-// },
+    game.load.spritesheet('arrow','img/arrow.png', 840,577,38);
+    game.load.spritesheet('arrowL','img/arrow.png', 840,577,38);
+    game.load.spritesheet('arrowCL','img/arrow.png', 840,577,38);
+    game.load.spritesheet('arrowCR','img/arrow.png', 840,577,38);
+},
 
 create:function (){
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#000';
-    
  
-    rectR = game.add.sprite(width/2,0,'white');
-    rectR.alpha=0;
-    rectR.width=width/2;
-    rectR.height=height;
-
-    rectL = game.add.sprite(0,0,'white2');
-    rectL.alpha=0;
-    rectL.width=width/2;
-    rectL.height=height;  
-
-
-    //#region Г Р А Д И Е Н Т Ы
-    q = game.add.sprite(width/2, 0, 'q');
-    q.width=0;
-    q.height=height;
-
-    q2 = game.add.sprite(width/2, 0, 'q2');
-    q2.width=0;
-    q2.height=height;
-
     points_back = game.add.group();
 
-    // q.alpha=0;
-    // q2.alpha=0;
-
-    // qTween = game.add.tween(q);
-    // q2Tween = game.add.tween(q2);
-    
-    //C L O S E   Г Р А Д И Е Н Т Ы
-    //  ЭТО ПОЯВЛЯЕТСЯ КОГДА ВЫИГРАЛ ИЛИ  
-    //КОРОЧЕ СОЗДАЕТ В А У ЭФФЕКТ
-    //КОНЕЦ В А У ЭФФЕКТА
-    //#endregion
-
-    //#region Тайлы ЗВЕЗДЫ
-
-    tilesprite = game.add.tileSprite(0, 0, width/2, height, 'tile');
-    tilesprite.alpha=0;
-    // tilesprite.alpha=1;
-    tilesprite.position.setTo(0,-300);
-    tileTweenL = game.add.tween(tilesprite);
-
-    tilesprite2 = game.add.tileSprite(width/2, 0, width/2, height, 'tile');
-    tilesprite2.alpha=0;
-    // tilesprite2.alpha=1;
-
-    tilesprite2.position.setTo(width/2,-300);
-    tileTweenR = game.add.tween(tilesprite2);
-    //#endregion
-    
-    
     right = game.add.sprite(0,0,'right');
     right.animations.add('main',[9],20,false);
     right.animations.add('naklon',[8,7,6,5,4],20,false);
     right.animations.add('rotate',[3,2,1,0,19,18,17,16,15,14,13,12,11,10,29,28,27,26,25,24],20,false);
     right.animations.play('main');
-    right.scale.setTo(0.7);
+    right.width=right.width/width * width/1.5 ;
+    right.height=right.height/height * height/1.5;
     right.position.x = (width/2);
     right.position.y =  (height/2)-(right.height/2) + 80;
     right.bringToTop();
@@ -150,7 +81,8 @@ create:function (){
     left.animations.add('naklon',[1,2,3,4,5],20,false);
     left.animations.add('rotate',[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],20,false);
     left.animations.play('main');
-    left.scale.setTo(0.7);
+    left.width=left.width/width * width/1.5 ;
+    left.height=left.height/height * height/1.5;
     left.position.x = (width/2)-left.width;
     left.position.y = (height/2) - (left.height/2) + 80;
     left.bringToTop();
@@ -165,22 +97,8 @@ create:function (){
     rightKey.onDown.add(this.rightDuck, this);
     
 
-    //#region SPEED
-    // speed = game.add.sprite(0,0,'speed');
-    // speed.animations.add('speed');
-
-    // speedR = game.add.sprite(0,0,'speed');
-    // speedR.animations.add('speedR');
-    // speedR.anchor.setTo(.5,.5);
-    // speedR.scale.x *= -1;
-    // speedR.position.setTo(width+(speedR.width/2),speedR.height/2);
-    //#endregion
-    
-    
     //A R R O W     
     //#region 
-  
-
     arrowR = game.add.sprite(0,0,'arrow');
     arrowL = game.add.sprite(0,0,'arrowL');
     arrowR.alpha = 0;
@@ -189,12 +107,17 @@ create:function (){
     arrowR.anchor.setTo(0,0.5);
     arrowR.position.y=height/2;
     arrowR.position.x=width/2;
+    arrowR.width = arrowR.width/width * width/2;
+    arrowR.height = arrowR.height/height * height/2;
+    // arrowR.scale.setTo(0.78);
     arrowR.animations.add('playRight',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],25,true);
 
     arrowL.scale.x*=-1;
     arrowL.anchor.setTo(0,0.5);
     arrowL.position.x=width/2;
     arrowL.position.y=height/2;
+    arrowL.width = arrowL.width/width * width/2;
+    arrowL.height = arrowL.height/height * height/2;
     arrowL.animations.add('playLeft',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],25,true);
    
     arrowTimer = game.time.create(false);
@@ -205,7 +128,6 @@ create:function (){
         arrowR.animations.play('playRight');
 
     },this);
-
 
     arrowCR = game.add.sprite(0,0,'arrowCR');
     arrowCL = game.add.sprite(0,0,'arrowCL');
@@ -218,18 +140,12 @@ create:function (){
     arrowCL.scale.setTo(0.5);
     arrowCL.animations.add('playCL',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],25,true);
 
-
     arrowCR.position.x=width;
     arrowCR.position.y=height/2;
     arrowCR.scale.setTo(0.5);
     arrowCR.anchor.setTo(0,0.5);
-
     arrowCR.scale.x*=-1;
-
-
     arrowCR.animations.add('playCR',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],25,true);
-
-
     //#endregion
     
     //Rocket Fire
@@ -281,9 +197,6 @@ create:function (){
 
     arrowTimer.start();
     this.grid();
-    
-    // game.add.tween(q).to({width:width/2,x:0},1000,'Linear',true).loop();
-    // game.add.tween(q2).to({width:width/2},1000,'Linear',true).loop();
 },
 
 // АНИМАЦИЯ В КАКУЮ СТОРОНУ НАЖИМАТЬ
@@ -301,16 +214,9 @@ leftDuck: function(){
         left.x -= (((width/2)/100)*3);
         console.log(left.x);
         
-        // speed.animations.play('speed', 20, true);
         
         fire.position.setTo(left.x+100, (right.y+(right.height/2) *0.7))
         fire.start(true, 500, null, 10);
-        
-        //Анимация включения двигателя
-        // rocketAnimL.position.setTo(left.x,left.y+(left.height/2));
-        // rocketAnimL.scale.setTo(0.5);
-        // rocketAnimL.alpha=1;
-        // rocketAnimL.animations.play('rocketPink', 20, false,true);
     } else{
         left.x -= ((width/2/100)*4);
     }
@@ -326,13 +232,8 @@ rightDuck: function(){
 
         right.x += ((width/2)/100)*3;
 
-        // speedR.animations.play('speedR', 20, true);
-
         fire2.position.setTo(right.x-70, (right.y+(right.height/2) *0.7))
         fire2.start(true, 500, null, 10);
-
-        //Анимация включения двигателя
-        //тоже самое только для правого переделать
     }
      else{
         right.x +=((width/2/100)*4);
@@ -340,60 +241,50 @@ rightDuck: function(){
 },
 //вызывается если нажимается на клавишу
 leftDuckChange: function(){
-    //25
-    // fire.position.setTo( left.x+200,(left.y+left.height/2 +70)*0.7);
     
-    
-    // arrowL.position.x = 0;
-    // arrowL.position.y = 0;
     arrowCL.alpha=1;
     arrowCL.animations.play('playCL');
 
     left.x += (((width/2)/100)*4);
     
     if(left.x+left.width  > width/2-width/3 ){
-    // arrowL.alpha=0;
 
         fire.position.setTo( left.x-70 ,(left.y+(left.height/2)-100));
-
         fire.start(true, 500, null, 10);
-        
 
         left.x+=(((width/2)/100)*0.8);
 
         if( (left.x + left.width) > width/2 - 100){
             left.scale.x -=0.02;
             left.scale.y -=0.02;
-            left.x+=8;
+            left.x+=10;
         }
-        // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь           П Р А В Ы Й
+
         if( (left.x + left.width) > width/2 + 40){
             this.leftWIN();
         }
     }
 },
 rightDuckChange: function(){
-    // 25
-    // fire2.position.setTo( (right.x/0.7)-right.width,(right.y+right.height/2 +70)*0.7);
+
     arrowCR.alpha=1;
     arrowCR.animations.play('playCR');
 
     right.x -= (((width/2)/100)*4);
     
     if(right.x  < (width/2-width/3) + width/2 + right.width){
-        // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', right.x);
+
         fire2.position.setTo( (right.x+right.width)-130,(right.y+(right.height/2)-100));
-        
         fire2.start(true, 500, null, 10);
         
         right.x-=(((width/2)/100)*0.8);
 
-        if( right.x   < width/2 +  100){
+        if( right.x < width/2 +  100){
             right.scale.x -=0.02;
             right.scale.y -=0.02;
             right.x-=3;
         }
-        // 🌟 🌟 🌟 П О Б Е Д И Т Е Л Ь       Л Е В Ы Й
+
         if(right.x < width/2 - 40){
             this.rightWIN();
         }
